@@ -25,7 +25,7 @@
       <a href="index.html">introduction</a>
       <a href="method.html">method</a>
       <a href="ledger.html" aria-current="page">the ledger</a>
-      <a href="notes.html">notes</a>
+      <a href="papers.html">papers</a>
       <a href="about.html">about</a>
     </nav>
   </div>
@@ -35,31 +35,39 @@
   <div class="wrap">
     <div class="row"><div><span class="chip">The ledger</span></div></div>
     <h1>Every forecast, its timestamp, and its mark</h1>
-    <p class="lede">Append-only. Entries are added before the outcome is known and never edited
-    afterwards. The ledger opens with the prison population entry; the rest appear as they are
-    registered.</p>
+    <p class="lede">Append-only. Every line is registered before the outcome is known and never
+    edited afterwards. The ledger opens with the prison headroom track; the rest appear as they
+    are registered.</p>
   </div>
 </div>
 
 <section class="band">
   <div class="wrap">
-  <p class="record-summary mono">Registered 0. Open 0. Closed 0. Nothing scored yet; first marks land in October.</p>
+  <p class="record-summary mono">Tracks 1. Lines registered 8. Resolved 0. Open 0. First mark expected 2 Oct 2026.</p>
   <div class="card table-card">
     <div class="table-scroll">
       <table class="ledger">
         <thead>
-          <tr><th>Forecast</th><th>Series</th><th>Benchmark</th>
-              <th>Made</th><th>Next mark</th><th>Status</th></tr>
+          <tr><th>Track</th><th>Series</th><th>Benchmarks</th>
+              <th>Registered</th><th>Next mark</th><th>Status</th></tr>
         </thead>
-        <tbody><tr><td class="empty" colspan="6">Nothing registered yet. The first entries are committed to the public repository from 12&nbsp;September and appear here the moment they are. The ledger starts empty because a ledger that starts full should not be believed.</td></tr>
+        <tbody>
+          <tr>
+            <td class="claim"><a href="prison-headroom.html">Prison headroom, England and Wales</a>
+              <span class="sub">8 lines registered, 0 resolved</span></td>
+            <td>Public services</td>
+            <td class="bench">Naive, Seasonal naive, Official path</td>
+            <td class="num"><a href="https://github.com/walkforwardresearch/prisoncap/commit/8df8a8f">6 Sep 2026</a></td>
+            <td class="num">2 Oct 2026</td>
+            <td><span class="status s-registered"><svg class="glyph" viewBox="0 0 21 16" aria-hidden="true"><rect x="0" y="1" width="9" height="4" fill="var(--block)"/><rect x="10" y="1" width="5" height="4" fill="var(--block)"/><rect x="3" y="6" width="9" height="4" fill="var(--block)"/><rect x="13" y="6" width="5" height="4" fill="var(--block)"/><rect x="6" y="11" width="9" height="4" fill="var(--block)"/><rect x="16" y="11" width="5" height="4" fill="var(--block)"/></svg><span>Registered</span></span></td>
+          </tr>
         </tbody>
       </table>
     </div>
   </div>
-  <p class="caption">Every row links to the entry in the <a href="https://github.com/walkforwardresearch/ledger">public repository</a> and to
-  the commit that registered it. <span class="mono">Made</span> is the commit date;
-  <span class="mono">Benchmark</span> names the publisher and vintage; the claim is the exact
-  sentence registered, unedited. <a href="method.html#how-it-works">How the ledger works</a>.</p>
+  <p class="caption">Each track opens onto its own lines, their benchmarks and the rule they will be
+  scored by. <span class="mono">Registered</span> links to the commit that timestamped it.
+  <a href="method.html#how-it-works">How the ledger works</a>.</p>
   </div>
 </section>
 </main>
@@ -68,7 +76,7 @@
     <div class="foot-rule"></div>
     <div class="foot">
       <span>walkforward research &middot; foresight not hindsight</span>
-      <span>page built 6 Sep 2026 11:02 UTC &middot; no accounts, no tracking, no personal data</span>
+      <span>page built 6 Sep 2026 18:20 UTC &middot; <a href="about.html#privacy">privacy</a></span>
     </div>
   </div>
 </footer>

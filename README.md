@@ -10,7 +10,7 @@ python3 build_site.py --preview    # builds site-preview/ — design only, never
 - `/` **introduction** — what the business does, the three-step order, the standard, the four series
 - `/method` — walk-forward scoring, why backtests are not evidence, how the ledger works, status vocabulary
 - `/ledger` — record summary and the full table
-- `/notes` — occasional write-ups
+- `/papers` — published papers, as PDFs
 - `/about` — what this is, standing, contact, privacy
 
 Note the ledger moves from `/` (where the holding page keeps it) to `/ledger` here. Anyone who
@@ -18,14 +18,14 @@ bookmarked `/` still lands on the introduction, one click away.
 
 ## The rule the build enforces
 
-An entry appears on the site only once `registered_utc` and `commit` are set in its file. The four
-entries in `data/forecasts/` are scheduled, not registered, so `site/` is honestly empty today. The
-record summary is computed from the same files as the table, so the two can never disagree.
+A **track** appears on the site only once `registered_utc` is set in its file, and the build
+**refuses** to publish a track that is registered while `claim_form`, `definition`, `benchmarks`,
+`scoring_rule`, `data_sources`, `provenance` or `lines` is blank or still placeholder text. The
+method page promises each of those is recorded at registration, so the build makes the promise
+structurally true rather than merely stated.
 
-`--preview` shows the **launch state**: only entries carrying `"launch_entry": true` are filled in.
-Prison population carries that flag, so the preview opens the ledger with that single row, which is
-how it will actually look. Move the flag, or add it to another entry, to preview a different
-opening.
+The record summary and the per-track counts are computed from the same files as the tables, so
+they can never disagree with them.
 
 Registering: fill the entry, set `registered_utc`, commit, push; then put the commit SHA in
 `commit` and push again. The first commit is the timestamp, the second only records where to find it.
@@ -44,9 +44,40 @@ The ledger stays at `/` and no URL breaks.
 
 ## Still open
 
-- The four claims carry `[date]`, `[x]bn`, `[x]pp`. These are the actual forecasts and need real
-  numbers before registration.
-- *A generation from now* is listed as a series with no entry yet.
+- **The register file is the source of truth, and this repo currently restates it by hand.** That
+  is the one real weakness: two copies can drift. Next step is to have the build read
+  `outputs/forecast_register.csv` from `walkforwardresearch/prisoncap` directly, so the site cannot
+  disagree with the register even in principle.
+- The track gains three lines a week from 11 September. Hand-maintaining `lines` will not survive
+  that for long — see the point above.
+- The other three tracks (council shortlist, Budget headroom, energy pass-through) are not yet
+  written as track files.
+- *A generation from now* is listed as a series with no track yet.
 - No licence stated on the downloadable data.
 - Keep the council screen's working files in a separate private repo — this one is public and so is
   its history.
+
+
+## Adding a paper
+
+1. Put the PDF in the `papers/` folder at the repo root. Keep the filename lowercase with hyphens,
+   e.g. `moj-projection-scorecard-2026.pdf`. The build copies the whole folder into the site.
+2. Add or update the entry in `data/papers.json`:
+
+```json
+{
+  "id": "moj-projection-scorecard-2026",
+  "title": "How good have the MoJ prison population projections been?",
+  "standfirst": "One sentence saying what it does.",
+  "series": "Public services",
+  "date": "2026-09-28",
+  "status": "published",
+  "pdf": "moj-projection-scorecard-2026.pdf",
+  "pages": 7,
+  "related_track": "prison-headroom"
+}
+```
+
+An entry with `"pdf": null` is listed under **In preparation** with no download link. Fill in `pdf`,
+`date` and `pages` and it moves up into the published list automatically. `related_track` is the
+`id` of a track file and adds a link through to the forecasts behind the paper.

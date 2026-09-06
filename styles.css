@@ -368,3 +368,44 @@ table.ledger .sched { display: block; }
 .card a.mono, .card .mono { font-size: 0.83rem; overflow-wrap: anywhere; }
 /* centre the mark against the headline block */
 .hero-grid { align-items: center; }
+
+/* track lines table + track page */
+.sub{display:block;font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.05em;
+  color:var(--faint);margin-top:.3rem;white-space:normal;line-height:1.5}
+table.ledger td.strong{color:var(--ink);font-weight:500}
+table.ledger td.soft{color:var(--muted)}
+table.ledger .pending{color:var(--faint);font-style:italic}
+table.lines td,table.lines th{padding:.6rem .7rem}
+table.lines td.num{white-space:nowrap;min-width:0}
+.claim-quote{font-family:"Spectral",Georgia,serif;font-size:1.14rem;line-height:1.4;
+  text-wrap:balance;margin:.2rem 0 .8rem}
+ol.rules{margin:0;padding-left:1.3rem;display:grid;gap:.65rem}
+ol.rules li{font-size:.95rem;color:var(--ink)}
+.series-row p .sub{margin-top:.4rem}
+
+/* papers */
+.papers{display:grid;gap:1.1rem}
+.paper h3{margin:.45rem 0 .5rem;font-size:1.25rem}
+.paper h3 a{color:var(--ink);text-decoration-color:var(--line-strong)}
+.paper h3 a:hover{color:var(--accent)}
+.paper .note-date{color:var(--faint)}
+.paper-link{margin:.7rem 0 0}
+.paper-link a{font-size:.8rem;letter-spacing:.04em}
+.paper-soon h3{color:var(--muted)}
+.forthcoming-head{margin:2.6rem 0 1.2rem;font-size:1.3rem}
+
+/* the five areas on the introduction */
+.areas{display:grid;gap:0;border-top:1px solid var(--line)}
+.area-row{display:grid;grid-template-columns:minmax(0,14rem) minmax(0,1fr) minmax(0,11rem);
+  gap:.4rem 2rem;padding:1.25rem 0;border-bottom:1px solid var(--line);align-items:baseline}
+.area-row h3{font-size:1.12rem}
+.area-row p{margin:0;color:var(--muted);font-size:.97rem}
+.area-count{font-size:.74rem;letter-spacing:.05em;text-align:right}
+.area-count .soft{color:var(--faint)}
+@media (max-width:52rem){
+  .area-row{grid-template-columns:1fr;gap:.3rem}
+  .area-count{text-align:left;margin-top:.2rem}
+}
+.area-count{white-space:nowrap}
+.area-row{grid-template-columns:minmax(0,14rem) minmax(0,1fr) max-content}
+@media (max-width:52rem){.area-row{grid-template-columns:1fr}}

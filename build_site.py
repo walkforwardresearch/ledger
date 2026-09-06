@@ -25,7 +25,7 @@ FONTS = ('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n
 NAV = [("index.html", "intro", "introduction"),
        ("method.html", "method", "method"),
        ("ledger.html", "ledger", "the ledger"),
-       ("notes.html", "notes", "notes"),
+       ("papers.html", "papers", "papers"),
        ("about.html", "about", "about")]
 
 MARK = '''<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
@@ -55,14 +55,16 @@ METHOD_DIAGRAM = '''<svg class="stair" viewBox="0 0 470 150" role="img" aria-lab
         </svg>'''
 
 SERIES = [
-    ("Which are next?",
-     "Distress screens of public bodies and regulated companies, published as a pre-registered shortlist and scored on what happens."),
-    ("Breaking points",
-     "Capacity against a threshold, with a dated forecast of when the threshold is crossed."),
-    ("Against consensus",
-     "National series forecast ahead of the official and market numbers, marked on release."),
-    ("A generation from now",
-     "Town-level demography, housing and cohort forecasts to 2046 and 2066, with the backtest published alongside."),
+    ("Public finances",
+     "Budgets, headroom and financial distress in public bodies, forecast ahead of the official number and scored on release."),
+    ("Public services",
+     "Capacity and demand in the systems that run out first, forecast at dated horizons against the official path."),
+    ("Regulated industries",
+     "Resilience and performance of regulated companies, published as a pre-registered screen and scored on what happens."),
+    ("Prices and the economy",
+     "National series forecast ahead of the official statistics and the market consensus, marked on release."),
+    ("Demographics",
+     "Population, households and cohorts, at national and town level, forecast decades out with the backtest published alongside."),
 ]
 
 # ------------------------------------------------------------------ ledger data
@@ -71,17 +73,46 @@ def fmt(d):
     return datetime.date.fromisoformat(d[:10]).strftime("%-d %b %Y") if d else ""
 
 
+def num(v):
+    return "&mdash;" if v is None else f"{v:,}"
+
+
+REQUIRED_TO_PUBLISH = ("track", "claim_form", "definition", "benchmarks",
+                       "scoring_rule", "data_sources", "provenance", "lines")
+
+
+def check(t):
+    """The method page promises each registered track records all of this. Enforce it, so a track
+    cannot reach the site while that promise is untrue of it."""
+    missing = [f for f in REQUIRED_TO_PUBLISH if not t.get(f)]
+    placeholder = [f for f in REQUIRED_TO_PUBLISH
+                   if isinstance(t.get(f), str) and t[f].strip().startswith("[")]
+    if missing or placeholder:
+        raise SystemExit(
+            f"\n  {t['id']} is marked registered but is not ready to publish."
+            + (f"\n  Missing: {', '.join(missing)}" if missing else "")
+            + (f"\n  Still placeholder text: {', '.join(placeholder)}" if placeholder else "")
+            + "\n  Fill these in, or clear registered_utc until it is ready.\n")
+
+
 def load():
     out = []
-    for path in sorted(glob.glob(os.path.join(HERE, "data", "forecasts", "*.json"))):
-        e = json.load(open(path))
-        e["_file"] = os.path.relpath(path, HERE)
-        # --preview shows the launch state: only entries flagged as the opening entry.
-        if PREVIEW and not e.get("registered_utc") and e.get("launch_entry"):
-            e["registered_utc"], e["commit"] = e["planned_registration"], "0000000"
-        out.append(e)
-    out.sort(key=lambda e: e.get("registered_utc") or e["planned_registration"])
-    return [e for e in out if e.get("registered_utc")]
+    for path in sorted(glob.glob(os.path.join(HERE, "data", "tracks", "*.json"))):
+        t = json.load(open(path))
+        t["_file"] = os.path.relpath(path, HERE)
+        t["_page"] = t["id"] + ".html"
+        if PREVIEW and not t.get("registered_utc") and t.get("launch_entry"):
+            t["registered_utc"], t["commit"] = t["planned_registration"], "0000000"
+        out.append(t)
+    out.sort(key=lambda t: t.get("registered_utc") or "9999")
+    live = [t for t in out if t.get("registered_utc")]
+    names = {n for n, _ in SERIES}
+    for t in live:
+        check(t)
+        if t["series"] not in names:
+            raise SystemExit(f"\n  {t['id']} has series {t['series']!r}, which is not one of: "
+                             + ", ".join(sorted(names)) + "\n")
+    return live
 
 
 def glyph(status):
@@ -96,62 +127,182 @@ def glyph(status):
     return f'<svg class="glyph" viewBox="0 0 21 16" aria-hidden="true">{rows}</svg>'
 
 
-def counts(entries):
-    c = {"registered": 0, "open": 0, "closed": 0, "withdrawn": 0}
-    for e in entries:
-        c[e.get("status", "registered")] = c.get(e.get("status", "registered"), 0) + 1
-    c["scored"] = sum(1 for e in entries if e.get("result"))
-    return c
+def next_mark(t):
+    pending = [l for l in t["lines"] if l.get("outcome") is None]
+    return min((l["expected_publication"] for l in pending), default=None)
 
 
-def summary(entries):
-    c = counts(entries)
-    line = f'Registered {c["registered"]}. Open {c["open"]}. Closed {c["closed"]}.'
-    if c["withdrawn"]:
-        line += f' Withdrawn {c["withdrawn"]}.'
-    if not c["scored"]:
-        line += " Nothing scored yet; first marks land in October."
+def totals(tracks):
+    lines = sum(len(t["lines"]) for t in tracks)
+    resolved = sum(1 for t in tracks for l in t["lines"] if l.get("outcome") is not None)
+    return lines, resolved
+
+
+def summary(tracks):
+    lines, resolved = totals(tracks)
+    open_tracks = sum(1 for t in tracks if t.get("status") == "open")
+    line = (f'Tracks {len(tracks)}. Lines registered {lines}. Resolved {resolved}. '
+            f'Open {open_tracks}.')
+    if not resolved and tracks:
+        first = min(filter(None, (next_mark(t) for t in tracks)), default=None)
+        if first:
+            line += f' First mark expected {fmt(first)}.'
     return line
 
 
-def ledger_rows(entries):
-    if not entries:
-        return ('<tr><td class="empty" colspan="6">Nothing registered yet. The first entries are '
-                'committed to the public repository from 12&nbsp;September and appear here the moment '
-                'they are. The ledger starts empty because a ledger that starts full should not be '
-                'believed.</td></tr>')
+def ledger_rows(tracks):
+    if not tracks:
+        return ('<tr><td class="empty" colspan="6">Nothing registered yet. The first track is '
+                'committed to the public repository before its first target, and appears here the '
+                'moment it is. The ledger starts empty because a ledger that starts full should '
+                'not be believed.</td></tr>')
     out = ""
-    for e in entries:
-        link = f'{REPO}/blob/main/{e["_file"]}'
-        commit = f'{REPO}/commit/{e["commit"]}' if e.get("commit") else link
-        sched = f' <span class="sched">({e["mark_schedule"]})</span>' if e.get("mark_schedule") else ""
-        st = e.get("status", "registered")
-        label = st.capitalize() + (f' &middot; {e["result"]}' if e.get("result") else "")
+    for t in tracks:
+        # The timestamp of record is the pre-registration commit in the project's own
+        # repository, not whatever commit later put the track on this website.
+        pr = t["provenance"]
+        commit = "https://github.com/" + pr["repository"] + "/commit/" + pr["commit"]
+        st = t.get("status", "registered")
+        benches = ", ".join(b["name"] for b in t["benchmarks"])
+        nm = next_mark(t)
+        resolved = sum(1 for l in t["lines"] if l.get("outcome") is not None)
         out += f'''
           <tr>
-            <td class="claim"><a href="{link}">{e["claim"]}</a></td>
-            <td>{e["series"]}</td>
-            <td class="bench">{e["benchmark"]}</td>
-            <td class="num"><a href="{commit}">{fmt(e["registered_utc"])}</a></td>
-            <td class="num">{fmt(e["next_mark"])}{sched}</td>
-            <td><span class="status s-{st}">{glyph(st)}<span>{label}</span></span></td>
+            <td class="claim"><a href="{t["_page"]}">{t["track"]}</a>
+              <span class="sub">{len(t["lines"])} lines registered, {resolved} resolved</span></td>
+            <td>{t["series"]}</td>
+            <td class="bench">{benches}</td>
+            <td class="num"><a href="{commit}">{fmt(t.get("registered_utc"))}</a></td>
+            <td class="num">{fmt(nm)}</td>
+            <td><span class="status s-{st}">{glyph(st)}<span>{st.capitalize()}</span></span></td>
           </tr>'''
     return out
 
 
-def ledger_table(entries):
+def ledger_table(tracks):
     return f'''<div class="card table-card">
     <div class="table-scroll">
       <table class="ledger">
         <thead>
-          <tr><th>Forecast</th><th>Series</th><th>Benchmark</th>
-              <th>Made</th><th>Next mark</th><th>Status</th></tr>
+          <tr><th>Track</th><th>Series</th><th>Benchmarks</th>
+              <th>Registered</th><th>Next mark</th><th>Status</th></tr>
         </thead>
-        <tbody>{ledger_rows(entries)}
+        <tbody>{ledger_rows(tracks)}
         </tbody>
       </table>
     </div>
   </div>'''
+
+
+def lines_table(t):
+    rows = ""
+    for l in t["lines"]:
+        note = (f'<span class="sub">{l["resolving_note"]}</span>'
+                if l.get("resolving_note") else "")
+        outcome = ("<span class=\"pending\">awaiting bulletin</span>"
+                   if l.get("outcome") is None else num(l["outcome"]))
+        rows += f'''
+          <tr>
+            <td class="num strong">{fmt(l["target_date"])}</td>
+            <td class="num">{num(l["forecast"])}</td>
+            <td class="num soft">{num(l["lower_80"])} to {num(l["upper_80"])}</td>
+            <td class="num soft">{num(l["baseline_naive"])}</td>
+            <td class="num soft">{num(l["baseline_seasonal"])}</td>
+            <td class="num soft">{num(l["baseline_official"])}</td>
+            <td class="num">{fmt(l["expected_publication"])}{note}</td>
+            <td class="num">{outcome}</td>
+          </tr>'''
+    return f'''<div class="card table-card">
+    <div class="table-scroll">
+      <table class="ledger lines">
+        <thead>
+          <tr><th>Target</th><th>Forecast</th><th>80% interval</th>
+              <th>Naive</th><th>Seasonal</th><th>Official</th>
+              <th>Mark expected</th><th>Outcome</th></tr>
+        </thead>
+        <tbody>{rows}
+        </tbody>
+      </table>
+    </div>
+  </div>'''
+
+
+def track_page(t):
+    first = t["lines"][0]
+    claim = (t["claim_form"]
+             .replace("{target}", fmt(first["target_date"]))
+             .replace("{forecast}", num(first["forecast"]))
+             .replace("{lower}", num(first["lower_80"]))
+             .replace("{upper}", num(first["upper_80"])))
+    p = t["provenance"]
+    prov_repo = f'https://github.com/{p["repository"]}'
+    benches = "".join(
+        f'<div class="series-row"><h3>{b["name"]}</h3><p>{b["definition"]}'
+        f'<span class="sub">Edition: {b["edition"]}</span></p></div>'
+        for b in t["benchmarks"])
+    rules = "".join(f"<li>{r}</li>" for r in t["scoring_rule"])
+    sources = "".join(f"<li>{d}</li>" for d in t["data_sources"])
+    return f'''<main>
+<div class="page-head">
+  <div class="wrap">
+    <div class="row"><div><span class="chip">{t["series"]}</span></div></div>
+    <h1>{t["track"]}</h1>
+    <p class="lede">{t["definition"]} Model version {t["model_version"]}, forecast from the
+    {fmt(t["base_bulletin"])} bulletin, headroom {num(t["base_headroom"])}.</p>
+  </div>
+</div>
+
+<section class="band">
+  <div class="wrap">
+  <div class="panel">
+    <p class="kicker">The claim, as registered</p>
+    <p class="claim-quote">{claim}</p>
+    <p class="small">Every line on this track takes that wording with its own target, forecast and
+    interval. The wording is fixed at registration and is never edited.</p>
+  </div>
+
+  <h2>The founding set</h2>
+  {lines_table(t)}
+  <p class="caption">{t["cadence"]}</p>
+  <p class="caption">{t["superseded_versions"]}</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+  <h2>Benchmarks</h2>
+  <div class="series">{benches}</div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+  <h2>Scoring rule</h2>
+  <div class="card"><ol class="rules">{rules}</ol></div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+  <h2>Provenance</h2>
+  <div class="cards c2">
+    <div class="card">
+      <p class="kicker">Source of truth</p>
+      <p>The register file, not this page. {p["note"]}</p>
+      <p class="small mono"><a href="{prov_repo}/blob/{p["commit"]}/{p["register"]}">{p["repository"]} · {p["register"]}</a><br>
+      commit <a href="{prov_repo}/commit/{p["commit"]}">{p["commit"]}</a><br>
+      OSF registration {p["osf_registration"]}</p>
+    </div>
+    <div class="card tint">
+      <p class="kicker">Pre-registration and data</p>
+      <p class="small mono"><a href="{prov_repo}/blob/{p["commit"]}/{p["preregistration"]}">{p["preregistration"]}</a></p>
+      <ul class="ticks">{sources}</ul>
+    </div>
+  </div>
+  </div>
+</section>
+</main>'''
+
 
 # ------------------------------------------------------------------ chrome
 
@@ -180,25 +331,34 @@ def footer():
     <div class="foot-rule"></div>
     <div class="foot">
       <span>walkforward research &middot; foresight not hindsight</span>
-      <span>page built {built} &middot; no accounts, no tracking, no personal data</span>
+      <span>page built {built} &middot; <a href="about.html#privacy">privacy</a></span>
     </div>
   </div>
 </footer>'''
 
 # ------------------------------------------------------------------ pages
 
-def intro():
-    series = "\n".join(
-        f'      <div class="series-row"><h3>{n}</h3><p>{d}</p></div>' for n, d in SERIES)
+def intro(tracks):
+    rows = ""
+    for name, desc in SERIES:
+        n = sum(1 for t in tracks if t["series"] == name)
+        lines = sum(len(t["lines"]) for t in tracks if t["series"] == name)
+        if n:
+            count = (f'<a href="ledger.html">{n} track, {lines} lines</a>' if n == 1
+                     else f'<a href="ledger.html">{n} tracks, {lines} lines</a>')
+        else:
+            count = '<span class="soft">nothing registered yet</span>'
+        rows += (f'      <div class="area-row"><h3>{name}</h3>'
+                 f'<p>{desc}</p><p class="area-count mono">{count}</p></div>\n')
+
     return f'''<div class="hero">
   <div class="wrap">
     <div class="hero-grid">
       <div>
         <p class="kicker">Foresight not hindsight</p>
         <h1>Forecasts with dates on them, scored in public.</h1>
-        <p class="lede">Walkforward Research forecasts British public institutions &mdash; prison
-        capacity, council finances, the public finances, inflation, the shape of towns a generation
-        out. Each forecast is published before the outcome is known and scored afterwards against
+        <p class="lede">Walkforward Research forecasts British public institutions across five
+        areas. Each forecast is published before the outcome is known and scored afterwards against
         the official or market number it set out to beat.</p>
       </div>
       <div class="hero-mark">{HERO_STAIR}</div>
@@ -209,7 +369,17 @@ def intro():
 <main class="wrap">
 <section class="band">
   <div class="section-head">
-    <h2>What we do</h2>
+    <h2>What we forecast</h2>
+    <p>Five areas, one method. Anything may enter an area if it can be forecast in advance and
+    scored on a fixed date against a number somebody official has already published.</p>
+  </div>
+  <div class="areas">
+{rows}  </div>
+</section>
+
+<section class="band">
+  <div class="section-head">
+    <h2>How it works</h2>
     <p>Three steps, in this order, every time. The order is the whole point: once a forecast is
     registered, there is nowhere left to hide.</p>
   </div>
@@ -218,8 +388,7 @@ def intro():
       <p class="kicker">First</p>
       <h3>Pick a question with a date on it</h3>
       <p>Questions where a decision turns on a number that does not exist yet, and where an official
-      body has already put its own number on the record. Those are the ones worth forecasting,
-      because there is something to be measured against.</p>
+      body has already put its own number on the record.</p>
     </div>
     <div class="card tint">
       <p class="kicker">Then</p>
@@ -232,7 +401,7 @@ def intro():
       <p class="kicker">Afterwards</p>
       <h3>Publish the mark either way</h3>
       <p>Scored on the fixed date against the number it set out to beat. Hits and misses alike.
-      Nothing is edited, nothing is quietly dropped, and the misses stay on the record.</p>
+      Nothing is edited and nothing is quietly dropped.</p>
     </div>
   </div>
 </section>
@@ -247,20 +416,9 @@ def intro():
       <li>Every claim on this site links to a registered entry, or it is not made</li>
     </ul>
   </div>
-</section>
-
-<section class="band">
-  <div class="section-head">
-    <h2>The series</h2>
-    <p>Four lines of work, one method. Anything may enter if it can be forecast in advance and
-    scored on a fixed date; anything may leave once it has been scored honestly.</p>
-  </div>
-  <div class="series">
-{series}
-  </div>
-  <p class="caption">What has been registered so far, and how each entry stands, is on
+  <p class="measure">What has been registered so far, and how each line stands, is on
   <a href="ledger.html">the ledger</a>. The rules it runs on are set out in the
-  <a href="method.html">method</a>.</p>
+  <a href="method.html">method</a>, and the written work is in <a href="papers.html">papers</a>.</p>
 </section>
 </main>'''
 
@@ -271,9 +429,9 @@ def ledger_page(entries):
   <div class="wrap">
     <div class="row"><div><span class="chip">The ledger</span></div></div>
     <h1>Every forecast, its timestamp, and its mark</h1>
-    <p class="lede">Append-only. Entries are added before the outcome is known and never edited
-    afterwards. The ledger opens with the prison population entry; the rest appear as they are
-    registered.</p>
+    <p class="lede">Append-only. Every line is registered before the outcome is known and never
+    edited afterwards. The ledger opens with the prison headroom track; the rest appear as they
+    are registered.</p>
   </div>
 </div>
 
@@ -281,10 +439,9 @@ def ledger_page(entries):
   <div class="wrap">
   <p class="record-summary mono">{summary(entries)}</p>
   {ledger_table(entries)}
-  <p class="caption">Every row links to the entry in the <a href="{REPO}">public repository</a> and to
-  the commit that registered it. <span class="mono">Made</span> is the commit date;
-  <span class="mono">Benchmark</span> names the publisher and vintage; the claim is the exact
-  sentence registered, unedited. <a href="method.html#how-it-works">How the ledger works</a>.</p>
+  <p class="caption">Each track opens onto its own lines, their benchmarks and the rule they will be
+  scored by. <span class="mono">Registered</span> links to the commit that timestamped it.
+  <a href="method.html#how-it-works">How the ledger works</a>.</p>
   </div>
 </section>
 </main>'''
@@ -419,31 +576,62 @@ def method():
 </main>'''
 
 
-def notes():
-    return '''<main>
+def papers():
+    data = json.load(open(os.path.join(HERE, "data", "papers.json")))
+    items = data.get("papers", [])
+    published = [p for p in items if p.get("pdf")]
+    forthcoming = [p for p in items if not p.get("pdf")]
+
+    def card(p, live):
+        meta = []
+        if p.get("series"):
+            meta.append(p["series"])
+        if live:
+            if p.get("date"):
+                meta.append(fmt(p["date"]))
+            if p.get("pages"):
+                meta.append(f'{p["pages"]} pages')
+        else:
+            meta.append(p.get("status", "in preparation"))
+        title = (f'<a href="papers/{p["pdf"]}">{p["title"]}</a>' if live else p["title"])
+        link = (f'<p class="paper-link"><a href="papers/{p["pdf"]}" class="mono">Download the PDF</a></p>'
+                if live else "")
+        track = (f'<p class="paper-link"><a href="{p["related_track"]}.html" class="mono">'
+                 f'The forecasts behind it</a></p>' if p.get("related_track") else "")
+        return f'''      <article class="card paper{"" if live else " paper-soon"}">
+        <p class="note-date">{" &middot; ".join(meta)}</p>
+        <h3>{title}</h3>
+        <p>{p["standfirst"]}</p>
+        {link}{track}
+      </article>'''
+
+    body = ""
+    if published:
+        body += ('<div class="papers">' +
+                 "\n".join(card(p, True) for p in published) + '</div>')
+    else:
+        body += '''<div class="panel">
+      <p class="kicker">Nothing published yet</p>
+      <p>The first paper is in preparation. Papers appear here as PDFs when they are finished, and
+      each one links to the forecasts on the ledger that it rests on.</p>
+    </div>'''
+    if forthcoming:
+        body += ('<h2 class="forthcoming-head">In preparation</h2><div class="papers">' +
+                 "\n".join(card(p, False) for p in forthcoming) + '</div>')
+
+    return f'''<main>
 <div class="page-head">
   <div class="wrap">
-    <div class="row"><div><span class="chip">Notes</span></div></div>
-    <h1>Occasional write-ups</h1>
-    <p class="lede">Method, results, and the entries that went badly. Published when there is
-    something to say, not on a schedule.</p>
+    <div class="row"><div><span class="chip">Papers</span></div></div>
+    <h1>The written work</h1>
+    <p class="lede">Papers are published when they are finished, not on a schedule. Each one states
+    what was forecast, what happened, and what the method got wrong as well as right.</p>
   </div>
 </div>
 
 <section class="band">
   <div class="wrap">
-  <article class="card note-card">
-    <p class="note-date">September 2026</p>
-    <h2>Before the first entry</h2>
-    <p>This site went up before there was anything on it, which is deliberate. A record only means
-    something if the page existed before the results did &mdash; otherwise there is no way to know
-    which results were quietly left off. So the ledger starts empty, the
-    <a href="method.html#how-it-works">scoring rules are written down first</a>, and the first
-    entries are registered in the public repository from September.</p>
-    <p>From then on the deal is simple: every forecast is timestamped before the outcome is known,
-    scored against the number it set out to beat, and never edited afterwards. Some will be wrong.
-    Those stay up too &mdash; they are the point.</p>
-  </article>
+{body}
   </div>
 </section>
 </main>'''
@@ -463,27 +651,26 @@ def about():
 
 <section class="band">
   <div class="wrap">
-  <div class="cards c3">
-    <div class="card">
-      <p class="kicker">Standing</p>
-      <h3>A personal research project</h3>
-      <p>Incorporation is in progress. The company number and registered address will appear here
-      when it completes.</p>
-      <p>Until then this is a personal research project, independent of any employer or client, and
-      should be read as one.</p>
-    </div>
-    <div class="card tint">
-      <p class="kicker">Contact</p>
-      <h3>Enquiries</h3>
-      <p><a href="mailto:enquiries@{DOMAIN}" class="mono">enquiries@{DOMAIN}</a></p>
-      <p>It reaches a person. There is no form and no mailing list.</p>
-    </div>
-    <div class="card">
-      <p class="kicker">Privacy</p>
-      <h3>Nothing is collected</h3>
-      <p>No accounts, no tracking beyond simple page counts, no personal data. The site is static
-      files; there is nothing to sign up for and nothing watching you read it.</p>
-    </div>
+  <div class="panel">
+    <p class="kicker">Contact</p>
+    <h3>Enquiries</h3>
+    <p><a href="mailto:enquiries@{DOMAIN}" class="mono">enquiries@{DOMAIN}</a></p>
+  </div>
+  </div>
+</section>
+
+<section class="band" id="privacy">
+  <div class="wrap">
+  <h2>Privacy</h2>
+  <div class="measure">
+    <p>This site is a set of static files. It sets no cookies, has no accounts and no mailing list,
+    and asks you for nothing.</p>
+    <p>The host counts page views in aggregate so we know roughly how many people read something.
+    That count uses no cookies and does not identify anyone.</p>
+    <p>If you email <a href="mailto:enquiries@{DOMAIN}" class="mono">enquiries@{DOMAIN}</a>, your
+    message and address are used to reply to you and for nothing else. They are not sold, shared or
+    added to any list. Ask and they will be deleted.</p>
+    <p class="small">Last updated 6 September 2026.</p>
   </div>
   </div>
 </section>
@@ -499,8 +686,8 @@ PAGES = {
                     "Walk-forward scoring, pre-registration, and how entries are marked, withdrawn and superseded.", method),
     "ledger.html": ("ledger", "The ledger &mdash; Walkforward Research",
                     "Every forecast, its timestamp and its mark, linked to the entry and the commit that registered it.", ledger_page),
-    "notes.html": ("notes", "Notes &mdash; Walkforward Research",
-                   "Occasional write-ups on method and results, published when there is something to say.", notes),
+    "papers.html": ("papers", "Papers &mdash; Walkforward Research",
+                    "Published papers, each stating what was forecast, what happened, and what the method got wrong as well as right.", papers),
     "about.html": ("about", "About &mdash; Walkforward Research",
                    "What Walkforward Research is, how to reach a person, and what this site does and does not collect.", about),
 }
@@ -509,10 +696,12 @@ PAGES = {
 def build():
     os.makedirs(OUT, exist_ok=True)
     entries = load()
+    for t in entries:
+        PAGES[t["_page"]] = ("track", f'{t["track"]} &mdash; Walkforward Research',
+                             f'{t["track"]}: the registered lines, their benchmarks and the rule they are scored by.',
+                             (lambda tt: (lambda: track_page(tt)))(t))
     for fname, (key, title, desc, fn) in PAGES.items():
-        body = fn(entries) if key == "ledger" else fn()
-        if key == "intro":
-            body = intro()
+        body = fn(entries) if key in ("ledger", "intro") else fn()
         html = f'''<!doctype html>
 <html lang="en-GB">
 <head>
@@ -532,6 +721,15 @@ def build():
 </html>
 '''
         open(os.path.join(OUT, fname), "w").write(html)
+    src_papers = os.path.join(HERE, "papers")
+    if os.path.isdir(src_papers):
+        dst = os.path.join(OUT, "papers")
+        os.makedirs(dst, exist_ok=True)
+        for f in os.listdir(src_papers):
+            if f.startswith("."):
+                continue
+            with open(os.path.join(src_papers, f), "rb") as r, open(os.path.join(dst, f), "wb") as w:
+                w.write(r.read())
     for asset in ("styles.css", "favicon.svg"):
         src = os.path.join(HERE, asset)
         if os.path.exists(src):
