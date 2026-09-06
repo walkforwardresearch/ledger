@@ -1,0 +1,15 @@
+{
+  "id": "energy-passthrough-oct-cpi",
+  "claim": "Energy pass-through will add [x]pp to October CPI",
+  "series": "Against consensus",
+  "benchmark": "Sell-side consensus, Reuters poll",
+  "planned_registration": "2026-09-17",
+  "registered_utc": null,
+  "commit": null,
+  "next_mark": "2026-11-18",
+  "mark_schedule": "monthly",
+  "status": "registered",
+  "result": null,
+  "withdrawn_reason": null,
+  "supersedes": null
+}

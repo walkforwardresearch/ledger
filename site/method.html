@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Method &mdash; Walkforward Research</title>
+<meta name="description" content="Walk-forward scoring, pre-registration, and how entries are marked, withdrawn and superseded.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap site-bar">
+    <a class="brand" href="index.html">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
+        <rect x="0" y="2"  width="15" height="8" fill="var(--block)"/><rect x="16" y="2"  width="8" height="8" fill="var(--accent)"/>
+        <rect x="4" y="12" width="15" height="8" fill="var(--block)"/><rect x="20" y="12" width="8" height="8" fill="var(--accent)"/>
+        <rect x="8" y="22" width="15" height="8" fill="var(--block)"/><rect x="24" y="22" width="8" height="8" fill="var(--accent)"/>
+      </svg>
+      <span class="wordmark">walk<span class="fwd">forward</span><span class="co">Research</span></span>
+    </a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="index.html">introduction</a>
+      <a href="method.html" aria-current="page">method</a>
+      <a href="ledger.html">the ledger</a>
+      <a href="notes.html">notes</a>
+      <a href="about.html">about</a>
+    </nav>
+  </div>
+</header>
+<main>
+<div class="page-head">
+  <div class="wrap">
+    <div class="row"><div><span class="chip">Method</span></div></div>
+    <h1>Trained on the past, scored on what it had never seen</h1>
+    <p class="lede">The rules are written down before the forecast, so they cannot drift afterwards
+    to flatter the result.</p>
+  </div>
+</div>
+
+<section class="band">
+  <div class="wrap">
+  <div class="section-head">
+    <h2>What walk-forward scoring is</h2>
+    <p>Train a model on the past. Test it on the next slice of time &mdash; data it could not have
+    seen. Step forward and repeat. Every score here is produced that way: the model makes its call
+    the way it would on a Monday morning, before the answer exists.</p>
+  </div>
+  <div class="split">
+    <div class="card diagram-card">
+      <p class="kicker">Walk-forward validation</p>
+      <svg class="stair" viewBox="0 0 470 150" role="img" aria-label="Each row trains on a block of past data then tests on the next slice it has never seen, stepping forward in time">
+          <rect x="6"   y="6"   width="215" height="30" fill="var(--block)"/>
+          <rect x="227" y="6"   width="64"  height="30" fill="var(--accent)"/>
+          <rect x="66"  y="54"  width="215" height="30" fill="var(--block)"/>
+          <rect x="287" y="54"  width="64"  height="30" fill="var(--accent)"/>
+          <rect x="126" y="102" width="215" height="30" fill="var(--block)"/>
+          <rect x="347" y="102" width="64"  height="30" fill="var(--accent)"/>
+        </svg>
+      <div class="legend">
+        <span><span class="key train"></span>data the model learned from</span>
+        <span><span class="key test"></span>the slice it was tested on, never seen in training</span>
+      </div>
+      <p class="caption">Train on the past, test on the next slice, step forward, repeat. The model
+      never sees the future.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <h3>Pre-registered</h3>
+        <ul class="ticks">
+          <li>Target, metric, benchmark and horizon written down first</li>
+          <li>The bar is set while it can still be missed</li>
+        </ul>
+      </div>
+      <div class="card tint">
+        <h3>Published, then scored</h3>
+        <ul class="ticks">
+          <li>Forecasts out before the outcome, marks up after</li>
+          <li>Hits and misses alike, and the ledger is append-only</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Domain-agnostic</h3>
+        <ul class="ticks">
+          <li>One harness scores public finances, capacity and demography</li>
+          <li>Shared machinery is what makes these one body of work</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+  <div class="section-head">
+    <h2>Why backtests are not evidence</h2>
+    <p>A model tested on data it was fitted to will always look good &mdash; the exam was written
+    after seeing the answers. Retrospective accuracy is easy to manufacture, and most published
+    claims of it are worthless as evidence.</p>
+  </div>
+  <div class="panel invert">
+    <p class="kicker">The standard</p>
+    <h3>The only honest test is the one where the future was still the future</h3>
+    <ul class="ticks">
+      <li>Every claim here links to a registered entry, or it is not made</li>
+      <li>That discipline is unglamorous, and it is the whole of the method</li>
+    </ul>
+  </div>
+  </div>
+</section>
+
+<section class="band" id="how-it-works">
+  <div class="wrap">
+  <div class="section-head">
+    <h2>How the ledger works</h2>
+    <p>Registration, marking and withdrawal, in the order they happen.</p>
+  </div>
+  <div class="cards c3">
+    <div class="card">
+      <p class="kicker">Registration</p>
+      <h3>Before the outcome exists</h3>
+      <ul class="ticks">
+        <li>The claim, the benchmark and its value on that day, the data used, the marking dates
+        and the scoring rule, committed as a file</li>
+        <li>The commit is the timestamp, and because the repository is public the push is recorded
+        independently, so the date can be checked without taking our word for it</li>
+      </ul>
+    </div>
+    <div class="card tint">
+      <p class="kicker">Marking</p>
+      <h3>Against the number it set out to beat</h3>
+      <ul class="ticks">
+        <li>Marks are added by scripts from the source data as it is published</li>
+        <li>The benchmark names the publisher and the vintage, not just the series</li>
+        <li>Marks will be computed with the conventions in the Bank of England&rsquo;s published
+        forecast-evaluation package, so the arithmetic is not ours to argue about</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="kicker">Afterwards</p>
+      <h3>Nothing is edited or deleted</h3>
+      <ul class="ticks">
+        <li>A forecast wrong in construction is withdrawn with a reason and stays on the ledger</li>
+        <li>A change of view is a new entry that supersedes the old one, and both are scored</li>
+        <li>The record counts everything, including withdrawn entries and misses</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p class="kicker">Status</p>
+    <div class="statuses">
+      <span class="status s-registered"><svg class="glyph" viewBox="0 0 21 16" aria-hidden="true"><rect x="0" y="1" width="9" height="4" fill="var(--block)"/><rect x="10" y="1" width="5" height="4" fill="var(--block)"/><rect x="3" y="6" width="9" height="4" fill="var(--block)"/><rect x="13" y="6" width="5" height="4" fill="var(--block)"/><rect x="6" y="11" width="9" height="4" fill="var(--block)"/><rect x="16" y="11" width="5" height="4" fill="var(--block)"/></svg><span><strong>Registered</strong> &mdash; no marks yet</span></span>
+      <span class="status s-open"><svg class="glyph" viewBox="0 0 21 16" aria-hidden="true"><rect x="0" y="1" width="9" height="4" fill="var(--block)"/><rect x="10" y="1" width="5" height="4" fill="var(--accent)"/><rect x="3" y="6" width="9" height="4" fill="var(--block)"/><rect x="13" y="6" width="5" height="4" fill="var(--block)"/><rect x="6" y="11" width="9" height="4" fill="var(--block)"/><rect x="16" y="11" width="5" height="4" fill="var(--block)"/></svg><span><strong>Open</strong> &mdash; marks arriving</span></span>
+      <span class="status s-closed"><svg class="glyph" viewBox="0 0 21 16" aria-hidden="true"><rect x="0" y="1" width="9" height="4" fill="var(--block)"/><rect x="10" y="1" width="5" height="4" fill="var(--accent)"/><rect x="3" y="6" width="9" height="4" fill="var(--block)"/><rect x="13" y="6" width="5" height="4" fill="var(--accent)"/><rect x="6" y="11" width="9" height="4" fill="var(--block)"/><rect x="16" y="11" width="5" height="4" fill="var(--accent)"/></svg><span><strong>Closed</strong> &mdash; final mark landed</span></span>
+      <span class="status s-withdrawn"><svg class="glyph" viewBox="0 0 21 16" aria-hidden="true"><rect x="0" y="1" width="9" height="4" fill="var(--block)"/><rect x="10" y="1" width="5" height="4" fill="var(--block)"/><rect x="3" y="6" width="9" height="4" fill="var(--block)"/><rect x="13" y="6" width="5" height="4" fill="var(--block)"/><rect x="6" y="11" width="9" height="4" fill="var(--block)"/><rect x="16" y="11" width="5" height="4" fill="var(--block)"/><line x1="0" y1="16" x2="21" y2="0" stroke="var(--muted)" stroke-width="1.5"/></svg><span><strong>Withdrawn</strong> &mdash; kept, with a reason</span></span>
+    </div>
+    <p class="small">A marked entry also carries the headline word: beat, missed or tied.</p>
+  </div>
+  </div>
+</section>
+</main>
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-rule"></div>
+    <div class="foot">
+      <span>walkforward research &middot; foresight not hindsight</span>
+      <span>page built 6 Sep 2026 11:02 UTC &middot; no accounts, no tracking, no personal data</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

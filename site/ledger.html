@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The ledger &mdash; Walkforward Research</title>
+<meta name="description" content="Every forecast, its timestamp and its mark, linked to the entry and the commit that registered it.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site">
+  <div class="wrap site-bar">
+    <a class="brand" href="index.html">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
+        <rect x="0" y="2"  width="15" height="8" fill="var(--block)"/><rect x="16" y="2"  width="8" height="8" fill="var(--accent)"/>
+        <rect x="4" y="12" width="15" height="8" fill="var(--block)"/><rect x="20" y="12" width="8" height="8" fill="var(--accent)"/>
+        <rect x="8" y="22" width="15" height="8" fill="var(--block)"/><rect x="24" y="22" width="8" height="8" fill="var(--accent)"/>
+      </svg>
+      <span class="wordmark">walk<span class="fwd">forward</span><span class="co">Research</span></span>
+    </a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="index.html">introduction</a>
+      <a href="method.html">method</a>
+      <a href="ledger.html" aria-current="page">the ledger</a>
+      <a href="notes.html">notes</a>
+      <a href="about.html">about</a>
+    </nav>
+  </div>
+</header>
+<main>
+<div class="page-head">
+  <div class="wrap">
+    <div class="row"><div><span class="chip">The ledger</span></div></div>
+    <h1>Every forecast, its timestamp, and its mark</h1>
+    <p class="lede">Append-only. Entries are added before the outcome is known and never edited
+    afterwards. The ledger opens with the prison population entry; the rest appear as they are
+    registered.</p>
+  </div>
+</div>
+
+<section class="band">
+  <div class="wrap">
+  <p class="record-summary mono">Registered 0. Open 0. Closed 0. Nothing scored yet; first marks land in October.</p>
+  <div class="card table-card">
+    <div class="table-scroll">
+      <table class="ledger">
+        <thead>
+          <tr><th>Forecast</th><th>Series</th><th>Benchmark</th>
+              <th>Made</th><th>Next mark</th><th>Status</th></tr>
+        </thead>
+        <tbody><tr><td class="empty" colspan="6">Nothing registered yet. The first entries are committed to the public repository from 12&nbsp;September and appear here the moment they are. The ledger starts empty because a ledger that starts full should not be believed.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p class="caption">Every row links to the entry in the <a href="https://github.com/walkforwardresearch/ledger">public repository</a> and to
+  the commit that registered it. <span class="mono">Made</span> is the commit date;
+  <span class="mono">Benchmark</span> names the publisher and vintage; the claim is the exact
+  sentence registered, unedited. <a href="method.html#how-it-works">How the ledger works</a>.</p>
+  </div>
+</section>
+</main>
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-rule"></div>
+    <div class="foot">
+      <span>walkforward research &middot; foresight not hindsight</span>
+      <span>page built 6 Sep 2026 11:02 UTC &middot; no accounts, no tracking, no personal data</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
