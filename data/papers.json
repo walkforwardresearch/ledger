@@ -1,14 +1,18 @@
 {
   "papers": [
     {
-      "id": "moj-projection-scorecard-2026",
-      "title": "How good have the MoJ prison population projections been?",
-      "standfirst": "Every published projection edition scored against what actually happened, walk-forward, with the error by horizon and by edition.",
+      "id": "justice-held-population-2026-01",
+      "ref": "Paper 2026/01",
+      "title": "The justice-held population, England and Wales",
+      "standfirst": "A quarterly composite series of the people whose liberty is conditioned by the criminal justice system: in prison, under supervision, or waiting for a courtroom. It has grown by a quarter since 2019, and almost all of the growth is in the queue.",
       "series": "Public services",
-      "date": "",
-      "status": "in preparation",
-      "pdf": null,
-      "pages": null,
+      "date": "2026-09-05",
+      "status": "published",
+      "version": "1.0",
+      "licence": "CC BY 4.0",
+      "doi": "10.5281/zenodo.22536356",
+      "pdf": "justice-held-population-2026-01.pdf",
+      "pages": 4,
       "related_track": "prison-headroom"
     }
   ]

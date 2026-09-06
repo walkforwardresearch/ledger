@@ -409,3 +409,4 @@ ol.rules li{font-size:.95rem;color:var(--ink)}
 .area-count{white-space:nowrap}
 .area-row{grid-template-columns:minmax(0,14rem) minmax(0,1fr) max-content}
 @media (max-width:52rem){.area-row{grid-template-columns:1fr}}
+.paper-stamp{margin:.7rem 0 0;font-size:.72rem;letter-spacing:.06em;color:var(--faint)}

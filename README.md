@@ -79,5 +79,11 @@ The ledger stays at `/` and no URL breaks.
 ```
 
 An entry with `"pdf": null` is listed under **In preparation** with no download link. Fill in `pdf`,
-`date` and `pages` and it moves up into the published list automatically. `related_track` is the
-`id` of a track file and adds a link through to the forecasts behind the paper.
+`date` and `pages` and it moves up into the published list automatically.
+
+Optional fields: `ref` (e.g. `Paper 2026/01`), `version`, `licence`, `doi` (bare, without the
+`https://doi.org/` prefix — the link is built for you) and `related_track` (the `id` of a track
+file, which adds a "Related forecasts" link).
+
+The PDF itself is typeset from `paper/paper.html` and rendered with `paper/render.js`. Edit the
+HTML, run `node render.js`, and copy the output into `papers/`.

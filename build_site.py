@@ -583,7 +583,7 @@ def papers():
     forthcoming = [p for p in items if not p.get("pdf")]
 
     def card(p, live):
-        meta = []
+        meta = [p["ref"]] if p.get("ref") else []
         if p.get("series"):
             meta.append(p["series"])
         if live:
@@ -594,15 +594,25 @@ def papers():
         else:
             meta.append(p.get("status", "in preparation"))
         title = (f'<a href="papers/{p["pdf"]}">{p["title"]}</a>' if live else p["title"])
-        link = (f'<p class="paper-link"><a href="papers/{p["pdf"]}" class="mono">Download the PDF</a></p>'
-                if live else "")
-        track = (f'<p class="paper-link"><a href="{p["related_track"]}.html" class="mono">'
-                 f'The forecasts behind it</a></p>' if p.get("related_track") else "")
+        foot = []
+        if live:
+            foot.append(f'<a href="papers/{p["pdf"]}" class="mono">Download the PDF</a>')
+        if p.get("doi"):
+            foot.append(f'<a href="https://doi.org/{p["doi"]}" class="mono">doi:{p["doi"]}</a>')
+        if p.get("related_track"):
+            foot.append(f'<a href="{p["related_track"]}.html" class="mono">Related forecasts</a>')
+        stamp = ""
+        if live and (p.get("version") or p.get("licence")):
+            bits = [b for b in (f'Version {p["version"]}' if p.get("version") else None,
+                                p.get("licence")) if b]
+            stamp = f'<p class="paper-stamp mono">{" &middot; ".join(bits)}</p>'
+        links = (f'<p class="paper-link">{" &nbsp;&middot;&nbsp; ".join(foot)}</p>'
+                 if foot else "")
         return f'''      <article class="card paper{"" if live else " paper-soon"}">
         <p class="note-date">{" &middot; ".join(meta)}</p>
         <h3>{title}</h3>
         <p>{p["standfirst"]}</p>
-        {link}{track}
+        {stamp}{links}
       </article>'''
 
     body = ""
