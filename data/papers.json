@@ -13,6 +13,26 @@
       "doi": "10.5281/zenodo.22536356",
       "pdf": "justice-held-population-2026-01.pdf",
       "pages": 4,
+      "related_track": "prison-headroom",
+      "authors": [
+        "Hamish Paton"
+      ]
+    },
+    {
+      "id": "moj-projection-scorecard-2026-02",
+      "ref": "Paper 2026/02",
+      "title": "How good are the Ministry of Justice prison population projections?",
+      "standfirst": "Eighteen editions since 2008, every central projection scored against what happened at every horizon. The projections have been too high at every horizon, and a forecaster who assumed no change would have beaten them on identical targets.",
+      "series": "Public services",
+      "authors": [
+        "Hamish Paton"
+      ],
+      "date": "2026-09-04",
+      "status": "published",
+      "version": "1.0",
+      "licence": "CC BY 4.0",
+      "pdf": "moj-projection-scorecard-2026-02.pdf",
+      "pages": 9,
       "related_track": "prison-headroom"
     }
   ]

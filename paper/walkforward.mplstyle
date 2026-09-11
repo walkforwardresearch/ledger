@@ -1,0 +1,48 @@
+# Walkforward Research figure style.
+# Drop this in prisoncap and call plt.style.use('walkforward.mplstyle') before plotting.
+# Then no post-processing is needed: charts come out in the house palette, and the
+# title is left off because the paper's caption carries it.
+#
+#   accent  #21645A   the series the chart is about
+#   grey    #7E8C90   the comparison series
+#   deep    #1B262A   outturn, emphasis, text
+#   block   #A6B2B6   background series
+#   line    #C3CBCC   rules and grid
+#   muted   #5C6A6C   labels
+
+axes.prop_cycle:      cycler('color', ['21645A', '7E8C90', '1B262A', 'A6B2B6', '4FAD97'])
+axes.edgecolor:       C3CBCC
+axes.labelcolor:      17211F
+axes.titlesize:       0            # titles live in the caption, not the figure
+axes.labelsize:       10
+axes.spines.top:      False
+axes.spines.right:    False
+axes.grid:            False
+axes.facecolor:       white
+
+figure.facecolor:     white
+figure.dpi:           200
+savefig.dpi:          200
+savefig.facecolor:    white
+savefig.bbox:         tight
+savefig.pad_inches:   0.02
+
+font.family:          sans-serif
+font.sans-serif:      DejaVu Sans
+font.size:            10
+
+text.color:           17211F
+xtick.color:          5C6A6C
+ytick.color:          5C6A6C
+xtick.labelcolor:     17211F
+ytick.labelcolor:     17211F
+xtick.direction:      out
+ytick.direction:      out
+xtick.major.size:     3
+ytick.major.size:     3
+
+legend.frameon:       False
+legend.fontsize:      9
+
+lines.linewidth:      1.6
+patch.edgecolor:      none

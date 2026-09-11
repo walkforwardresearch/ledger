@@ -28,6 +28,15 @@ NAV = [("index.html", "intro", "introduction"),
        ("papers.html", "papers", "papers"),
        ("about.html", "about", "about")]
 
+# The server strips .html, so every link uses the clean form. These are the URLs that
+# get handed to people, so they should be the ones on the page.
+URL = {"intro": "/", "method": "/method", "ledger": "/ledger",
+       "papers": "/papers", "about": "/about"}
+
+
+def url(key):
+    return URL.get(key, "/" + key)
+
 MARK = '''<svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
         <rect x="0" y="2"  width="15" height="8" fill="var(--block)"/><rect x="16" y="2"  width="8" height="8" fill="var(--accent)"/>
         <rect x="4" y="12" width="15" height="8" fill="var(--block)"/><rect x="20" y="12" width="8" height="8" fill="var(--accent)"/>
@@ -101,6 +110,7 @@ def load():
         t = json.load(open(path))
         t["_file"] = os.path.relpath(path, HERE)
         t["_page"] = t["id"] + ".html"
+        t["_url"] = "/" + t["id"]
         if PREVIEW and not t.get("registered_utc") and t.get("launch_entry"):
             t["registered_utc"], t["commit"] = t["planned_registration"], "0000000"
         out.append(t)
@@ -109,6 +119,7 @@ def load():
     names = {n for n, _ in SERIES}
     for t in live:
         check(t)
+        t["status"] = track_status(t)
         if t["series"] not in names:
             raise SystemExit(f"\n  {t['id']} has series {t['series']!r}, which is not one of: "
                              + ", ".join(sorted(names)) + "\n")
@@ -127,6 +138,17 @@ def glyph(status):
     return f'<svg class="glyph" viewBox="0 0 21 16" aria-hidden="true">{rows}</svg>'
 
 
+def track_status(t):
+    """Derived, so the table can never contradict itself. Registered until a mark lands,
+    open while marks are arriving, closed when every line has resolved."""
+    if t.get("withdrawn_reason"):
+        return "withdrawn"
+    done = [l for l in t["lines"] if l.get("outcome") is not None]
+    if not done:
+        return "registered"
+    return "closed" if len(done) == len(t["lines"]) else "open"
+
+
 def next_mark(t):
     pending = [l for l in t["lines"] if l.get("outcome") is None]
     return min((l["expected_publication"] for l in pending), default=None)
@@ -140,13 +162,11 @@ def totals(tracks):
 
 def summary(tracks):
     lines, resolved = totals(tracks)
-    open_tracks = sum(1 for t in tracks if t.get("status") == "open")
-    line = (f'Tracks {len(tracks)}. Lines registered {lines}. Resolved {resolved}. '
-            f'Open {open_tracks}.')
-    if not resolved and tracks:
+    line = f'Tracks {len(tracks)}. Lines registered {lines}. Resolved {resolved}.'
+    if tracks:
         first = min(filter(None, (next_mark(t) for t in tracks)), default=None)
         if first:
-            line += f' First mark expected {fmt(first)}.'
+            line += (f' {"First" if not resolved else "Next"} mark expected {fmt(first)}.')
     return line
 
 
@@ -162,13 +182,13 @@ def ledger_rows(tracks):
         # repository, not whatever commit later put the track on this website.
         pr = t["provenance"]
         commit = "https://github.com/" + pr["repository"] + "/commit/" + pr["commit"]
-        st = t.get("status", "registered")
+        st = track_status(t)
         benches = ", ".join(b["name"] for b in t["benchmarks"])
         nm = next_mark(t)
         resolved = sum(1 for l in t["lines"] if l.get("outcome") is not None)
         out += f'''
           <tr>
-            <td class="claim"><a href="{t["_page"]}">{t["track"]}</a>
+            <td class="claim"><a href="{t["_url"]}">{t["track"]}</a>
               <span class="sub">{len(t["lines"])} lines registered, {resolved} resolved</span></td>
             <td>{t["series"]}</td>
             <td class="bench">{benches}</td>
@@ -194,9 +214,79 @@ def ledger_table(tracks):
   </div>'''
 
 
-def lines_table(t):
+def exposure(t):
+    """How much of the track is a directional call. Computed, so it stays true as lines are
+    added and cannot drift from the numbers in the table."""
+    lines = t["lines"]
+    out = {"n": len(lines), "naive": 0, "seasonal": 0}
+    for l in lines:
+        lo, hi = l["lower_80"], l["upper_80"]
+        for key, field in (("naive", "baseline_naive"), ("seasonal", "baseline_seasonal")):
+            v = l.get(field)
+            if v is not None and not (lo <= v <= hi):
+                out[key] += 1
+    return out
+
+
+def words(n):
+    return {1: "One", 2: "Two", 3: "Three", 4: "Four", 5: "Five", 6: "Six", 7: "Seven",
+            8: "Eight", 9: "Nine", 10: "Ten"}.get(n, str(n))
+
+
+def exposure_note(t):
+    e = exposure(t)
+    both = min(e["naive"], e["seasonal"])
+    if not both:
+        return ""
+    first, last = t["lines"][0], t["lines"][-1]
+    authored = t.get("exposure_note", "")
+    return f'''<div class="panel">
+    <p class="kicker">What this track is risking</p>
+    <p>This is a directional call, not a hedge. The forecast rises from
+    {num(t["base_headroom"])} at the base bulletin to {num(max(l["forecast"] for l in t["lines"]))}
+    at its peak, while the naive baseline stays flat at {num(first["baseline_naive"])} throughout.
+    {words(both)} of the {words(e["n"]).lower()} registered lines place their whole 80% interval clear of both
+    baseline values, so if headroom simply stays where it is, those lines miss and breach their
+    intervals as well.</p>
+    {f"<p>{authored}</p>" if authored else ""}
+    <p class="small">That is the point of registering it. A forecast that could not be wrong
+    against the obvious alternative would not be worth scoring.</p>
+  </div>'''
+
+
+def by_horizon(t):
+    """Once the weekly cadence has run for a while a flat table stops being readable. Lines
+    collapse into horizon buckets here; the register CSV always holds every line."""
+    weekly = [l for l in t["lines"] if l.get("group") != "founding"]
+    if not weekly:
+        return ""
+    buckets = {}
+    for l in weekly:
+        b = buckets.setdefault(l["horizon_weeks"], {"n": 0, "done": 0, "err": []})
+        b["n"] += 1
+        if l.get("outcome") is not None:
+            b["done"] += 1
+            if l.get("error") is not None:
+                b["err"].append(abs(l["error"]))
     rows = ""
-    for l in t["lines"]:
+    for h in sorted(buckets):
+        b = buckets[h]
+        mae = f'{sum(b["err"]) / len(b["err"]):,.0f}' if b["err"] else "&mdash;"
+        rows += (f'<tr><td class="num strong">{h} weeks</td><td class="num">{b["n"]}</td>'
+                 f'<td class="num">{b["done"]}</td><td class="num">{mae}</td></tr>')
+    return f'''<h2>Weekly forecasts, by horizon</h2>
+  <div class="card table-card"><div class="table-scroll">
+    <table class="ledger lines">
+      <thead><tr><th>Horizon</th><th>Lines</th><th>Resolved</th><th>Mean absolute error</th></tr></thead>
+      <tbody>{rows}</tbody>
+    </table>
+  </div></div>
+  <p class="caption">Every individual weekly line, resolved or not, is in the register file.</p>'''
+
+
+def lines_table(t, only=None):
+    rows = ""
+    for l in [x for x in t["lines"] if only is None or x.get("group") == only]:
         note = (f'<span class="sub">{l["resolving_note"]}</span>'
                 if l.get("resolving_note") else "")
         outcome = ("<span class=\"pending\">awaiting bulletin</span>"
@@ -261,10 +351,14 @@ def track_page(t):
     interval. The wording is fixed at registration and is never edited.</p>
   </div>
 
+  {exposure_note(t)}
+
   <h2>The founding set</h2>
-  {lines_table(t)}
+  {lines_table(t, only="founding")}
   <p class="caption">{t["cadence"]}</p>
   <p class="caption">{t["superseded_versions"]}</p>
+
+  {by_horizon(t)}
   </div>
 </section>
 
@@ -309,11 +403,11 @@ def track_page(t):
 def header(active):
     cur = ' aria-current="page"'
     links = "\n      ".join(
-        f'<a href="{f}"{cur if k == active else ""}>{label}</a>'
+        f'<a href="{url(k)}"{cur if k == active else ""}>{label}</a>'
         for f, k, label in NAV)
     return f'''<header class="site">
   <div class="wrap site-bar">
-    <a class="brand" href="index.html">
+    <a class="brand" href="/">
       {MARK}
       <span class="wordmark">walk<span class="fwd">forward</span><span class="co">Research</span></span>
     </a>
@@ -331,7 +425,7 @@ def footer():
     <div class="foot-rule"></div>
     <div class="foot">
       <span>walkforward research &middot; foresight not hindsight</span>
-      <span>page built {built} &middot; <a href="about.html#privacy">privacy</a></span>
+      <span>page built {built} &middot; <a href="/about#privacy">privacy</a></span>
     </div>
   </div>
 </footer>'''
@@ -344,8 +438,8 @@ def intro(tracks):
         n = sum(1 for t in tracks if t["series"] == name)
         lines = sum(len(t["lines"]) for t in tracks if t["series"] == name)
         if n:
-            count = (f'<a href="ledger.html">{n} track, {lines} lines</a>' if n == 1
-                     else f'<a href="ledger.html">{n} tracks, {lines} lines</a>')
+            count = (f'<a href="/ledger">{n} track, {lines} lines</a>' if n == 1
+                     else f'<a href="/ledger">{n} tracks, {lines} lines</a>')
         else:
             count = '<span class="soft">nothing registered yet</span>'
         rows += (f'      <div class="area-row"><h3>{name}</h3>'
@@ -417,8 +511,8 @@ def intro(tracks):
     </ul>
   </div>
   <p class="measure">What has been registered so far, and how each line stands, is on
-  <a href="ledger.html">the ledger</a>. The rules it runs on are set out in the
-  <a href="method.html">method</a>, and the written work is in <a href="papers.html">papers</a>.</p>
+  <a href="/ledger">the ledger</a>. The rules it runs on are set out in the
+  <a href="/method">method</a>, and the written work is in <a href="/papers">papers</a>.</p>
 </section>
 </main>'''
 
@@ -441,7 +535,7 @@ def ledger_page(entries):
   {ledger_table(entries)}
   <p class="caption">Each track opens onto its own lines, their benchmarks and the rule they will be
   scored by. <span class="mono">Registered</span> links to the commit that timestamped it.
-  <a href="method.html#how-it-works">How the ledger works</a>.</p>
+  <a href="/method#how-it-works">How the ledger works</a>.</p>
   </div>
 </section>
 </main>'''
@@ -578,12 +672,14 @@ def method():
 
 def papers():
     data = json.load(open(os.path.join(HERE, "data", "papers.json")))
-    items = data.get("papers", [])
+    items = sorted(data.get("papers", []), key=lambda p: p.get("ref", ""), reverse=True)
     published = [p for p in items if p.get("pdf")]
     forthcoming = [p for p in items if not p.get("pdf")]
 
     def card(p, live):
         meta = [p["ref"]] if p.get("ref") else []
+        if p.get("authors"):
+            meta.append(", ".join(p["authors"]))
         if p.get("series"):
             meta.append(p["series"])
         if live:
@@ -593,14 +689,14 @@ def papers():
                 meta.append(f'{p["pages"]} pages')
         else:
             meta.append(p.get("status", "in preparation"))
-        title = (f'<a href="papers/{p["pdf"]}">{p["title"]}</a>' if live else p["title"])
+        title = (f'<a href="/papers/{p["pdf"]}">{p["title"]}</a>' if live else p["title"])
         foot = []
         if live:
-            foot.append(f'<a href="papers/{p["pdf"]}" class="mono">Download the PDF</a>')
+            foot.append(f'<a href="/papers/{p["pdf"]}" class="mono">Download the PDF</a>')
         if p.get("doi"):
             foot.append(f'<a href="https://doi.org/{p["doi"]}" class="mono">doi:{p["doi"]}</a>')
         if p.get("related_track"):
-            foot.append(f'<a href="{p["related_track"]}.html" class="mono">Related forecasts</a>')
+            foot.append(f'<a href="/{p["related_track"]}" class="mono">Related forecasts</a>')
         stamp = ""
         if live and (p.get("version") or p.get("licence")):
             bits = [b for b in (f'Version {p["version"]}' if p.get("version") else None,
@@ -653,18 +749,27 @@ def about():
   <div class="wrap">
     <div class="row"><div><span class="chip">About</span></div></div>
     <h1>What this is</h1>
-    <p class="lede">Walkforward Research is an independent research project. It publishes forecasts
-    about British public institutions before the outcome is known, and scores them in public
-    afterwards against the official or market forecast each one set out to beat.</p>
+    <p class="lede">Walkforward Research publishes forecasts about British public institutions
+    before the outcome is known, and scores them in public afterwards against the official or
+    market forecast each one set out to beat.</p>
   </div>
 </div>
 
 <section class="band">
   <div class="wrap">
-  <div class="panel">
-    <p class="kicker">Contact</p>
-    <h3>Enquiries</h3>
-    <p><a href="mailto:enquiries@{DOMAIN}" class="mono">enquiries@{DOMAIN}</a></p>
+  <div class="cards c2">
+    <div class="card">
+      <p class="kicker">Authorship</p>
+      <h3>Named on the papers</h3>
+      <p>Authors are named on each paper. Where work is joint, the paper says so.</p>
+      <p>The work is done in a personal capacity, independently of any employer or client.</p>
+    </div>
+    <div class="card tint">
+      <p class="kicker">Contact</p>
+      <h3>Two addresses</h3>
+      <p>Enquiries: <span class="mono">enquiries@{DOMAIN}</span><br>
+      Press: <span class="mono">press@{DOMAIN}</span></p>
+    </div>
   </div>
   </div>
 </section>
@@ -673,11 +778,11 @@ def about():
   <div class="wrap">
   <h2>Privacy</h2>
   <div class="measure">
-    <p>This site is a set of static files. It sets no cookies, has no accounts and no mailing list,
-    and asks you for nothing.</p>
+    <p>This site is a set of static files. It sets no cookies, has no accounts and no mailing
+    list.</p>
     <p>The host counts page views in aggregate so we know roughly how many people read something.
     That count uses no cookies and does not identify anyone.</p>
-    <p>If you email <a href="mailto:enquiries@{DOMAIN}" class="mono">enquiries@{DOMAIN}</a>, your
+    <p>If you email <span class="mono">enquiries@{DOMAIN}</span>, your
     message and address are used to reply to you and for nothing else. They are not sold, shared or
     added to any list. Ask and they will be deleted.</p>
     <p class="small">Last updated 6 September 2026.</p>

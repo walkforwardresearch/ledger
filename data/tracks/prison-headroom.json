@@ -2,7 +2,6 @@
   "id": "prison-headroom",
   "track": "Prison headroom, England and Wales",
   "series": "Public services",
-  "status": "registered",
   "model_version": "v3",
   "claim_form": "Headroom in the England and Wales prison estate, as published in the Ministry of Justice weekly prison population bulletin for Monday {target}, will be {forecast}, with an 80% interval of {lower} to {upper}.",
   "definition": "Headroom means the bulletin's total-estate Useable Operational Capacity minus total-estate Population.",
@@ -47,7 +46,7 @@
     "Error equals forecast minus outcome, in people, sign kept.",
     "Interval hit means the outcome falls within the 80% interval, inclusive.",
     "Closer means a smaller absolute error than the named baseline, per line. Across the track, the model is said to beat a baseline only when its running mean absolute error is lower over at least 13 resolved lines.",
-    "Policy events between bulletins have no effect. A release tranche, a recall change, a capacity measure or anything else occurring between bulletins does not alter the forecast or the score. Events are logged for context only.",
+    "Policy events between bulletins have no effect. A release tranche, a recall change, a capacity measure or anything else occurring between bulletins does not alter the forecast or the score. This is not a claim that policy does not matter: it is that a forecast which can be revised after the fact is not a forecast. Events are logged for context only.",
     "Definitional change. If the MoJ changes the meaning of useable operational capacity, the line is still scored against the published figure and the change is logged. The target is the published number."
   ],
   "cadence": "Marks happen when a target resolves, not weekly. Bulletins publish on Fridays for the preceding Monday. From Friday 11 September 2026 a new forecast is posted every bulletin week at 4, 13 and 26 weeks ahead, so the track gains three lines a week. The eight lines below are the founding set, not the cadence.",
@@ -67,7 +66,8 @@
       "outcome": null,
       "error": null,
       "in_interval": null,
-      "closer_than_naive": null
+      "closer_than_naive": null,
+      "group": "founding"
     },
     {
       "target_date": "2026-10-26",
@@ -83,7 +83,8 @@
       "outcome": null,
       "error": null,
       "in_interval": null,
-      "closer_than_naive": null
+      "closer_than_naive": null,
+      "group": "founding"
     },
     {
       "target_date": "2026-11-30",
@@ -99,7 +100,8 @@
       "outcome": null,
       "error": null,
       "in_interval": null,
-      "closer_than_naive": null
+      "closer_than_naive": null,
+      "group": "founding"
     },
     {
       "target_date": "2026-12-28",
@@ -116,7 +118,8 @@
       "outcome": null,
       "error": null,
       "in_interval": null,
-      "closer_than_naive": null
+      "closer_than_naive": null,
+      "group": "founding"
     },
     {
       "target_date": "2027-01-25",
@@ -132,7 +135,8 @@
       "outcome": null,
       "error": null,
       "in_interval": null,
-      "closer_than_naive": null
+      "closer_than_naive": null,
+      "group": "founding"
     },
     {
       "target_date": "2027-03-01",
@@ -148,7 +152,8 @@
       "outcome": null,
       "error": null,
       "in_interval": null,
-      "closer_than_naive": null
+      "closer_than_naive": null,
+      "group": "founding"
     },
     {
       "target_date": "2027-03-29",
@@ -165,7 +170,8 @@
       "outcome": null,
       "error": null,
       "in_interval": null,
-      "closer_than_naive": null
+      "closer_than_naive": null,
+      "group": "founding"
     },
     {
       "target_date": "2027-05-31",
@@ -182,7 +188,9 @@
       "outcome": null,
       "error": null,
       "in_interval": null,
-      "closer_than_naive": null
+      "closer_than_naive": null,
+      "group": "founding"
     }
-  ]
+  ],
+  "register_csv": "outputs/justice_held_population.csv"
 }

@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>How good are the MoJ prison population projections?</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#FFFFFF; --tint:#DBE2E5; --deep:#1B262A; --ink:#17211F;
+  --muted:#5C6A6C; --faint:#8A979A; --line:#C3CBCC; --line-strong:#9FAAAC;
+  --accent:#21645A; --block:#A6B2B6;
+}
+*{box-sizing:border-box}
+@page{ size:A4; margin:19mm 18mm 20mm; }
+@page:first{ margin-top:16mm; }
+html,body{margin:0;padding:0;background:var(--paper);color:var(--ink)}
+body{
+  font-family:"Source Serif 4",Georgia,serif;
+  font-size:10.2pt; line-height:1.52;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:"Spectral",Georgia,serif;letter-spacing:-0.012em;margin:0;line-height:1.16}
+p{margin:0 0 .62em}
+a{color:var(--accent);text-decoration:none}
+
+/* ---------- masthead ---------- */
+.masthead{display:flex;align-items:center;gap:.55rem;padding-bottom:9pt;
+  border-bottom:1.6pt solid var(--deep);margin-bottom:16pt}
+.masthead svg{display:block;flex:none}
+.wordmark{font-family:"Spectral",Georgia,serif;font-weight:600;font-size:14pt;letter-spacing:-0.02em}
+.wordmark .fwd{color:var(--accent)}
+.wordmark .co{font-family:"IBM Plex Mono",monospace;font-weight:400;font-size:6.4pt;
+  letter-spacing:.28em;color:var(--faint);margin-left:.45rem;text-transform:uppercase}
+.masthead .ref{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:7.2pt;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+.title{font-size:21pt;font-weight:600;margin-bottom:6pt;text-wrap:balance;max-width:30em}
+.subtitle{font-family:"Spectral",Georgia,serif;font-size:12pt;font-weight:400;
+  color:var(--muted);line-height:1.32;margin-bottom:13pt;max-width:32em}
+.byline{font-family:"IBM Plex Mono",monospace;font-size:8pt;letter-spacing:.1em;
+  color:var(--ink);margin:-6pt 0 13pt}
+.meta{font-family:"IBM Plex Mono",monospace;font-size:7.4pt;letter-spacing:.06em;
+  color:var(--muted);padding:6pt 0;border-top:.5pt solid var(--line);
+  border-bottom:.5pt solid var(--line);margin-bottom:13pt}
+.citation{background:var(--tint);border:.5pt solid var(--line-strong);padding:8pt 10pt;
+  font-size:8.6pt;line-height:1.45;color:var(--ink);margin-bottom:18pt}
+.citation .lab{font-family:"IBM Plex Mono",monospace;font-size:6.8pt;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);display:block;margin-bottom:3pt}
+
+/* ---------- sections ---------- */
+h2.sec{font-size:12.6pt;font-weight:600;margin:19pt 0 7pt;break-after:avoid}
+h2.sec .n{font-family:"IBM Plex Mono",monospace;font-size:8.4pt;color:var(--accent);
+  margin-right:.6em;letter-spacing:.04em}
+h2.sec.unnumbered{color:var(--ink)}
+
+ul.plain{margin:0 0 .62em;padding-left:0;list-style:none}
+ul.plain li{position:relative;padding-left:13pt;margin-bottom:.5em}
+ul.plain li::before{content:"";position:absolute;left:0;top:.52em;
+  width:4.5pt;height:4.5pt;background:var(--accent)}
+
+/* ---------- tables ---------- */
+table{border-collapse:collapse;width:100%;margin:9pt 0 4pt;font-size:8.4pt;
+  font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;
+  break-inside:avoid}
+th{text-align:left;font-weight:500;font-size:6.9pt;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);background:var(--tint);padding:5pt 6pt;
+  border-top:.5pt solid var(--line-strong);border-bottom:.5pt solid var(--line-strong)}
+td{padding:5pt 6pt;border-bottom:.5pt solid var(--line);vertical-align:top;line-height:1.42}
+td.t{font-family:"Source Serif 4",Georgia,serif;font-size:9pt;line-height:1.42}
+td.n{text-align:right;white-space:nowrap}
+th.n{text-align:right}
+tr.total td{border-top:.5pt solid var(--line-strong);font-weight:500;color:var(--ink)}
+td.lim{color:var(--accent);font-weight:500;width:2em}
+caption{caption-side:bottom;text-align:left;font-family:"Source Serif 4",Georgia,serif;
+  font-size:8.2pt;font-style:italic;color:var(--muted);padding-top:5pt;line-height:1.45}
+
+.callout{background:var(--deep);color:#EEF1F0;padding:10pt 12pt;margin:13pt 0;
+  break-inside:avoid}
+.callout p{margin:0;font-size:9.6pt;line-height:1.5}
+.callout .lab{font-family:"IBM Plex Mono",monospace;font-size:6.8pt;letter-spacing:.2em;
+  text-transform:uppercase;color:#4FAD97;display:block;margin-bottom:4pt}
+
+.colophon{margin-top:20pt;padding-top:8pt;border-top:.5pt solid var(--line);
+  font-family:"IBM Plex Mono",monospace;font-size:7.4pt;letter-spacing:.05em;
+  color:var(--muted);line-height:1.7}
+
+/* paper 02 additions */
+figure.chart{margin:11pt 0 4pt;break-inside:avoid}
+figure.chart svg{width:100%;height:auto;display:block}
+figure.chart .ylab{font-family:"IBM Plex Mono",monospace;font-size:7pt;fill:#17211F}
+figure.chart .val{font-family:"IBM Plex Mono",monospace;font-size:6.6pt;fill:#5C6A6C}
+figure.chart .axis{font-family:"IBM Plex Mono",monospace;font-size:6.4pt;fill:#8A979A}
+.key{display:flex;gap:14pt;margin-bottom:6pt;font-family:"IBM Plex Mono",monospace;
+  font-size:6.8pt;letter-spacing:.08em;color:#5C6A6C;text-transform:uppercase}
+.key span{display:inline-flex;align-items:center;gap:4pt}
+.key i{width:11pt;height:6pt;display:inline-block}
+figure.plot{margin:12pt 0 4pt;break-inside:avoid}
+figure.plot img{width:100%;height:auto;display:block}
+figure.plot figcaption{font-family:"Source Serif 4",Georgia,serif;font-size:8.2pt;
+  font-style:italic;color:var(--muted);padding-top:5pt;line-height:1.45}
+table.tight{font-size:7pt;break-inside:auto}
+table.tight thead{display:table-header-group}
+table.tight tr{break-inside:avoid}
+table.tight th,table.tight td{padding:3.6pt 4pt}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
+    <rect x="0" y="2"  width="15" height="8" fill="#A6B2B6"/><rect x="16" y="2"  width="8" height="8" fill="#21645A"/>
+    <rect x="4" y="12" width="15" height="8" fill="#A6B2B6"/><rect x="20" y="12" width="8" height="8" fill="#21645A"/>
+    <rect x="8" y="22" width="15" height="8" fill="#A6B2B6"/><rect x="24" y="22" width="8" height="8" fill="#21645A"/>
+  </svg>
+  <span class="wordmark">walk<span class="fwd">forward</span><span class="co">Research</span></span>
+  <span class="ref">Paper 2026/02</span>
+</div>
+
+<h1 class="title">How good are the Ministry of Justice prison population projections?</h1>
+<p class="subtitle">A walk-forward scorecard of eighteen editions, 2008 to 2025</p>
+<p class="byline">Hamish Paton &nbsp;·&nbsp; Walkforward Research</p>
+
+<p class="meta">Version 1.0, 4 September 2026 &nbsp;·&nbsp; Tag: Scored &nbsp;·&nbsp;
+ORCID 0009-0007-4160-9268 &nbsp;·&nbsp; Data and code: github.com/walkforwardresearch/prisoncap</p>
+
+<h2 class="sec unnumbered">Summary</h2>
+<ul class="plain">
+  <li>Since 2008 the Ministry of Justice has published eighteen editions of its prison population
+  projections. This note scores every central projection against what happened, at every horizon
+  from one to six years, using the MoJ’s own weekly population bulletins as outturn.</li>
+  <li>The central projection has been <strong>too high at every horizon</strong>. Mean error is
+  +2.4% at one year, +3.8% at two and +5.2% at five. Thirteen of seventeen scoreable editions had
+  every target too high. Fourteen of fourteen targets from editions published since 2020 were too
+  high, by 7.6% on average. Removing the COVID years and the release-scheme years from the targets
+  roughly halves the overshoot, to +2.3%, but does not remove it: the bias is structural, and the
+  shocks doubled it.</li>
+  <li>A forecaster who simply assumed the population would not change would have
+  <strong>beaten the MoJ at every horizon</strong>, scored on identical targets. At two years the
+  no-change error is 42% smaller, and the no-change forecast was closer on 54 of the 75 targets.
+  Nobody outside government appears to run this comparison.</li>
+  <li>The projections got the direction of change right 63% of the time overall and 53% at one and
+  two years, barely better than a coin toss at the horizons that matter for capacity planning. They
+  projected a rise in 73% of targets; the population rose in 52%.</li>
+  <li>At one and two years, outturn fell below the MoJ’s own low scenario 38% of the time. The
+  published range covered the outcome in half of those targets.</li>
+  <li>95% of the error sits in the determinate sentenced population, the component set by release
+  rules. Remand error runs the other way. Because the two partly cancel, gross component error is
+  1.9 times the net headline error, so the headline bias understates the modelling failure by about
+  half.</li>
+  <li>The MoJ can fairly say its projections are conditional on unchanged policy and that policy
+  changed. That is true, and it is also the problem: a projection that is systematically falsified
+  by the publisher’s own subsequent actions is not a basis for sizing a £7 billion building
+  programme.</li>
+</ul>
+
+<h2 class="sec unnumbered">What was scored, and how</h2>
+<p>The eighteen editions run from <em>Prison Population Projections 2008–2015</em> to
+<em>2025–2030</em>. Each publishes a central path at annual reference points; earlier editions
+publish it as one of three scenario columns, later editions as a single path broken down by custody
+type. The 2008 to 2019 editions sit as attachments on a single rolling gov.uk page; the six recent
+editions have their own pages. All were parsed into one table with scenario labels normalised to
+central, low and high.</p>
+<p>Outturn is the weekly prison population bulletin, 787 bulletins from January 2011 to August 2026,
+parsed into one series and interpolated to each edition’s published reference date. The reference
+date matters: it moves between end June, 1 June, end September, 1 July and end November across
+editions, and horizons are not comparable unless the published dates are used. Targets before
+January 2011 cannot be scored, so the 2008 and 2009 editions are scored from their second year.</p>
+<p>Whether the projections are measured on the same basis as the bulletins was tested rather than
+assumed. Ten editions publish their own unrounded base-year actual. Those match the bulletin total,
+which includes HMPPS-operated immigration removal centres before 2022, more closely than the
+prisons-only figure: mean absolute gap 258 against 394. Since 2018 the agreement is within 40
+people. The bulletin total is therefore used.</p>
+<p>The benchmark is a forecaster with no model who, at publication, carries the current population
+forward unchanged. It is available at the same moment with the same information, and its errors are
+computed on the same targets. Where an edition publishes no base actual, the bulletin value at 30
+June of the edition year is used. For the 2008, 2009 and 2010 editions, whose base years predate the
+weekly series, the 30 June prison population is taken from the Population in Custody bulletins for
+June 2009 and June 2010 (83,194, 83,391 and 85,002), so every one of the 75 targets has a
+like-for-like benchmark.</p>
+<p>Horizon is the calendar year of the reference date less the edition year, so a 2020 edition’s
+September 2021 target is one year ahead. Error is projected minus actual; a positive error means the
+projection was too high.</p>
+
+<h2 class="sec unnumbered">Results</h2>
+<h3 style="font-size:10.4pt;font-weight:600;margin:13pt 0 5pt">By horizon</h3>
+<table>
+  <caption>Table 1. Central projection against outturn, all editions, 75 targets, both forecasts
+  scored on the same targets. MAE in prisoners. The ratio column is MoJ error over no-change error;
+  above 1 means the no-change forecast was more accurate. The final column is the share of targets
+  on which it was closer.</caption>
+  <thead><tr><th>Horizon</th><th class="n">Mean error</th><th class="n">Mean abs. % error</th>
+    <th class="n">Share too high</th><th class="n">MoJ MAE</th><th class="n">No-change MAE</th>
+    <th class="n">MoJ / no-change</th><th class="n">No-change closer</th></tr></thead>
+  <tbody>
+    <tr><td>1 year</td><td class="n">+2.4%</td><td class="n">2.9%</td><td class="n">87%</td><td class="n">2,429</td><td class="n">1,666</td><td class="n">1.46</td><td class="n">73%</td></tr>
+    <tr><td>2 years</td><td class="n">+3.8%</td><td class="n">4.7%</td><td class="n">87%</td><td class="n">3,923</td><td class="n">2,275</td><td class="n">1.72</td><td class="n">67%</td></tr>
+    <tr><td>3 years</td><td class="n">+3.5%</td><td class="n">4.3%</td><td class="n">86%</td><td class="n">3,616</td><td class="n">3,222</td><td class="n">1.12</td><td class="n">64%</td></tr>
+    <tr><td>4 years</td><td class="n">+4.6%</td><td class="n">6.1%</td><td class="n">79%</td><td class="n">5,115</td><td class="n">3,595</td><td class="n">1.42</td><td class="n">71%</td></tr>
+    <tr><td>5 years</td><td class="n">+5.2%</td><td class="n">5.7%</td><td class="n">78%</td><td class="n">4,778</td><td class="n">2,630</td><td class="n">1.82</td><td class="n">100%</td></tr>
+    <tr><td>6 years</td><td class="n">+4.3%</td><td class="n">4.6%</td><td class="n">86%</td><td class="n">3,780</td><td class="n">2,439</td><td class="n">1.55</td><td class="n">57%</td></tr>
+  </tbody>
+</table>
+
+<figure class="plot">
+  <img src="figs/fig1.png" alt="Grouped bars of mean absolute error at horizons one to six years. The no-change forecast is lower than the MoJ central projection at every horizon.">
+  <figcaption>Figure 1. Mean absolute error by horizon. The no-change forecast wins at every horizon.</figcaption>
+</figure>
+
+<figure class="plot">
+  <img src="figs/fig2.png" alt="Line chart of the weekly prison population against every MoJ central projection path since 2008. The 2020-onward editions all rise steeply away from a broadly flat outturn.">
+  <figcaption>Figure 2. Every central path since 2008 against the weekly outturn. Editions from 2020 onward, in accent, all project a rise the population has not made.</figcaption>
+</figure>
+
+<h3 style="font-size:10.4pt;font-weight:600;margin:15pt 0 5pt">By era</h3>
+<table>
+  <caption>Table 2. The bias has worsened in each era, and the no-change forecast wins in every era,
+  including the 2008 to 2014 editions that predate any emergency release scheme. No target from a
+  2020-onward edition has been too low.</caption>
+  <thead><tr><th>Editions</th><th class="n">Mean error</th><th class="n">Mean abs. % error</th>
+    <th class="n">Share too high</th><th class="n">MoJ MAE</th><th class="n">No-change MAE</th>
+    <th class="n">No-change closer</th></tr></thead>
+  <tbody>
+    <tr><td>2008 to 2014</td><td class="n">+2.3%</td><td class="n">3.4%</td><td class="n">75%</td><td class="n">2,895</td><td class="n">1,623</td><td class="n">29 of 40</td></tr>
+    <tr><td>2015 to 2019</td><td class="n">+4.3%</td><td class="n">4.9%</td><td class="n">91%</td><td class="n">3,984</td><td class="n">3,212</td><td class="n">15 of 21</td></tr>
+    <tr><td>2020 to 2025</td><td class="n">+7.6%</td><td class="n">7.6%</td><td class="n">100%</td><td class="n">6,506</td><td class="n">4,703</td><td class="n">10 of 14</td></tr>
+  </tbody>
+</table>
+
+<h3 style="font-size:10.4pt;font-weight:600;margin:15pt 0 5pt">Direction and range</h3>
+<p>Two further tests do not depend on magnitude. First, direction: did the central path get the sign
+of the change from the base year right? Across 75 targets it did so 63% of the time, and 53% at both
+one and two years. The projections called a rise in 73% of targets; the population rose in 52%. At
+the horizons that bear on capacity decisions, the central path is about as informative on direction
+as a coin toss, and it is biased toward predicting growth. Second, coverage: forty-five targets have
+a published low and high scenario. Outturn fell inside that range 67% of the time overall, but only
+50% at one and two years, where it fell below the low scenario in 38% of targets. Coverage improves
+to 86% at five years because the range widens: the mean half-width at three years, 3,343, is about
+the same as the mean absolute error at three years, 3,616.</p>
+
+<figure class="plot">
+  <img src="figs/fig3.png" alt="Dot plot of sixteen one- and two-year targets showing where the outturn fell relative to the published low and high scenarios. Six fall below the low scenario.">
+  <figcaption>Figure 3. Each dot is a target at one or two years with a published low and high scenario, placed by where the outturn fell relative to that range. Six of sixteen fell below the MoJ’s own low scenario.</figcaption>
+</figure>
+
+<h3 style="font-size:10.4pt;font-weight:600;margin:15pt 0 5pt">By edition</h3>
+<table class="tight">
+  <caption>Table 3. Percentage error of the central path at each horizon, by edition. n/a marks a
+  target dated before January 2011, outside the weekly series and not scoreable; a blank means the
+  edition published no target at that horizon. The 2025–2030 edition has no scoreable target yet:
+  its first, 30 September 2026, is 91,400 against 86,843 on 24 August, and will be scored against
+  the 28 September bulletin when it publishes in early October. The 2012 and 2013 editions, which
+  projected a fall, are the only two that were too low.</caption>
+  <thead><tr><th>Edition</th><th class="n">1 yr</th><th class="n">2 yr</th><th class="n">3 yr</th>
+    <th class="n">4 yr</th><th class="n">5 yr</th><th class="n">Targets</th>
+    <th class="n">No-change wins</th><th class="n">All too high</th></tr></thead>
+  <tbody>
+    <tr><td>2008–2015</td><td class="n">n/a</td><td class="n">n/a</td><td class="n">+3.0</td><td class="n">+2.7</td><td class="n">+5.7</td><td class="n">5</td><td class="n">4</td><td class="n">yes</td></tr>
+    <tr><td>2009–2015</td><td class="n">n/a</td><td class="n">+1.8</td><td class="n">+1.5</td><td class="n">+4.5</td><td class="n">+2.9</td><td class="n">5</td><td class="n">2</td><td class="n">yes</td></tr>
+    <tr><td>2010–2016</td><td class="n">+2.0</td><td class="n">+1.5</td><td class="n">+5.5</td><td class="n">+3.7</td><td class="n">+2.9</td><td class="n">6</td><td class="n">5</td><td class="n">yes</td></tr>
+    <tr><td>2011–2017</td><td class="n">+0.6</td><td class="n">+3.7</td><td class="n">+2.3</td><td class="n">+2.2</td><td class="n">+4.0</td><td class="n">6</td><td class="n">4</td><td class="n">yes</td></tr>
+    <tr><td>2012–2018</td><td class="n">+0.9</td><td class="n">&minus;1.4</td><td class="n">&minus;2.0</td><td class="n">&minus;0.5</td><td class="n">&minus;0.7</td><td class="n">6</td><td class="n">3</td><td class="n">no</td></tr>
+    <tr><td>2013–2019</td><td class="n">&minus;2.5</td><td class="n">&minus;4.7</td><td class="n">&minus;3.7</td><td class="n">&minus;5.0</td><td class="n">&minus;1.8</td><td class="n">6</td><td class="n">5</td><td class="n">no</td></tr>
+    <tr><td>2014–2020</td><td class="n">+1.9</td><td class="n">+4.7</td><td class="n">+4.0</td><td class="n">+8.1</td><td class="n">+8.9</td><td class="n">6</td><td class="n">6</td><td class="n">yes</td></tr>
+    <tr><td>2015–2021</td><td class="n">+1.8</td><td class="n">+1.8</td><td class="n">+6.3</td><td class="n">+7.6</td><td class="n">+12.7</td><td class="n">5</td><td class="n">5</td><td class="n">yes</td></tr>
+    <tr><td>2016–2021</td><td class="n">&minus;1.5</td><td class="n">+0.9</td><td class="n">+1.3</td><td class="n">+5.7</td><td class="n"></td><td class="n">4</td><td class="n">1</td><td class="n">no</td></tr>
+    <tr><td>2017–2022</td><td class="n">+3.8</td><td class="n">+4.7</td><td class="n">+8.5</td><td class="n">+12.0</td><td class="n"></td><td class="n">4</td><td class="n">4</td><td class="n">yes</td></tr>
+    <tr><td>2018–2023</td><td class="n">+1.2</td><td class="n">+5.9</td><td class="n">+8.6</td><td class="n">+6.3</td><td class="n"></td><td class="n">4</td><td class="n">4</td><td class="n">yes</td></tr>
+    <tr><td>2019–2024</td><td class="n">+3.5</td><td class="n">+3.7</td><td class="n">+0.9</td><td class="n">&minus;4.8</td><td class="n"></td><td class="n">4</td><td class="n">1</td><td class="n">no</td></tr>
+    <tr><td>2020–2026</td><td class="n">+5.6</td><td class="n">+8.4</td><td class="n">+5.9</td><td class="n">+10.9</td><td class="n">+11.9</td><td class="n">5</td><td class="n">4</td><td class="n">yes</td></tr>
+    <tr><td>2021–2026</td><td class="n">+5.0</td><td class="n">+4.2</td><td class="n">+7.0</td><td class="n">+11.6</td><td class="n"></td><td class="n">4</td><td class="n">2</td><td class="n">yes</td></tr>
+    <tr><td>2022–2027</td><td class="n">+1.4</td><td class="n">+8.3</td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n">2</td><td class="n">1</td><td class="n">yes</td></tr>
+    <tr><td>2023–2028</td><td class="n">+9.8</td><td class="n">+14.2</td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n">2</td><td class="n">2</td><td class="n">yes</td></tr>
+    <tr><td>2024–2029</td><td class="n">+2.0</td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n">1</td><td class="n">1</td><td class="n">yes</td></tr>
+  </tbody>
+</table>
+
+<figure class="plot">
+  <img src="figs/fig4.png" alt="Heatmap of central projection error by edition and horizon. Most cells are positive, and dots marking a closer no-change forecast are spread across the grid.">
+  <figcaption>Figure 4. The same table as a picture. Each cell is one target; colour is the error as a share of outturn; a dot marks a target where the no-change forecast was closer. Cells marked n/a predate the weekly series.</figcaption>
+</figure>
+
+<h3 style="font-size:10.4pt;font-weight:600;margin:15pt 0 5pt">Robustness</h3>
+<p>A hostile reader will ask whether the result is an artefact of two shocks that no projection could
+have foreseen: the COVID fall of 2020 to 2021, and the emergency releases from October 2023. It is
+not. The table below re-scores the central path after removing those target years, after removing
+both, after switching outturn to the prisons-only definition, and after dropping the five largest
+misses.</p>
+<table>
+  <caption>Table 5. The headline survives every cut. The magnitude does not: about 40% of the
+  measured overshoot is attributable to the two shock periods, and the structural overshoot in
+  ordinary years is about +2%.</caption>
+  <thead><tr><th>Cut</th><th class="n">Targets</th><th class="n">Mean error</th>
+    <th class="n">Share too high</th><th class="n">No-change closer</th>
+    <th class="n">Wins at every horizon</th></tr></thead>
+  <tbody>
+    <tr><td class="t">All targets</td><td class="n">75</td><td class="n">+3.8%</td><td class="n">84%</td><td class="n">72%</td><td class="n">yes</td></tr>
+    <tr><td class="t">Excluding COVID targets, Mar 2020 to Dec 2021</td><td class="n">65</td><td class="n">+3.2%</td><td class="n">82%</td><td class="n">72%</td><td class="n">yes</td></tr>
+    <tr><td class="t">Excluding release-scheme targets, Oct 2023 on</td><td class="n">66</td><td class="n">+3.2%</td><td class="n">82%</td><td class="n">71%</td><td class="n">yes</td></tr>
+    <tr><td class="t">Excluding both: normal years only</td><td class="n">56</td><td class="n">+2.3%</td><td class="n">79%</td><td class="n">71%</td><td class="n">yes</td></tr>
+    <tr><td class="t">Normal years, pre-2020 editions only</td><td class="n">52</td><td class="n">+2.1%</td><td class="n">77%</td><td class="n">73%</td><td class="n">yes</td></tr>
+    <tr><td class="t">Prisons-only outturn, IRCs excluded</td><td class="n">58</td><td class="n">+3.9%</td><td class="n">84%</td><td class="n">74%</td><td class="n">yes</td></tr>
+    <tr><td class="t">Dropping the five largest absolute errors</td><td class="n">70</td><td class="n">+3.2%</td><td class="n">83%</td><td class="n">70%</td><td class="n">yes</td></tr>
+    <tr><td class="t">Horizons one to three only</td><td class="n">44</td><td class="n">+3.2%</td><td class="n">86%</td><td class="n">68%</td><td class="n">yes</td></tr>
+  </tbody>
+</table>
+<figure class="plot">
+  <img src="figs/fig5.png" alt="Two dot plots. Mean error stays positive under every robustness cut, and the share of targets where no-change was closer stays near seventy per cent.">
+  <figcaption>Figure 5. Mean error and the share of targets where no-change was closer, under each cut in Table 5.</figcaption>
+</figure>
+
+<p>Targets within an edition are not independent, so the unit of inference should be the edition.
+Fifteen of seventeen editions have a positive mean error (one-sided sign test p = 0.001). Thirteen
+of seventeen have a higher mean absolute error than the no-change forecast (p = 0.02). The mean of
+edition-level mean errors is +4.2% with a standard deviation of 3.6, t = 4.8 on seventeen
+observations. Even seventeen overstates independence, because editions share target years and a low
+outturn year counts against several at once; the honest description is a small, correlated sample
+that points the same way on every test available.</p>
+<p>Two objections cannot be settled from these data. First, the no-change forecast wins because the
+population was flat; in the trending decades before 2011 it would have lost, and the MoJ’s method was
+built in that era. The scorecard is a statement about the last fifteen years, not about forecasting
+in general. Second, if capacity binds on the population through channels other than release timing,
+the pre-2020 overshoot could itself be constrained demand rather than error. The proportion of
+sentence served held at 60 to 64% throughout 2015 to 2023, which argues against a binding constraint
+on release, but it does not rule out effects through remand, home detention curfew or sentencing
+behaviour.</p>
+
+<h2 class="sec unnumbered">Where the error sits</h2>
+<p>Every edition since 2017 publishes an unrounded base-year actual broken down by custody type:
+remand, determinate, indeterminate, recall, non-criminal. Where an earlier edition projected that
+same reference month, the error can be decomposed component by component. Thirteen such pairs
+exist.</p>
+<table>
+  <caption>Table 4. Component decomposition of projection error, 13 matched pairs. Positive means
+  projected above actual. Non-criminal and fine defaulter prisoners are combined; the non-criminal
+  category fell from 1,422 to 367 over the period and its error is largely definitional churn.</caption>
+  <thead><tr><th>Component</th><th class="n">Mean error</th><th class="n">Share of total error</th>
+    <th class="n">Largest contributor in</th></tr></thead>
+  <tbody>
+    <tr><td class="t">Determinate</td><td class="n">+3,272</td><td class="n">95%</td><td class="n">54% of pairs</td></tr>
+    <tr><td class="t">Other (non-criminal, fine defaulters)</td><td class="n">+426</td><td class="n">12%</td><td class="n">15%</td></tr>
+    <tr><td class="t">Indeterminate</td><td class="n">+174</td><td class="n">5%</td><td class="n">0%</td></tr>
+    <tr><td class="t">Recall</td><td class="n">&minus;144</td><td class="n">&minus;4%</td><td class="n">0%</td></tr>
+    <tr><td class="t">Remand</td><td class="n">&minus;292</td><td class="n">&minus;8%</td><td class="n">31%</td></tr>
+  </tbody>
+</table>
+<figure class="plot">
+  <img src="figs/fig6.png" alt="Bar chart of mean component error by era. The 2020-onward determinate bar is large and positive, the remand bar large and negative.">
+  <figcaption>Figure 6. Mean component error by edition era. The 2020-onward editions are +8,610 on determinate and −2,862 on remand; the two partly cancel.</figcaption>
+</figure>
+
+<p>Determinate accounts for 95% of the error and recall is never the largest contributor. Remand has
+a near-zero mean but a mean absolute error of 1,893: a large miss in both directions that averages
+out. The two biggest components err in opposite directions, so the gross component error, 6,896 on
+average, is 1.9 times the net error of 3,627. The worst case is the 2022 edition’s November 2023
+target: net error 1,165, gross 8,723, a ratio of 7.5. It got the total nearly right by pairing a
+determinate overshoot of 4,608 with a remand undershoot of 3,086.</p>
+<p>The composition shifts across eras. Editions from 2015 to 2019 were mildly high on everything:
+determinate +900, remand +851. Editions from 2020 onward are +8,610 on determinate and &minus;2,862
+on remand. Nineteen successive-edition revisions of a common target date point the same way:
+determinate accounts for 105% of revision movement and is revised down, by 2,621 on average, edition
+after edition.</p>
+<p>The interpretation is that the determinate overshoot is policy: release points were cut after each
+edition was published, by ECSL in 2023, SDS40 in 2024 and the progression model in 2026. The remand
+undershoot is demand: the court backlog. These are separate failures that happen to offset, and
+reporting a single net bias hides both.</p>
+
+<h2 class="sec unnumbered">The conditional-projection defence</h2>
+<p>The MoJ’s strongest reply is that the projections are conditional. They model the population under
+existing release rules; the rules then change in response; the projection is falsified by design. On
+this reading the overshoot is a measure of the policy response, not of forecasting skill, and a naive
+forecast wins precisely because it silently assumes the government will act.</p>
+<div class="callout">
+  <span class="lab">Why the defence does not rescue the number</span>
+  <p>The 10-Year Prison Capacity Strategy commits up to £7 billion to 14,000 places by 2031 against a
+  demand assumption of about 3,000 additional prisoners a year in the absence of further action. The
+  realised growth rate over the fifteen years of weekly data is 246 a year. No five-year window since
+  2011 has sustained even 2,000 a year.</p>
+</div>
+<p>That is a fair description of what has happened and this note does not dispute it. But it does not
+rescue the projections for the purpose they are put to. A counterfactual that has been too high in
+every year since 2020, and that the government itself falsifies each time it is published, cannot
+carry that weight.</p>
+<p>There is a second reason the defence is incomplete. The no-change forecast wins in the 2008 to
+2014 editions too: closer on 29 of 40 targets, with a mean absolute error of 1,623 against the MoJ’s
+2,895, on identical targets. Those editions predate ECSL, SDS40 and the progression model by a
+decade. The overshoot predates the policy responses that are said to explain it.</p>
+
+<h2 class="sec unnumbered">Why it matters now</h2>
+<p>Fifteen years of weekly data show a prison estate that has run between 96% and 99% full in every
+calendar year, with headroom above 5,000 in ten weeks in total. The supply side has delivered a net
+641 places since January 2011 on this series, or 1,005 between 2010 and 2024 on the Public Accounts
+Committee’s figure, against thousands announced. The demand side is planned against a growth rate
+that has never been sustained. Both halves of the capacity plan rest on numbers that the record does
+not support, and the demand half has not previously been scored.</p>
+<p>The 2025–2030 edition projects 91,400 for September 2026. The August 2026 bulletin gives 86,843.
+The nineteenth edition is expected in December 2026 and will be scored on publication.</p>
+
+<h2 class="sec unnumbered">What would prove this wrong</h2>
+<ul class="plain">
+  <li><strong>An outturn series on a different basis from the projections.</strong> Tested: the
+  editions’ own base actuals match the bulletin total to within 40 people since 2018, and the result
+  holds on the prisons-only definition.</li>
+  <li><strong>The overshoot being entirely the two shocks.</strong> Tested: removing COVID and
+  release-scheme years halves the magnitude to +2.3% and leaves the direction, the share too high and
+  the no-change result unchanged.</li>
+  <li><strong>A scored point going the other way.</strong> The 2025–2030 edition’s first target, 30
+  September 2026, is 91,400; the register will score it in early October, and the nineteenth edition
+  will be scored on the day it is published. If either is closer than no-change, that goes in the
+  next version of this paper.</li>
+</ul>
+
+<h2 class="sec unnumbered">Data notes and caveats</h2>
+<ul class="plain">
+  <li>Two source defects were found. The 2022–2027 edition’s central block stops at November 2024
+  while its low and high blocks run to 2026; the missing years are recoverable from the monthly
+  appendix. And “Scenario 2” is the central path in the 2012 and 2013 editions but the high path in
+  the 2014 edition, so generic scenario labels must be resolved against the explicit central column
+  rather than read by position.</li>
+  <li>The 2011–2017 edition’s base-year row is a scenario value, not an actual; it is excluded from
+  the calibration test. The 2016–2021 edition publishes only four forward years.</li>
+  <li>Component decomposition rests on thirteen matched pairs, weighted toward the June reference
+  grid of the 2015 to 2019 editions, and the two most extreme rows come from the same edition. The
+  era contrast rests on fewer independent observations than the row count suggests.</li>
+  <li>Reference dates vary between the first and last day of the month across editions; decomposition
+  matches on year and month and the largest day gap used is 29 days.</li>
+  <li>The no-change benchmark uses the edition’s own base actual where published, otherwise the
+  bulletin at 30 June of the edition year. This slightly favours the MoJ where their base is a
+  September or November figure and the population was seasonally higher.</li>
+  <li>Everything in this note refreshes from the gov.uk content API. Every input is a versioned
+  attachment or an API-enumerable route; there is no page scraping. The refresh reads every source
+  Notes sheet before rebuilding any series and stops if a definition has changed.</li>
+</ul>
+
+<h2 class="sec unnumbered">Data and code</h2>
+<p><strong>Corrections.</strong> Five made before publication and recorded in the definitions log: an
+unscored benchmark for three early editions, a direction-accuracy figure of 43% corrected to 63%,
+non-like-for-like error tables, a misaligned row, and the magnitude claim qualified by the robustness
+section.</p>
+<p>The weekly series (population, capacity, headroom, operating margin, 2011 to date), the
+establishment panel (2018 to date), the eighteen projection editions in one table, the scorecard by
+edition, the decomposition and a 106-entry log of definitional changes and corrections are published
+with this note. The repository includes the refresh script and a standing forecast register, lodged
+on 3 September 2026, that will be scored against each weekly bulletin without amendment.</p>
+
+<div class="colophon">
+  Walk Forward Research &nbsp;·&nbsp; enquiries@walkforwardresearch.com<br>
+  github.com/walkforwardresearch/prisoncap
+</div>
+
+</body>
+</html>

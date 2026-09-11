@@ -1,0 +1,30 @@
+  <text x="52" y="42" text-anchor="end" class="ylab">1 year</text>
+  <rect x="58" y="34" width="164.3" height="9" fill="#7E8C90"/>
+  <text x="227.3" y="41.5" class="val">2,429</text>
+  <rect x="58" y="45" width="112.7" height="9" fill="#21645A"/>
+  <text x="175.7" y="52.5" class="val">1,666</text>
+  <text x="52" y="74" text-anchor="end" class="ylab">2 years</text>
+  <rect x="58" y="66" width="265.3" height="9" fill="#7E8C90"/>
+  <text x="328.3" y="73.5" class="val">3,923</text>
+  <rect x="58" y="77" width="153.9" height="9" fill="#21645A"/>
+  <text x="216.9" y="84.5" class="val">2,275</text>
+  <text x="52" y="106" text-anchor="end" class="ylab">3 years</text>
+  <rect x="58" y="98" width="244.6" height="9" fill="#7E8C90"/>
+  <text x="307.6" y="105.5" class="val">3,616</text>
+  <rect x="58" y="109" width="217.9" height="9" fill="#21645A"/>
+  <text x="280.9" y="116.5" class="val">3,222</text>
+  <text x="52" y="138" text-anchor="end" class="ylab">4 years</text>
+  <rect x="58" y="130" width="346.0" height="9" fill="#7E8C90"/>
+  <text x="409.0" y="137.5" class="val">5,115</text>
+  <rect x="58" y="141" width="243.2" height="9" fill="#21645A"/>
+  <text x="306.2" y="148.5" class="val">3,595</text>
+  <text x="52" y="170" text-anchor="end" class="ylab">5 years</text>
+  <rect x="58" y="162" width="323.2" height="9" fill="#7E8C90"/>
+  <text x="386.2" y="169.5" class="val">4,778</text>
+  <rect x="58" y="173" width="177.9" height="9" fill="#21645A"/>
+  <text x="240.9" y="180.5" class="val">2,630</text>
+  <text x="52" y="202" text-anchor="end" class="ylab">6 years</text>
+  <rect x="58" y="194" width="255.7" height="9" fill="#7E8C90"/>
+  <text x="318.7" y="201.5" class="val">3,780</text>
+  <rect x="58" y="205" width="165.0" height="9" fill="#21645A"/>
+  <text x="228.0" y="212.5" class="val">2,439</text>
