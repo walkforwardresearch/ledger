@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-Build the full Walkforward Research site: ledger, method, notes, about.
+Build the full Walkforward Research site: the record, method, papers, about.
 
     python3 build_site.py              # the real site
     python3 build_site.py --preview    # design preview, planned entries shown as registered
 
 Same rule as the holding page: an entry appears only once registered_utc and commit are set.
-The ledger lives at / and the four pages share one stylesheet.
+The record lives at /record and the five pages share one stylesheet.
 """
 import glob, json, os, re, sys, datetime
 
@@ -24,13 +24,13 @@ FONTS = ('<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n
 
 NAV = [("index.html", "intro", "introduction"),
        ("method.html", "method", "method"),
-       ("ledger.html", "ledger", "the ledger"),
+       ("record.html", "record", "the record"),
        ("papers.html", "papers", "papers"),
        ("about.html", "about", "about")]
 
 # The server strips .html, so every link uses the clean form. These are the URLs that
 # get handed to people, so they should be the ones on the page.
-URL = {"intro": "/", "method": "/method", "ledger": "/ledger",
+URL = {"intro": "/", "method": "/method", "record": "/record",
        "papers": "/papers", "about": "/about"}
 
 
@@ -195,7 +195,7 @@ def ledger_rows(tracks):
     if not tracks:
         return ('<tr><td class="empty" colspan="6">Nothing registered yet. The first track is '
                 'committed to the public repository before its first target, and appears here the '
-                'moment it is. The ledger starts empty because a ledger that starts full should '
+                'moment it is. The record starts empty because a record that starts full should '
                 'not be believed.</td></tr>')
     out = ""
     for t in tracks:
@@ -461,7 +461,7 @@ def footer():
   <div class="wrap">
     <div class="foot-rule"></div>
     <div class="foot">
-      <span>walkforward research &middot; foresight not hindsight</span>
+      <span>walkforward research</span>
       <span>page built {built} &middot; <a href="/about#privacy">privacy</a></span>
     </div>
   </div>
@@ -475,8 +475,8 @@ def intro(tracks):
         n = sum(1 for t in tracks if t["series"] == name)
         lines = sum(len(t["lines"]) for t in tracks if t["series"] == name)
         if n:
-            count = (f'<a href="/ledger">{n} track, {lines} lines</a>' if n == 1
-                     else f'<a href="/ledger">{n} tracks, {lines} lines</a>')
+            count = (f'<a href="/record">{n} track, {lines} lines</a>' if n == 1
+                     else f'<a href="/record">{n} tracks, {lines} lines</a>')
         else:
             count = '<span class="soft">nothing registered yet</span>'
         rows += (f'      <div class="area-row"><h3>{name}</h3>'
@@ -486,11 +486,11 @@ def intro(tracks):
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <p class="kicker">Foresight not hindsight</p>
         <h1>Forecasts with dates on them, scored in public.</h1>
-        <p class="lede">Walkforward Research forecasts British public institutions across five
-        areas. Each forecast is published before the outcome is known and scored afterwards against
-        the official or market number it set out to beat.</p>
+        <p class="lede">Walkforward Research publishes forecasts of UK public services, prices and
+        demography, and scores them in public against data the models could not have seen. Each
+        forecast is registered before the outcome is known and marked afterwards against the
+        official or market number it set out to beat.</p>
       </div>
       <div class="hero-mark">{HERO_STAIR}</div>
     </div>
@@ -548,21 +548,20 @@ def intro(tracks):
     </ul>
   </div>
   <p class="measure">What has been registered so far, and how each line stands, is on
-  <a href="/ledger">the ledger</a>. The rules it runs on are set out in the
+  <a href="/record">the record</a>. The rules it runs on are set out in the
   <a href="/method">method</a>, and the written work is in <a href="/papers">papers</a>.</p>
 </section>
 </main>'''
 
 
-def ledger_page(entries):
+def record_page(entries):
     return f'''<main>
 <div class="page-head">
   <div class="wrap">
-    <div class="row"><div><span class="chip">The ledger</span></div></div>
+    <div class="row"><div><span class="chip">The record</span></div></div>
     <h1>Every forecast, its timestamp, and its mark</h1>
     <p class="lede">Append-only. Every line is registered before the outcome is known and never
-    edited afterwards. The ledger opens with the prison headroom track; the rest appear as they
-    are registered.</p>
+    edited afterwards. Two tracks are registered now; the rest appear as they are.</p>
   </div>
 </div>
 
@@ -572,7 +571,7 @@ def ledger_page(entries):
   {ledger_table(entries)}
   <p class="caption">Each track opens onto its own lines, their benchmarks and the rule they will be
   scored by. <span class="mono">Registered</span> links to the commit or deposit that timestamped it.
-  <a href="/method#how-it-works">How the ledger works</a>.</p>
+  <a href="/method#how-it-works">How the record works</a>.</p>
   </div>
 </section>
 </main>'''
@@ -595,7 +594,8 @@ def method():
     <h2>What walk-forward scoring is</h2>
     <p>Train a model on the past. Test it on the next slice of time &mdash; data it could not have
     seen. Step forward and repeat. Every score here is produced that way: the model makes its call
-    the way it would on a Monday morning, before the answer exists.</p>
+    the way it would on a Monday morning, before the answer exists. Foresight not hindsight, or put
+    more exactly: every number scored on what was knowable at the time.</p>
   </div>
   <div class="split">
     <div class="card diagram-card">
@@ -620,7 +620,7 @@ def method():
         <h3>Published, then scored</h3>
         <ul class="ticks">
           <li>Forecasts out before the outcome, marks up after</li>
-          <li>Hits and misses alike, and the ledger is append-only</li>
+          <li>Hits and misses alike, and the record is append-only</li>
         </ul>
       </div>
       <div class="card">
@@ -657,7 +657,7 @@ def method():
 <section class="band" id="how-it-works">
   <div class="wrap">
   <div class="section-head">
-    <h2>How the ledger works</h2>
+    <h2>How the record works</h2>
     <p>Registration, marking and withdrawal, in the order they happen.</p>
   </div>
   <div class="cards c3">
@@ -685,7 +685,7 @@ def method():
       <p class="kicker">Afterwards</p>
       <h3>Nothing is edited or deleted</h3>
       <ul class="ticks">
-        <li>A forecast wrong in construction is withdrawn with a reason and stays on the ledger</li>
+        <li>A forecast wrong in construction is withdrawn with a reason and stays on the record</li>
         <li>A change of view is a new entry that supersedes the old one, and both are scored</li>
         <li>The record counts everything, including withdrawn entries and misses</li>
       </ul>
@@ -756,7 +756,7 @@ def papers():
         body += '''<div class="panel">
       <p class="kicker">Nothing published yet</p>
       <p>The first paper is in preparation. Papers appear here as PDFs when they are finished, and
-      each one links to the forecasts on the ledger that it rests on.</p>
+      each one links to the forecasts on the record that it rests on.</p>
     </div>'''
     if forthcoming:
         body += ('<h2 class="forthcoming-head">In preparation</h2><div class="papers">' +
@@ -836,8 +836,8 @@ PAGES = {
                    "UK forecasts published before the outcome is known, then scored in public against the official or market forecast they set out to beat.", intro),
     "method.html": ("method", "Method &mdash; Walkforward Research",
                     "Walk-forward scoring, pre-registration, and how entries are marked, withdrawn and superseded.", method),
-    "ledger.html": ("ledger", "The ledger &mdash; Walkforward Research",
-                    "Every forecast, its timestamp and its mark, linked to the entry and the commit that registered it.", ledger_page),
+    "record.html": ("record", "The record &mdash; Walkforward Research",
+                    "Every forecast, its timestamp and its mark, linked to the entry and the commit that registered it.", record_page),
     "papers.html": ("papers", "Papers &mdash; Walkforward Research",
                     "Published papers, each stating what was forecast, what happened, and what the method got wrong as well as right.", papers),
     "about.html": ("about", "About &mdash; Walkforward Research",
@@ -853,7 +853,7 @@ def build():
                              f'{t["track"]}: the registered lines, their benchmarks and the rule they are scored by.',
                              (lambda tt: (lambda: track_page(tt)))(t))
     for fname, (key, title, desc, fn) in PAGES.items():
-        body = fn(entries) if key in ("ledger", "intro") else fn()
+        body = fn(entries) if key in ("record", "intro") else fn()
         html = f'''<!doctype html>
 <html lang="en-GB">
 <head>
@@ -861,7 +861,8 @@ def build():
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <meta name="description" content="{desc}">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="/favicon.ico" sizes="48x48 32x32 16x16">
 {FONTS}
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -886,7 +887,14 @@ def build():
         src = os.path.join(HERE, asset)
         if os.path.exists(src):
             open(os.path.join(OUT, asset), "w").write(open(src).read())
-    print(f"site built — {len(entries)} entries in the ledger" + (" (preview)" if PREVIEW else ""))
+    ico = os.path.join(HERE, "favicon.ico")
+    if os.path.exists(ico):
+        with open(ico, "rb") as r, open(os.path.join(OUT, "favicon.ico"), "wb") as w:
+            w.write(r.read())
+    # /ledger was the old address; keep it working so nothing linked breaks.
+    open(os.path.join(OUT, "_redirects"), "w").write(
+        "/ledger /record 301\n/ledger.html /record 301\n")
+    print(f"site built — {len(entries)} entries on the record" + (" (preview)" if PREVIEW else ""))
 
 
 if __name__ == "__main__":

@@ -1,57 +1,58 @@
 {
-  "papers": [
-    {
-      "id": "justice-held-population-2026-01",
-      "ref": "Paper 2026/01",
-      "title": "The justice-held population, England and Wales",
-      "standfirst": "A quarterly composite series of the people whose liberty is conditioned by the criminal justice system: in prison, under supervision, or waiting for a courtroom. It has grown by a quarter since 2019, and almost all of the growth is in the queue.",
-      "series": "Public services",
-      "date": "2026-09-05",
-      "status": "published",
-      "version": "1.0",
-      "licence": "CC BY 4.0",
-      "doi": "10.5281/zenodo.22536356",
-      "pdf": "justice-held-population-2026-01.pdf",
-      "pages": 4,
-      "related_track": "prison-headroom",
-      "authors": [
-        "Hamish Paton"
-      ]
-    },
-    {
-      "id": "moj-projection-scorecard-2026-02",
-      "ref": "Paper 2026/02",
-      "title": "How good are the Ministry of Justice prison population projections?",
-      "standfirst": "Eighteen editions since 2008, every central projection scored against what happened at every horizon. The projections have been too high at every horizon, and a forecaster who assumed no change would have beaten them on identical targets.",
-      "series": "Public services",
-      "authors": [
-        "Hamish Paton"
-      ],
-      "date": "2026-09-04",
-      "status": "published",
-      "version": "1.0",
-      "licence": "CC BY 4.0",
-      "pdf": "moj-projection-scorecard-2026-02.pdf",
-      "pages": 9,
-      "related_track": "prison-headroom"
-    },
-    {
-      "id": "headroom-nowcast-2026-03",
-      "ref": "Paper 2026/03",
-      "title": "What the gilt move does to the Budget: a pre-registered nowcast of the OBR's headroom number for 28 October 2026",
-      "standfirst": "The Chancellor's headroom was a £23.6bn surplus in March. Gilt yields have since risen by about two thirds of a point and the sell side puts the pre-measures number at £11.6bn to £15bn, all of it attributed to debt interest. This estimate is £14.6bn with an 80 per cent interval of about −£4bn to +£34bn, built from 33 OBR forecasts, fixed on data to 10 September and scored against the OBR on 28 October. The route differs from the sell side's, and the route is the finding.",
-      "series": "Public finances",
-      "authors": [
-        "Hamish Paton"
-      ],
-      "date": "2026-09-12",
-      "status": "published",
-      "version": "1.0",
-      "licence": "CC BY 4.0",
-      "doi": "10.5281/zenodo.22724955",
-      "pdf": "headroom-nowcast-2026-03.pdf",
-      "pages": 9,
-      "related_track": "obr-headroom"
-    }
-  ]
+ "papers": [
+  {
+   "id": "justice-held-population-2026-01",
+   "ref": "Paper 2026/01",
+   "title": "The justice-held population, England and Wales",
+   "standfirst": "A quarterly composite series of the people whose liberty is conditioned by the criminal justice system: in prison, under supervision, or waiting for a courtroom. It has grown by a quarter since 2019, and almost all of the growth is in the queue.",
+   "series": "Public services",
+   "date": "2026-09-05",
+   "status": "published",
+   "version": "1.0",
+   "licence": "CC BY 4.0",
+   "doi": "10.5281/zenodo.22536356",
+   "pdf": "justice-held-population-2026-01.pdf",
+   "pages": 4,
+   "related_track": "prison-headroom",
+   "authors": [
+    "Hamish Paton"
+   ]
+  },
+  {
+   "id": "moj-projection-scorecard-2026-02",
+   "ref": "Paper 2026/02",
+   "title": "How good are the Ministry of Justice prison population projections?",
+   "standfirst": "Eighteen editions since 2008, every central projection scored against what happened at every horizon. The projections have been too high at every horizon, and a forecaster who assumed no change would have beaten them on identical targets.",
+   "series": "Public services",
+   "authors": [
+    "Hamish Paton"
+   ],
+   "date": "2026-09-04",
+   "status": "published",
+   "version": "1.0",
+   "licence": "CC BY 4.0",
+   "pdf": "moj-projection-scorecard-2026-02.pdf",
+   "pages": 9,
+   "related_track": "prison-headroom",
+   "doi": "10.5281/zenodo.22708959"
+  },
+  {
+   "id": "headroom-nowcast-2026-03",
+   "ref": "Paper 2026/03",
+   "title": "What the gilt move does to the Budget: a pre-registered nowcast of the OBR's headroom number for 28 October 2026",
+   "standfirst": "The Chancellor's headroom was a £23.6bn surplus in March. Gilt yields have since risen by about two thirds of a point and the sell side puts the pre-measures number at £11.6bn to £15bn, all of it attributed to debt interest. This estimate is £14.6bn with an 80 per cent interval of about −£4bn to +£34bn, built from 33 OBR forecasts, fixed on data to 10 September and scored against the OBR on 28 October. The route differs from the sell side's, and the route is the finding.",
+   "series": "Public finances",
+   "authors": [
+    "Hamish Paton"
+   ],
+   "date": "2026-09-12",
+   "status": "published",
+   "version": "1.0",
+   "licence": "CC BY 4.0",
+   "doi": "10.5281/zenodo.22724955",
+   "pdf": "headroom-nowcast-2026-03.pdf",
+   "pages": 9,
+   "related_track": "obr-headroom"
+  }
+ ]
 }
