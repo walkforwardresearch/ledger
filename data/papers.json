@@ -27,14 +27,14 @@
    "authors": [
     "Hamish Paton"
    ],
-   "date": "2026-09-04",
+   "date": "2026-09-11",
    "status": "published",
-   "version": "1.0",
+   "version": "1.1",
    "licence": "CC BY 4.0",
    "pdf": "moj-projection-scorecard-2026-02.pdf",
    "pages": 9,
    "related_track": "prison-headroom",
-   "doi": "10.5281/zenodo.22708959"
+   "doi": "10.5281/zenodo.22708958"
   },
   {
    "id": "headroom-nowcast-2026-03",
