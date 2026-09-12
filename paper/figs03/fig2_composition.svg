@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="576pt" height="331.2pt" viewBox="0 0 576 331.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09-12T13:09:16.542285</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 331.2 
+L 576 331.2 
+L 576 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 44.48 292.16 
+L 509.948571 292.16 
+L 509.948571 15.48 
+L 44.48 15.48 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 65.637662 256.071304 
+L 122.424462 256.071304 
+L 122.424462 114.122435 
+L 65.637662 114.122435 
+z
+" clip-path="url(#p33a24ea872)" style="fill: #a6b2b6; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 157.229274 165.248087 
+L 214.016074 165.248087 
+L 214.016074 114.122435 
+L 157.229274 114.122435 
+z
+" clip-path="url(#p33a24ea872)" style="fill: #21645a; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 248.820886 165.248087 
+L 305.607685 165.248087 
+L 305.607685 147.203739 
+L 248.820886 147.203739 
+z
+" clip-path="url(#p33a24ea872)" style="fill: #21645a; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 340.412498 168.255478 
+L 397.199297 168.255478 
+L 397.199297 147.203739 
+L 340.412498 147.203739 
+z
+" clip-path="url(#p33a24ea872)" style="fill: #21645a; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 432.00411 256.071304 
+L 488.790909 256.071304 
+L 488.790909 168.255478 
+L 432.00411 168.255478 
+z
+" clip-path="url(#p33a24ea872)" style="fill: #21645a; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="m91cca7234c" d="M 0 0 
+L 0 3.5 
+" style="stroke: #5c6a6c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m91cca7234c" x="94.031062" y="292.16" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 9px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; text-anchor: middle; fill: #17211f" x="94.031062" y="305.998594" transform="rotate(-0 94.031062 305.998594)">March 2026 EFO</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#m91cca7234c" x="185.622674" y="292.16" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 9px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; text-anchor: middle; fill: #17211f" x="185.622674" y="305.998594" transform="rotate(-0 185.622674 305.998594)">Debt interest</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#m91cca7234c" x="277.214286" y="292.16" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 9px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; fill: #17211f" transform="translate(257.541551 305.998594)">Receipts</text>
+      <text style="font-size: 9px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; fill: #17211f" transform="translate(245.553973 316.076625)">carry-forward</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m91cca7234c" x="368.805898" y="292.16" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 9px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; text-anchor: middle; fill: #17211f" x="368.805898" y="305.998594" transform="rotate(-0 368.805898 305.998594)">Spending drift</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#m91cca7234c" x="460.397509" y="292.16" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 9px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; fill: #17211f" transform="translate(427.369619 305.998594)">Before Budget</text>
+      <text style="font-size: 9px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; fill: #17211f" transform="translate(438.452978 316.204594)">measures</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_6">
+      <defs>
+       <path id="mdca47735a4" d="M 0 0 
+L -3.5 0 
+" style="stroke: #5c6a6c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#mdca47735a4" x="44.48" y="256.071304" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="259.705797" transform="rotate(-0 37.48 259.705797)">0</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_7">
+      <g>
+       <use xlink:href="#mdca47735a4" x="44.48" y="195.923478" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="199.55797" transform="rotate(-0 37.48 199.55797)">10</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#mdca47735a4" x="44.48" y="135.775652" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="139.410144" transform="rotate(-0 37.48 139.410144)">20</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_9">
+      <g>
+       <use xlink:href="#mdca47735a4" x="44.48" y="75.627826" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="79.262318" transform="rotate(-0 37.48 79.262318)">30</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#mdca47735a4" x="44.48" y="15.48" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="19.114492" transform="rotate(-0 37.48 19.114492)">40</text>
+     </g>
+    </g>
+    <g id="text_11">
+     <text style="font-size: 11px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; text-anchor: middle; fill: #17211f" x="19.597344" y="153.82" transform="rotate(-90 19.597344 153.82)">£bn, 2029-30 current budget surplus</text>
+    </g>
+   </g>
+   <g id="LineCollection_1">
+    <path d="M 460.397509 280.130435 
+L 460.397509 51.568696 
+" clip-path="url(#p33a24ea872)" style="fill: none; stroke: #21645a; stroke-width: 1.4"/>
+   </g>
+   <g id="line2d_11">
+    <defs>
+     <path id="m176f475404" d="M 6 0 
+L -6 -0 
+" style="stroke: #21645a"/>
+    </defs>
+    <g clip-path="url(#p33a24ea872)">
+     <use xlink:href="#m176f475404" x="460.397509" y="280.130435" style="fill: #1f77b4; stroke: #21645a"/>
+    </g>
+   </g>
+   <g id="line2d_12">
+    <g clip-path="url(#p33a24ea872)">
+     <use xlink:href="#m176f475404" x="460.397509" y="51.568696" style="fill: #1f77b4; stroke: #21645a"/>
+    </g>
+   </g>
+   <g id="line2d_13">
+    <path d="M 44.48 256.071304 
+L 509.948571 256.071304 
+" clip-path="url(#p33a24ea872)" style="fill: none; stroke: #c3cbcc; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 44.48 292.16 
+L 44.48 15.48 
+" style="fill: none; stroke: #c3cbcc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 44.48 292.16 
+L 509.948571 292.16 
+" style="fill: none; stroke: #c3cbcc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 11px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="94.031062" y="110.513565" transform="rotate(-0 94.031062 110.513565)">23.6</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 11px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="185.622674" y="110.513565" transform="rotate(-0 185.622674 110.513565)">-8.5</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 11px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="277.214286" y="143.59487" transform="rotate(-0 277.214286 143.59487)">+3.0</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 11px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="368.805898" y="143.59487" transform="rotate(-0 368.805898 143.59487)">-3.5</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 11px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="421.929032" y="164.646609" transform="rotate(-0 421.929032 164.646609)">14.6</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 9px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; fill: #21645a" transform="translate(498.865986 55.023119)">80% interval</text>
+    <text style="font-size: 9px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; fill: #21645a" transform="translate(498.865986 65.158525)">-4 to +34</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p33a24ea872">
+   <rect x="44.48" y="15.48" width="465.468571" height="276.68"/>
+  </clipPath>
+ </defs>
+</svg>

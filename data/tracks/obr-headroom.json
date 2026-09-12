@@ -1,0 +1,111 @@
+{
+  "id": "obr-headroom",
+  "track": "OBR headroom, 2029-30 current budget before Budget measures",
+  "series": "Public finances",
+  "model_version": "v1",
+  "unit": "£bn",
+  "claim_form": "The Office for Budget Responsibility's Economic and Fiscal Outlook of {target} will put the 2029-30 current budget, before the measures announced at the Budget, at a surplus of {forecast}, with an 80% interval of {lower} to {upper}.",
+  "definition": "Headroom means the OBR's forecast of the current budget, borrowing excluding investment, in the target year 2029-30, before Budget measures, quoted against balance rather than against the bottom of the 0.5 per cent of GDP range.",
+  "basis": "Forecast fixed on the ten working days of market data to 10 September 2026, from the March 2026 EFO figure of £23.6bn. Model version v1. The estimate, its method and the record it rests on are <a href=\"/papers/headroom-nowcast-2026-03.pdf\">Paper 2026/03</a>.",
+  "lines_heading": "The registered line",
+  "pending_label": "awaiting the EFO",
+  "posted": "2026-09-12",
+  "registered_utc": "2026-09-12",
+  "commit": null,
+  "provenance": {
+    "doi": "10.5281/zenodo.22724955",
+    "repository": "walkforwardresearch/ledger",
+    "commit": null,
+    "register": "data/tracks/obr-headroom.json",
+    "preregistration": "https://doi.org/10.5281/zenodo.22724955",
+    "preregistration_label": "Paper 2026/03 on Zenodo, DOI 10.5281/zenodo.22724955, deposited 12 September 2026",
+    "source_of_truth": "The Zenodo deposit",
+    "note": "The paper as deposited on Zenodo carries the forecast, the interval, the benchmarks and the scoring rule, and the deposit is timestamped independently of this site. If this page and that deposit disagree, the deposit wins."
+  },
+  "data_sources": [
+    "OBR Fiscal forecast revisions database, Policy measures database and ready reckoner, obr.uk/data, March 2026 vintage",
+    "Bank of England daily nominal, real and OIS yield curve archives",
+    "Debt Management Office financing remit, April 2026",
+    "ONS public sector finances, via the ONS time series API",
+    "Bundesbank and US Treasury daily 10-year yields",
+    "Economic and Fiscal Outlook documents on gov.uk, for the market window dates"
+  ],
+  "baselines": [
+    {"field": "baseline_nochange", "label": "No change"},
+    {"field": "baseline_mean", "label": "Historical mean"}
+  ],
+  "benchmarks": [
+    {
+      "name": "No change",
+      "definition": "The March 2026 EFO figure, £23.6bn, carried forward.",
+      "edition": "OBR Economic and Fiscal Outlook, March 2026, Table 5.1"
+    },
+    {
+      "name": "Historical mean",
+      "definition": "£23.6bn less the mean year-three underlying revision across the 33 OBR forecasts since November 2010, £3.4bn of headroom lost on average: £20.2bn. The unconditional benchmark.",
+      "edition": "OBR Fiscal forecast revisions database, March 2026"
+    },
+    {
+      "name": "Capital Economics",
+      "definition": "£15bn, from a stated base of £24bn.",
+      "edition": "Press reports of the note, 1 September 2026"
+    },
+    {
+      "name": "Deutsche Bank",
+      "definition": "£13.8bn on its own base of £26bn, which is £11.4bn on the OBR base. Scored at £13.8bn, the number as published.",
+      "edition": "Press reports of the note, 1 September 2026"
+    },
+    {
+      "name": "Pantheon",
+      "definition": "£13bn, from the OBR base of £23.6bn.",
+      "edition": "Press reports of the note, 2 September 2026"
+    },
+    {
+      "name": "Societe Generale",
+      "definition": "£12bn, from the OBR base of £23.6bn.",
+      "edition": "Press reports of the note, late August 2026"
+    },
+    {
+      "name": "Bloomberg Economics",
+      "definition": "£11.6bn, from the OBR base of £23.6bn.",
+      "edition": "Press reports of the note, 1 September 2026"
+    }
+  ],
+  "scoring_rule": [
+    "Field. The 2029-30 current budget before Budget measures, in £bn, as published in the OBR's Economic and Fiscal Outlook of 28 October 2026 and recoverable from its changes-since-March table. The figure as first published is used; later OBR revisions are logged but do not change the score.",
+    "Resolving publication. The EFO published alongside the Budget. If the Budget date moves, the line resolves against the EFO that accompanies it, and the new date is recorded here.",
+    "Error equals forecast minus outcome, in £bn, sign kept.",
+    "Interval hit means the outcome falls within the 80% interval, inclusive.",
+    "Closer means a smaller absolute error than the named benchmark. The claim of skill rests on beating the five published estimates, not on beating no change; if the OBR's number lands nearer the sell-side cluster than this line, the postscript to Paper 2026/03 says so.",
+    "Market moves after 10 September 2026, including any difference between the ten working days used here and the OBR's own window, do not alter the forecast. A forecast that can be revised after the fact is not a forecast.",
+    "A change to the fiscal rules at the Budget has no effect on the score. The line is marked against the published 2029-30 current budget before measures whatever the rules say about it."
+  ],
+  "cadence": "One line. It resolves against the OBR's Economic and Fiscal Outlook on 28 October 2026 and is marked here and in a postscript to Paper 2026/03, which is the only edit that paper will receive.",
+  "superseded_versions": "No earlier version. The paper also carries five further questions for the same day, on the post-measures number, the OBR's decomposition, the market gilt rate, the global share of the gilt move and whether the rules change; those are scored in the postscript and are not ledger lines.",
+  "lines": [
+    {
+      "target_date": "2026-10-28",
+      "horizon_days": 46,
+      "forecast": 14.6,
+      "lower_80": -4,
+      "upper_80": 34,
+      "baseline_nochange": 23.6,
+      "baseline_mean": 20.2,
+      "baseline_capital_economics": 15,
+      "baseline_deutsche_bank": 13.8,
+      "baseline_pantheon": 13,
+      "baseline_societe_generale": 12,
+      "baseline_bloomberg_economics": 11.6,
+      "data_to": "2026-09-10",
+      "resolving_publication": "OBR Economic and Fiscal Outlook, 28 October 2026",
+      "expected_publication": "2026-10-28",
+      "outcome": null,
+      "error": null,
+      "in_interval": null,
+      "closer_than_nochange": null,
+      "closer_than_mean": null,
+      "closer_than_sellside": null,
+      "group": "founding"
+    }
+  ]
+}

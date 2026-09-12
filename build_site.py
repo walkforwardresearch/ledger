@@ -83,7 +83,28 @@ def fmt(d):
 
 
 def num(v):
-    return "&mdash;" if v is None else f"{v:,}"
+    if v is None:
+        return "&mdash;"
+    return ("&minus;" if v < 0 else "") + f"{abs(v):,}"
+
+
+def money(t, v):
+    """Claim wording for tracks whose unit is money: -4 reads as \u2212\u00a34bn, 14.6 as \u00a314.6bn."""
+    if t.get("unit") != "\u00a3bn" or v is None:
+        return num(v)
+    return ("\u2212" if v < 0 else "") + f"\u00a3{abs(v):,}bn"
+
+
+BASELINES_DEFAULT = [("baseline_naive", "Naive"), ("baseline_seasonal", "Seasonal"),
+                     ("baseline_official", "Official")]
+
+
+def baselines(t):
+    """Which per-line baseline fields a track shows, and the column label for each. Tracks that
+    predate this field get the prison set."""
+    if t.get("baselines"):
+        return [(b["field"], b["label"]) for b in t["baselines"]]
+    return BASELINES_DEFAULT
 
 
 REQUIRED_TO_PUBLISH = ("track", "claim_form", "definition", "benchmarks",
@@ -181,7 +202,10 @@ def ledger_rows(tracks):
         # The timestamp of record is the pre-registration commit in the project's own
         # repository, not whatever commit later put the track on this website.
         pr = t["provenance"]
-        commit = "https://github.com/" + pr["repository"] + "/commit/" + pr["commit"]
+        if pr.get("commit"):
+            commit = "https://github.com/" + pr["repository"] + "/commit/" + pr["commit"]
+        else:
+            commit = "https://doi.org/" + pr["doi"]
         st = track_status(t)
         benches = ", ".join(b["name"] for b in t["benchmarks"])
         nm = next_mark(t)
@@ -189,7 +213,7 @@ def ledger_rows(tracks):
         out += f'''
           <tr>
             <td class="claim"><a href="{t["_url"]}">{t["track"]}</a>
-              <span class="sub">{len(t["lines"])} lines registered, {resolved} resolved</span></td>
+              <span class="sub">{len(t["lines"])} {"line" if len(t["lines"]) == 1 else "lines"} registered, {resolved} resolved</span></td>
             <td>{t["series"]}</td>
             <td class="bench">{benches}</td>
             <td class="num"><a href="{commit}">{fmt(t.get("registered_utc"))}</a></td>
@@ -218,13 +242,15 @@ def exposure(t):
     """How much of the track is a directional call. Computed, so it stays true as lines are
     added and cannot drift from the numbers in the table."""
     lines = t["lines"]
-    out = {"n": len(lines), "naive": 0, "seasonal": 0}
+    out = {"n": len(lines)}
+    for field, _ in baselines(t):
+        out[field] = 0
     for l in lines:
         lo, hi = l["lower_80"], l["upper_80"]
-        for key, field in (("naive", "baseline_naive"), ("seasonal", "baseline_seasonal")):
+        for field, _ in baselines(t):
             v = l.get(field)
             if v is not None and not (lo <= v <= hi):
-                out[key] += 1
+                out[field] += 1
     return out
 
 
@@ -235,8 +261,8 @@ def words(n):
 
 def exposure_note(t):
     e = exposure(t)
-    both = min(e["naive"], e["seasonal"])
-    if not both:
+    both = min(e[f] for f, _ in baselines(t)[:2])
+    if not both or "base_headroom" not in t:
         return ""
     first, last = t["lines"][0], t["lines"][-1]
     authored = t.get("exposure_note", "")
@@ -286,28 +312,30 @@ def by_horizon(t):
 
 def lines_table(t, only=None):
     rows = ""
+    unit = f', {t["unit"]}' if t.get("unit") else ""
+    pending = t.get("pending_label", "awaiting bulletin")
     for l in [x for x in t["lines"] if only is None or x.get("group") == only]:
         note = (f'<span class="sub">{l["resolving_note"]}</span>'
                 if l.get("resolving_note") else "")
-        outcome = ("<span class=\"pending\">awaiting bulletin</span>"
+        outcome = (f"<span class=\"pending\">{pending}</span>"
                    if l.get("outcome") is None else num(l["outcome"]))
+        bench = "".join(f'<td class="num soft">{num(l.get(f))}</td>' for f, _ in baselines(t))
         rows += f'''
           <tr>
             <td class="num strong">{fmt(l["target_date"])}</td>
             <td class="num">{num(l["forecast"])}</td>
             <td class="num soft">{num(l["lower_80"])} to {num(l["upper_80"])}</td>
-            <td class="num soft">{num(l["baseline_naive"])}</td>
-            <td class="num soft">{num(l["baseline_seasonal"])}</td>
-            <td class="num soft">{num(l["baseline_official"])}</td>
+            {bench}
             <td class="num">{fmt(l["expected_publication"])}{note}</td>
             <td class="num">{outcome}</td>
           </tr>'''
+    heads = "".join(f"<th>{label}</th>" for _, label in baselines(t))
     return f'''<div class="card table-card">
     <div class="table-scroll">
       <table class="ledger lines">
         <thead>
-          <tr><th>Target</th><th>Forecast</th><th>80% interval</th>
-              <th>Naive</th><th>Seasonal</th><th>Official</th>
+          <tr><th>Target</th><th>Forecast{unit}</th><th>80% interval</th>
+              {heads}
               <th>Mark expected</th><th>Outcome</th></tr>
         </thead>
         <tbody>{rows}
@@ -321,11 +349,23 @@ def track_page(t):
     first = t["lines"][0]
     claim = (t["claim_form"]
              .replace("{target}", fmt(first["target_date"]))
-             .replace("{forecast}", num(first["forecast"]))
-             .replace("{lower}", num(first["lower_80"]))
-             .replace("{upper}", num(first["upper_80"])))
+             .replace("{forecast}", money(t, first["forecast"]))
+             .replace("{lower}", money(t, first["lower_80"]))
+             .replace("{upper}", money(t, first["upper_80"])))
     p = t["provenance"]
     prov_repo = f'https://github.com/{p["repository"]}'
+    ref = p.get("commit") or "main"
+    basis = t.get("basis") or (f'Model version {t["model_version"]}, forecast from the '
+                                f'{fmt(t["base_bulletin"])} bulletin, headroom {num(t["base_headroom"])}.')
+    only = "founding" if any(l.get("group") == "founding" for l in t["lines"]) else None
+    captions = "".join(f'<p class="caption">{t[k]}</p>' for k in ("cadence", "superseded_versions") if t.get(k))
+    if p.get("preregistration", "").startswith("http"):
+        prereg = f'<a href="{p["preregistration"]}">{p.get("preregistration_label", p["preregistration"])}</a>'
+    else:
+        prereg = f'<a href="{prov_repo}/blob/{ref}/{p["preregistration"]}">{p["preregistration"]}</a>'
+    stamp = (f'commit <a href="{prov_repo}/commit/{p["commit"]}">{p["commit"]}</a>' if p.get("commit")
+             else f'DOI <a href="https://doi.org/{p["doi"]}">{p["doi"]}</a>')
+    osf = f'<br>OSF registration {p["osf_registration"]}' if p.get("osf_registration") else ""
     benches = "".join(
         f'<div class="series-row"><h3>{b["name"]}</h3><p>{b["definition"]}'
         f'<span class="sub">Edition: {b["edition"]}</span></p></div>'
@@ -337,8 +377,7 @@ def track_page(t):
   <div class="wrap">
     <div class="row"><div><span class="chip">{t["series"]}</span></div></div>
     <h1>{t["track"]}</h1>
-    <p class="lede">{t["definition"]} Model version {t["model_version"]}, forecast from the
-    {fmt(t["base_bulletin"])} bulletin, headroom {num(t["base_headroom"])}.</p>
+    <p class="lede">{t["definition"]} {basis}</p>
   </div>
 </div>
 
@@ -353,10 +392,9 @@ def track_page(t):
 
   {exposure_note(t)}
 
-  <h2>The founding set</h2>
-  {lines_table(t, only="founding")}
-  <p class="caption">{t["cadence"]}</p>
-  <p class="caption">{t["superseded_versions"]}</p>
+  <h2>{t.get("lines_heading", "The founding set")}</h2>
+  {lines_table(t, only=only)}
+  {captions}
 
   {by_horizon(t)}
   </div>
@@ -382,14 +420,13 @@ def track_page(t):
   <div class="cards c2">
     <div class="card">
       <p class="kicker">Source of truth</p>
-      <p>The register file, not this page. {p["note"]}</p>
-      <p class="small mono"><a href="{prov_repo}/blob/{p["commit"]}/{p["register"]}">{p["repository"]} · {p["register"]}</a><br>
-      commit <a href="{prov_repo}/commit/{p["commit"]}">{p["commit"]}</a><br>
-      OSF registration {p["osf_registration"]}</p>
+      <p>{p.get("source_of_truth", "The register file")}, not this page. {p["note"]}</p>
+      <p class="small mono"><a href="{prov_repo}/blob/{ref}/{p["register"]}">{p["repository"]} · {p["register"]}</a><br>
+      {stamp}{osf}</p>
     </div>
     <div class="card tint">
       <p class="kicker">Pre-registration and data</p>
-      <p class="small mono"><a href="{prov_repo}/blob/{p["commit"]}/{p["preregistration"]}">{p["preregistration"]}</a></p>
+      <p class="small mono">{prereg}</p>
       <ul class="ticks">{sources}</ul>
     </div>
   </div>
@@ -534,7 +571,7 @@ def ledger_page(entries):
   <p class="record-summary mono">{summary(entries)}</p>
   {ledger_table(entries)}
   <p class="caption">Each track opens onto its own lines, their benchmarks and the rule they will be
-  scored by. <span class="mono">Registered</span> links to the commit that timestamped it.
+  scored by. <span class="mono">Registered</span> links to the commit or deposit that timestamped it.
   <a href="/method#how-it-works">How the ledger works</a>.</p>
   </div>
 </section>

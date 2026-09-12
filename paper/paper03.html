@@ -1,0 +1,1168 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>What the gilt move does to the Budget</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#FFFFFF; --tint:#DBE2E5; --deep:#1B262A; --ink:#17211F;
+  --muted:#5C6A6C; --faint:#8A979A; --line:#C3CBCC; --line-strong:#9FAAAC;
+  --accent:#21645A; --block:#A6B2B6;
+}
+*{box-sizing:border-box}
+@page{ size:A4; margin:19mm 18mm 20mm; }
+@page:first{ margin-top:16mm; }
+html,body{margin:0;padding:0;background:var(--paper);color:var(--ink)}
+body{
+  font-family:"Source Serif 4",Georgia,serif;
+  font-size:10.2pt; line-height:1.52;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:"Spectral",Georgia,serif;letter-spacing:-0.012em;margin:0;line-height:1.16}
+p{margin:0 0 .62em}
+a{color:var(--accent);text-decoration:none}
+
+/* ---------- masthead ---------- */
+.masthead{display:flex;align-items:center;gap:.55rem;padding-bottom:9pt;
+  border-bottom:1.6pt solid var(--deep);margin-bottom:16pt}
+.masthead svg{display:block;flex:none}
+.wordmark{font-family:"Spectral",Georgia,serif;font-weight:600;font-size:14pt;letter-spacing:-0.02em}
+.wordmark .fwd{color:var(--accent)}
+.wordmark .co{font-family:"IBM Plex Mono",monospace;font-weight:400;font-size:6.4pt;
+  letter-spacing:.28em;color:var(--faint);margin-left:.45rem;text-transform:uppercase}
+.masthead .ref{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:7.2pt;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+.title{font-size:21pt;font-weight:600;margin-bottom:6pt;text-wrap:balance;max-width:30em}
+.subtitle{font-family:"Spectral",Georgia,serif;font-size:12pt;font-weight:400;
+  color:var(--muted);line-height:1.32;margin-bottom:13pt;max-width:32em}
+.byline{font-family:"IBM Plex Mono",monospace;font-size:8pt;letter-spacing:.1em;
+  color:var(--ink);margin:-6pt 0 13pt}
+.meta{font-family:"IBM Plex Mono",monospace;font-size:7.4pt;letter-spacing:.06em;
+  color:var(--muted);padding:6pt 0;border-top:.5pt solid var(--line);
+  border-bottom:.5pt solid var(--line);margin-bottom:13pt}
+.citation{background:var(--tint);border:.5pt solid var(--line-strong);padding:8pt 10pt;
+  font-size:8.6pt;line-height:1.45;color:var(--ink);margin-bottom:18pt}
+.citation .lab{font-family:"IBM Plex Mono",monospace;font-size:6.8pt;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted);display:block;margin-bottom:3pt}
+
+/* ---------- sections ---------- */
+h2.sec{font-size:12.6pt;font-weight:600;margin:19pt 0 7pt;break-after:avoid}
+h2.sec .n{font-family:"IBM Plex Mono",monospace;font-size:8.4pt;color:var(--accent);
+  margin-right:.6em;letter-spacing:.04em}
+h2.sec.unnumbered{color:var(--ink)}
+
+ul.plain{margin:0 0 .62em;padding-left:0;list-style:none}
+ul.plain li{position:relative;padding-left:13pt;margin-bottom:.5em}
+ul.plain li::before{content:"";position:absolute;left:0;top:.52em;
+  width:4.5pt;height:4.5pt;background:var(--accent)}
+
+/* ---------- tables ---------- */
+table{border-collapse:collapse;width:100%;margin:9pt 0 4pt;font-size:8.4pt;
+  font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;
+  break-inside:avoid}
+th{text-align:left;font-weight:500;font-size:6.9pt;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);background:var(--tint);padding:5pt 6pt;
+  border-top:.5pt solid var(--line-strong);border-bottom:.5pt solid var(--line-strong)}
+td{padding:5pt 6pt;border-bottom:.5pt solid var(--line);vertical-align:top;line-height:1.42}
+td.t{font-family:"Source Serif 4",Georgia,serif;font-size:9pt;line-height:1.42}
+td.n{text-align:right;white-space:nowrap}
+th.n{text-align:right}
+tr.total td{border-top:.5pt solid var(--line-strong);font-weight:500;color:var(--ink)}
+td.lim{color:var(--accent);font-weight:500;width:2em}
+caption{caption-side:bottom;text-align:left;font-family:"Source Serif 4",Georgia,serif;
+  font-size:8.2pt;font-style:italic;color:var(--muted);padding-top:5pt;line-height:1.45}
+
+.callout{background:var(--deep);color:#EEF1F0;padding:10pt 12pt;margin:13pt 0;
+  break-inside:avoid}
+.callout p{margin:0;font-size:9.6pt;line-height:1.5}
+.callout .lab{font-family:"IBM Plex Mono",monospace;font-size:6.8pt;letter-spacing:.2em;
+  text-transform:uppercase;color:#4FAD97;display:block;margin-bottom:4pt}
+
+.colophon{margin-top:20pt;padding-top:8pt;border-top:.5pt solid var(--line);
+  font-family:"IBM Plex Mono",monospace;font-size:7.4pt;letter-spacing:.05em;
+  color:var(--muted);line-height:1.7}
+
+/* paper 02 additions */
+figure.chart{margin:11pt 0 4pt;break-inside:avoid}
+figure.chart svg{width:100%;height:auto;display:block}
+figure.chart .ylab{font-family:"IBM Plex Mono",monospace;font-size:7pt;fill:#17211F}
+figure.chart .val{font-family:"IBM Plex Mono",monospace;font-size:6.6pt;fill:#5C6A6C}
+figure.chart .axis{font-family:"IBM Plex Mono",monospace;font-size:6.4pt;fill:#8A979A}
+.key{display:flex;gap:14pt;margin-bottom:6pt;font-family:"IBM Plex Mono",monospace;
+  font-size:6.8pt;letter-spacing:.08em;color:#5C6A6C;text-transform:uppercase}
+.key span{display:inline-flex;align-items:center;gap:4pt}
+.key i{width:11pt;height:6pt;display:inline-block}
+figure.plot{margin:12pt 0 4pt;break-inside:avoid}
+figure.plot img{width:100%;height:auto;display:block}
+figure.plot figcaption{font-family:"Source Serif 4",Georgia,serif;font-size:8.2pt;
+  font-style:italic;color:var(--muted);padding-top:5pt;line-height:1.45}
+table.tight{font-size:7pt;break-inside:auto}
+table.tight thead{display:table-header-group}
+table.tight tr{break-inside:avoid}
+table.tight th,table.tight td{padding:3.6pt 4pt}
+
+/* paper 03 additions */
+ol.plain{margin:0 0 .62em;padding-left:0;list-style:none;counter-reset:pt}
+ol.plain li{position:relative;padding-left:17pt;margin-bottom:.5em;counter-increment:pt}
+ol.plain li::before{content:counter(pt);position:absolute;left:0;top:.08em;
+  font-family:"IBM Plex Mono",monospace;font-size:8pt;color:var(--accent)}
+figure.plot svg{width:100%;height:auto;display:block}
+figure.plot svg text{fill:var(--ink)}
+p.tablenote{font-family:"Source Serif 4",Georgia,serif;font-size:8.2pt;font-style:italic;
+  color:var(--muted);line-height:1.45;margin:-2pt 0 10pt}
+.callout{break-inside:avoid}
+table.tight td:first-child{white-space:nowrap}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">
+    <rect x="0" y="2"  width="15" height="8" fill="#A6B2B6"/><rect x="16" y="2"  width="8" height="8" fill="#21645A"/>
+    <rect x="4" y="12" width="15" height="8" fill="#A6B2B6"/><rect x="20" y="12" width="8" height="8" fill="#21645A"/>
+    <rect x="8" y="22" width="15" height="8" fill="#A6B2B6"/><rect x="24" y="22" width="8" height="8" fill="#21645A"/>
+  </svg>
+  <span class="wordmark">walk<span class="fwd">forward</span><span class="co">Research</span></span>
+  <span class="ref">Paper 2026/03</span>
+</div>
+
+<h1 class="title">What the gilt move does to the Budget</h1>
+<p class="subtitle">A pre-registered nowcast of the OBR’s headroom number for 28 October 2026</p>
+<p class="byline">Hamish Paton &nbsp;·&nbsp; Walkforward Research</p>
+
+<p class="meta">Version 1.0, 12 September 2026 &nbsp;·&nbsp; Tag: Registered forecast &nbsp;·&nbsp;
+ORCID 0009-0007-4160-9268<br>
+DOI <a href="https://doi.org/10.5281/zenodo.22724955">10.5281/zenodo.22724955</a> &nbsp;·&nbsp;
+Ledger entry: <a href="https://walkforwardresearch.com/obr-headroom">walkforwardresearch.com/obr-headroom</a></p>
+
+<div class="citation"><span class="lab">Pre-registration</span>
+Forecast fixed on market data to 10 September 2026. One postscript will be added on 28 October 2026
+with the OBR’s numbers and the scorecard; nothing else in this paper will change.</div>
+
+<h2 class="sec unnumbered">Summary</h2>
+<p>The Chancellor’s headroom is the OBR’s forecast of the current budget in 2029-30. It was a £23.6bn surplus in March. Since the OBR’s market window closed in January, gilt yields have risen by about two thirds of a percentage point across the curve and markets have gone from pricing Bank Rate cuts to pricing hikes. Five sell-side houses put the pre-measures number at £11.6bn to £15bn, all of it attributed to debt interest.</p>
+<p>Our estimate is £14.6bn before Budget measures, with an 80 per cent interval of about −£4bn to +£34bn. The point is inside the sell-side range. The route is different, and the route is the finding:</p>
+<ol class="plain">
+  <li><strong>Debt interest is the predictable part.</strong> Across the 33 OBR forecasts since 2010, each percentage point on gilt yields between one market window and the next has moved the third-year debt interest forecast by about £11bn, with an R squared of 0.81 and a walk-forward error of £3.6bn. On today’s move that is £7.4bn; the OBR’s own ready reckoner, adding the Bank Rate path, gives £9.2bn. We take £8.5bn, not the £12bn in circulation.</li>
+  <li><strong>Receipts give some back.</strong> Tax revenue this year is running £2.8bn ahead of the OBR’s profile, and the record says the OBR carries in-year receipts news into its third-year forecast at roughly one for one. That is worth about £3bn.</li>
+  <li><strong>Spending drift takes it away again.</strong> In 27 of 33 forecasts the OBR has found more non-interest spending in year three than it had before, welfare above all, with a median revision of £3.4bn. This year’s welfare outturn is above profile. We take £3.5bn.</li>
+  <li><strong>The interval is wide because the OBR’s judgement is.</strong> The part of the OBR’s third-year revision that no market variable predicts, its view on productivity, migration and the tax gap, has a standard deviation of about £16bn on the record. Anyone quoting a headroom estimate without that width is quoting a point on a distribution they have not looked at.</li>
+  <li><strong>The gilt move is mostly imported.</strong> Regressing daily gilt changes on Bunds and Treasuries over the two years to January, then applying the fit to the months since, attributes 74 per cent of the rise in the 10-year to global rates. The UK-specific part was concentrated in March and has been flat since June.</li>
+</ol>
+<div class="callout"><p>Against a floor of £10bn, which the Treasury is reported to defend, £14.6bn leaves a little over £4bn for anything the Budget wants to do. The sell-side median of £13bn leaves £3bn; Bloomberg Economics’ £11.6bn leaves under £2bn. The gap between the estimates is the gap between a Budget with something in it and one with nothing.</p></div>
+<h2 class="sec"><span class="n">1</span>The number</h2>
+<p>Under the Charter for Budget Responsibility the current budget, borrowing excluding investment, must be in balance or surplus in the target year. The OBR forecasts it for every year; the target-year value is the headroom. The March 2026 Economic and Fiscal Outlook put the 2029-30 current budget at a surplus of £23.6bn, up from £21.7bn in November.</p>
+<p>Two conventions need stating. First, from this Budget the target year is the third year of the forecast, which is still 2029-30, and the rule becomes a range: the current budget counts as balanced if it is in deficit by no more than 0.5 per cent of GDP. On the OBR’s March forecast of 2029-30 nominal GDP (£3,507bn) that is £17.5bn, so headroom can be quoted to zero (£23.6bn in March) or to the bottom of the range (£41.1bn). Every published estimate we have seen is quoted to zero, and so is ours. Second, the OBR conditions its forecast on market prices averaged over ten working days. For the March forecast the economy window closed on 22 January and the window for Bank Rate and gilt yields, which is what matters for debt interest, on 30 January, 32 days before publication. The OBR does not announce the October window in advance; in November 2025 it confirmed the dates twelve days before the event. On the recent pattern the fiscal window for 28 October closes between 22 and 25 September. Our forecast uses the ten working days to 10 September and says so; the difference is a few weeks of market noise inside an interval that is far wider than that.</p>
+<h2 class="sec"><span class="n">2</span>What has moved</h2>
+<p>Table 1 compares the OBR’s January fiscal window with the ten working days to 10 September, using the Bank of England’s spot curve. The move is close to parallel and the short end has moved most. Weighted the way the Debt Management Office issues (49 per cent short, 39 per cent medium, 12 per cent long within conventionals, from the April 2026 remit), the rate on new issuance is up 0.68 of a point.</p>
+<table>
+  <caption>Table 1. Gilt spot yields, per cent, ten-working-day averages</caption>
+  <thead><tr><th></th><th class="n">2y</th><th class="n">5y</th><th class="n">10y</th><th class="n">15y</th><th class="n">20y</th><th class="n">30y</th><th class="n">DMO-weighted</th></tr></thead>
+  <tbody>
+    <tr><td>OBR window to 30 Jan 2026</td><td class="n">3.62</td><td class="n">3.95</td><td class="n">4.58</td><td class="n">5.03</td><td class="n">5.27</td><td class="n">5.36</td><td class="n">4.31</td></tr>
+    <tr><td>Ten days to 10 Sep 2026</td><td class="n">4.40</td><td class="n">4.67</td><td class="n">5.19</td><td class="n">5.63</td><td class="n">5.87</td><td class="n">5.94</td><td class="n">4.98</td></tr>
+    <tr><td>Change</td><td class="n">+0.78</td><td class="n">+0.72</td><td class="n">+0.61</td><td class="n">+0.60</td><td class="n">+0.60</td><td class="n">+0.58</td><td class="n">+0.68</td></tr>
+  </tbody>
+</table>
+<p>Our reconstruction of the January window reproduces the figures the OBR printed (4.5 at 10 years and 5.3 at 30 years for the economy window), so the same method applied in September is on the OBR’s basis. The Bank Rate path implied by overnight index swaps has moved further: in January it fell to 3.4 in 2026-27 and rose to 3.85 by 2029-30; it now sits at 4.1 to 4.4 across the forecast, a shift of 0.6 to 0.9 of a point. Brent has gone from the £63 to £66 range the OBR assumed to about $95.</p>
+<h2 class="sec"><span class="n">3</span>Method</h2>
+<p>We build the OBR’s own update mechanically and measure how much of its revision it explains, using data that existed before each forecast.</p>
+<p>The target series is the OBR’s Fiscal forecast revisions database, which decomposes the revision to borrowing at each of the 33 forecasts since November 2010 into policy, classification changes and underlying changes, and splits the underlying change into receipts, debt interest and non-interest spending. We take the third year of each forecast, the target year under the new convention. The database is for total borrowing rather than the current budget; we rebuilt the current budget series from the EFO tables for 16 events and found the two underlying revisions correlate at 0.97 with about £3bn of noise between them, so borrowing is used as the proxy throughout. Our parse reproduces the OBR’s own summary statistics (a mean absolute pre-measures revision of £17.7bn in year three over the last ten forecasts, against the £18bn the OBR prints).</p>
+<table>
+  <caption>Table 2. Distribution of the year-three underlying revision to borrowing, 33 forecasts, £bn, positive means higher borrowing</caption>
+  <thead><tr><th></th><th class="n">Mean</th><th class="n">Median</th><th class="n">SD</th><th class="n">Mean absolute</th><th class="n">p10</th><th class="n">p90</th></tr></thead>
+  <tbody>
+    <tr><td>Underlying, all</td><td class="n">+3.4</td><td class="n">−1.4</td><td class="n">19.8</td><td class="n">13.9</td><td class="n">−14.6</td><td class="n">+27.6</td></tr>
+    <tr><td>Underlying, excluding the three 2020 forecasts</td><td class="n"></td><td class="n"></td><td class="n">17.6</td><td class="n">12.9</td><td class="n">−15.0</td><td class="n">+18.9</td></tr>
+    <tr><td>of which debt interest</td><td class="n">−0.6</td><td class="n">−1.7</td><td class="n">7.9</td><td class="n">5.4</td><td class="n">−7.7</td><td class="n">+4.7</td></tr>
+    <tr><td>of which receipts</td><td class="n">0.0</td><td class="n">−1.5</td><td class="n">22.5</td><td class="n">15.5</td><td class="n">−23.2</td><td class="n">+21.7</td></tr>
+    <tr><td>of which non-interest spending</td><td class="n">+4.0</td><td class="n">+3.4</td><td class="n">5.5</td><td class="n">4.9</td><td class="n">−1.6</td><td class="n">+11.0</td></tr>
+  </tbody>
+</table>
+<figure class="plot">
+<svg role="img" aria-label="Histogram of the year-three underlying revision to borrowing in ten billion pound bins, with lines marking zero, 17.5 and 23.6." xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 576 316.8" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ 
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="fig3-figure_1">
+  <g id="fig3-patch_1">
+   <path d="M 0 316.8 
+L 576 316.8 
+L 576 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="fig3-axes_1">
+   <g id="fig3-patch_2">
+    <path d="M 44.48 274.19875 
+L 564.12 274.19875 
+L 564.12 15.48 
+L 44.48 15.48 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="fig3-patch_3">
+    <path d="M 68.1 274.19875 
+L 111.045455 274.19875 
+L 111.045455 252.638854 
+L 68.1 252.638854 
+z
+" clip-path="url(#fig3-pb30ef7219b)" style="fill: #a6b2b6; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="fig3-patch_4">
+    <path d="M 111.045455 274.19875 
+L 153.990909 274.19875 
+L 153.990909 274.19875 
+L 111.045455 274.19875 
+z
+" clip-path="url(#fig3-pb30ef7219b)" style="fill: #a6b2b6; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="fig3-patch_5">
+    <path d="M 153.990909 274.19875 
+L 196.936364 274.19875 
+L 196.936364 166.399271 
+L 153.990909 166.399271 
+z
+" clip-path="url(#fig3-pb30ef7219b)" style="fill: #a6b2b6; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="fig3-patch_6">
+    <path d="M 196.936364 274.19875 
+L 239.881818 274.19875 
+L 239.881818 37.039896 
+L 196.936364 37.039896 
+z
+" clip-path="url(#fig3-pb30ef7219b)" style="fill: #a6b2b6; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="fig3-patch_7">
+    <path d="M 239.881818 274.19875 
+L 282.827273 274.19875 
+L 282.827273 123.279479 
+L 239.881818 123.279479 
+z
+" clip-path="url(#fig3-pb30ef7219b)" style="fill: #a6b2b6; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="fig3-patch_8">
+    <path d="M 282.827273 274.19875 
+L 325.772727 274.19875 
+L 325.772727 166.399271 
+L 282.827273 166.399271 
+z
+" clip-path="url(#fig3-pb30ef7219b)" style="fill: #a6b2b6; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="fig3-patch_9">
+    <path d="M 325.772727 274.19875 
+L 368.718182 274.19875 
+L 368.718182 274.19875 
+L 325.772727 274.19875 
+z
+" clip-path="url(#fig3-pb30ef7219b)" style="fill: #a6b2b6; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="fig3-patch_10">
+    <path d="M 368.718182 274.19875 
+L 411.663636 274.19875 
+L 411.663636 231.078958 
+L 368.718182 231.078958 
+z
+" clip-path="url(#fig3-pb30ef7219b)" style="fill: #a6b2b6; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="fig3-patch_11">
+    <path d="M 411.663636 274.19875 
+L 454.609091 274.19875 
+L 454.609091 274.19875 
+L 411.663636 274.19875 
+z
+" clip-path="url(#fig3-pb30ef7219b)" style="fill: #a6b2b6; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="fig3-patch_12">
+    <path d="M 454.609091 274.19875 
+L 497.554545 274.19875 
+L 497.554545 252.638854 
+L 454.609091 252.638854 
+z
+" clip-path="url(#fig3-pb30ef7219b)" style="fill: #a6b2b6; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="fig3-patch_13">
+    <path d="M 497.554545 274.19875 
+L 540.5 274.19875 
+L 540.5 252.638854 
+L 497.554545 252.638854 
+z
+" clip-path="url(#fig3-pb30ef7219b)" style="fill: #a6b2b6; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="fig3-matplotlib.axis_1">
+    <g id="fig3-xtick_1">
+     <g id="fig3-line2d_1">
+      <defs>
+       <path id="fig3-m985d891d7b" d="M 0 0 
+L 0 3.5 
+" style="stroke: #5c6a6c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#fig3-m985d891d7b" x="68.1" y="274.19875" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig3-text_1">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="68.1" y="288.467734" transform="rotate(-0 68.1 288.467734)">−40</text>
+     </g>
+    </g>
+    <g id="fig3-xtick_2">
+     <g id="fig3-line2d_2">
+      <g>
+       <use xlink:href="#fig3-m985d891d7b" x="153.990909" y="274.19875" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig3-text_2">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="153.990909" y="288.467734" transform="rotate(-0 153.990909 288.467734)">−20</text>
+     </g>
+    </g>
+    <g id="fig3-xtick_3">
+     <g id="fig3-line2d_3">
+      <g>
+       <use xlink:href="#fig3-m985d891d7b" x="239.881818" y="274.19875" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig3-text_3">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="239.881818" y="288.467734" transform="rotate(-0 239.881818 288.467734)">0</text>
+     </g>
+    </g>
+    <g id="fig3-xtick_4">
+     <g id="fig3-line2d_4">
+      <g>
+       <use xlink:href="#fig3-m985d891d7b" x="325.772727" y="274.19875" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig3-text_4">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="325.772727" y="288.467734" transform="rotate(-0 325.772727 288.467734)">20</text>
+     </g>
+    </g>
+    <g id="fig3-xtick_5">
+     <g id="fig3-line2d_5">
+      <g>
+       <use xlink:href="#fig3-m985d891d7b" x="411.663636" y="274.19875" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig3-text_5">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="411.663636" y="288.467734" transform="rotate(-0 411.663636 288.467734)">40</text>
+     </g>
+    </g>
+    <g id="fig3-xtick_6">
+     <g id="fig3-line2d_6">
+      <g>
+       <use xlink:href="#fig3-m985d891d7b" x="497.554545" y="274.19875" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig3-text_6">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="497.554545" y="288.467734" transform="rotate(-0 497.554545 288.467734)">60</text>
+     </g>
+    </g>
+    <g id="fig3-text_7">
+     <text style="font-size: 11px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; text-anchor: middle; fill: #17211f" x="304.3" y="302.801719" transform="rotate(-0 304.3 302.801719)">Year-three underlying revision to borrowing, £bn (positive means headroom lost)</text>
+    </g>
+   </g>
+   <g id="fig3-matplotlib.axis_2">
+    <g id="fig3-ytick_1">
+     <g id="fig3-line2d_7">
+      <defs>
+       <path id="fig3-m38bd97a10a" d="M 0 0 
+L -3.5 0 
+" style="stroke: #5c6a6c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#fig3-m38bd97a10a" x="44.48" y="274.19875" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig3-text_8">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="277.833242" transform="rotate(-0 37.48 277.833242)">0</text>
+     </g>
+    </g>
+    <g id="fig3-ytick_2">
+     <g id="fig3-line2d_8">
+      <g>
+       <use xlink:href="#fig3-m38bd97a10a" x="44.48" y="231.078958" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig3-text_9">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="234.713451" transform="rotate(-0 37.48 234.713451)">2</text>
+     </g>
+    </g>
+    <g id="fig3-ytick_3">
+     <g id="fig3-line2d_9">
+      <g>
+       <use xlink:href="#fig3-m38bd97a10a" x="44.48" y="187.959167" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig3-text_10">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="191.593659" transform="rotate(-0 37.48 191.593659)">4</text>
+     </g>
+    </g>
+    <g id="fig3-ytick_4">
+     <g id="fig3-line2d_10">
+      <g>
+       <use xlink:href="#fig3-m38bd97a10a" x="44.48" y="144.839375" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig3-text_11">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="148.473867" transform="rotate(-0 37.48 148.473867)">6</text>
+     </g>
+    </g>
+    <g id="fig3-ytick_5">
+     <g id="fig3-line2d_11">
+      <g>
+       <use xlink:href="#fig3-m38bd97a10a" x="44.48" y="101.719583" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig3-text_12">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="105.354076" transform="rotate(-0 37.48 105.354076)">8</text>
+     </g>
+    </g>
+    <g id="fig3-ytick_6">
+     <g id="fig3-line2d_12">
+      <g>
+       <use xlink:href="#fig3-m38bd97a10a" x="44.48" y="58.599792" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig3-text_13">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="62.234284" transform="rotate(-0 37.48 62.234284)">10</text>
+     </g>
+    </g>
+    <g id="fig3-ytick_7">
+     <g id="fig3-line2d_13">
+      <g>
+       <use xlink:href="#fig3-m38bd97a10a" x="44.48" y="15.48" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig3-text_14">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="19.114492" transform="rotate(-0 37.48 19.114492)">12</text>
+     </g>
+    </g>
+    <g id="fig3-text_15">
+     <text style="font-size: 11px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; text-anchor: middle; fill: #17211f" x="19.75375" y="144.839375" transform="rotate(-90 19.75375 144.839375)">Forecasts</text>
+    </g>
+   </g>
+   <g id="fig3-line2d_14">
+    <path d="M 239.881818 274.19875 
+L 239.881818 15.48 
+" clip-path="url(#fig3-pb30ef7219b)" style="fill: none; stroke: #17211f; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="fig3-line2d_15">
+    <path d="M 315.036364 274.19875 
+L 315.036364 15.48 
+" clip-path="url(#fig3-pb30ef7219b)" style="fill: none; stroke-dasharray: 2.96,1.28; stroke-dashoffset: 0; stroke: #17211f; stroke-width: 0.8"/>
+   </g>
+   <g id="fig3-line2d_16">
+    <path d="M 341.233091 274.19875 
+L 341.233091 15.48 
+" clip-path="url(#fig3-pb30ef7219b)" style="fill: none; stroke-dasharray: 2.96,1.28; stroke-dashoffset: 0; stroke: #17211f; stroke-width: 0.8"/>
+   </g>
+   <g id="fig3-patch_14">
+    <path d="M 44.48 274.19875 
+L 44.48 15.48 
+" style="fill: none; stroke: #c3cbcc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="fig3-patch_15">
+    <path d="M 44.48 274.19875 
+L 564.12 274.19875 
+" style="fill: none; stroke: #c3cbcc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="fig3-text_16">
+    <text style="font-size: 8px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; fill: #17211f" transform="translate(248.107841 89.010104) rotate(-90)">no change</text>
+   </g>
+   <g id="fig3-text_17">
+    <text style="font-size: 8px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; fill: #17211f" transform="translate(323.262386 127.540104) rotate(-90)">the £17.5bn range</text>
+   </g>
+   <g id="fig3-text_18">
+    <text style="font-size: 8px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; fill: #17211f" transform="translate(349.501614 166.070104) rotate(-90)">the whole £23.6bn cushion</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="fig3-pb30ef7219b">
+   <rect x="44.48" y="15.48" width="519.64" height="258.71875"/>
+  </clipPath>
+ </defs>
+</svg>
+
+<figcaption>Figure 3. Distribution of the year-three underlying revision to borrowing, 33 OBR forecasts since 2010. Adverse 48 per cent, worse than the £17.5bn range 15 per cent, worse than the whole £23.6bn cushion 12 per cent.</figcaption>
+</figure>
+<p>On this record an adverse revision has happened 48 per cent of the time, one larger than £9.9bn 27 per cent, one larger than the £17.5bn range 15 per cent, and one larger than the whole £23.6bn cushion 12 per cent.</p>
+<p>The market inputs are the Bank of England’s daily nominal, real and OIS curves, from which we reconstruct the ten-working-day window average at any date. The window dates are read from each EFO’s text for 21 forecasts and assumed on the neighbouring pattern for 12; the assumed ones are marked in the appendix. The debt interest channel is then a regression of the year-three debt interest revision on the change in the DMO-weighted rate between one window and the next. Adding the Bank Rate path and market inflation expectations as separate regressors makes the walk-forward forecasts worse, because they move with gilts and there are too few events to separate them, so the published channel is the one-variable fit with the OBR’s ready reckoner as the structural cross-check. Receipts news is year-to-date receipts against the previous forecast’s profile at the last public finances release before the window; its carry-forward into year three is estimated on the 15 events for which both sides exist. Spending drift is the median of the record. Everything else the OBR does is treated as a draw from the residual distribution, with no narrowing on judgement.</p>
+<h2 class="sec"><span class="n">4</span>Results</h2>
+<figure class="plot">
+<svg role="img" aria-label="Scatter of the year-three debt interest revision against the change in the DMO-weighted gilt yield between OBR windows, with a fitted line of slope about 11 and the September 2026 move marked at plus 0.68 points." xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 576 360" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ 
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="fig1-figure_1">
+  <g id="fig1-patch_1">
+   <path d="M 0 360 
+L 576 360 
+L 576 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="fig1-axes_1">
+   <g id="fig1-patch_2">
+    <path d="M 50.24 317.68 
+L 564.12 317.68 
+L 564.12 11.88 
+L 50.24 11.88 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="fig1-matplotlib.axis_1">
+    <g id="fig1-xtick_1">
+     <g id="fig1-line2d_1">
+      <defs>
+       <path id="fig1-ma31805a435" d="M 0 0 
+L 0 3.5 
+" style="stroke: #5c6a6c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#fig1-ma31805a435" x="134.532569" y="317.68" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig1-text_1">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="134.532569" y="331.948984" transform="rotate(-0 134.532569 331.948984)">−1</text>
+     </g>
+    </g>
+    <g id="fig1-xtick_2">
+     <g id="fig1-line2d_2">
+      <g>
+       <use xlink:href="#fig1-ma31805a435" x="236.089881" y="317.68" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig1-text_2">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="236.089881" y="331.948984" transform="rotate(-0 236.089881 331.948984)">0</text>
+     </g>
+    </g>
+    <g id="fig1-xtick_3">
+     <g id="fig1-line2d_3">
+      <g>
+       <use xlink:href="#fig1-ma31805a435" x="337.647194" y="317.68" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig1-text_3">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="337.647194" y="331.948984" transform="rotate(-0 337.647194 331.948984)">1</text>
+     </g>
+    </g>
+    <g id="fig1-xtick_4">
+     <g id="fig1-line2d_4">
+      <g>
+       <use xlink:href="#fig1-ma31805a435" x="439.204506" y="317.68" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig1-text_4">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="439.204506" y="331.948984" transform="rotate(-0 439.204506 331.948984)">2</text>
+     </g>
+    </g>
+    <g id="fig1-xtick_5">
+     <g id="fig1-line2d_5">
+      <g>
+       <use xlink:href="#fig1-ma31805a435" x="540.761818" y="317.68" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig1-text_5">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="540.761818" y="331.948984" transform="rotate(-0 540.761818 331.948984)">3</text>
+     </g>
+    </g>
+    <g id="fig1-text_6">
+     <text style="font-size: 11px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; text-anchor: middle; fill: #17211f" x="307.18" y="346.282969" transform="rotate(-0 307.18 346.282969)">Change in DMO-weighted gilt yield between OBR windows, percentage points</text>
+    </g>
+   </g>
+   <g id="fig1-matplotlib.axis_2">
+    <g id="fig1-ytick_1">
+     <g id="fig1-line2d_6">
+      <defs>
+       <path id="fig1-mb89f885742" d="M 0 0 
+L -3.5 0 
+" style="stroke: #5c6a6c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#fig1-mb89f885742" x="50.24" y="311.783958" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig1-text_7">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="43.24" y="315.41845" transform="rotate(-0 43.24 315.41845)">−20</text>
+     </g>
+    </g>
+    <g id="fig1-ytick_2">
+     <g id="fig1-line2d_7">
+      <g>
+       <use xlink:href="#fig1-mb89f885742" x="50.24" y="256.558902" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig1-text_8">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="43.24" y="260.193394" transform="rotate(-0 43.24 260.193394)">−10</text>
+     </g>
+    </g>
+    <g id="fig1-ytick_3">
+     <g id="fig1-line2d_8">
+      <g>
+       <use xlink:href="#fig1-mb89f885742" x="50.24" y="201.333845" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig1-text_9">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="43.24" y="204.968337" transform="rotate(-0 43.24 204.968337)">0</text>
+     </g>
+    </g>
+    <g id="fig1-ytick_4">
+     <g id="fig1-line2d_9">
+      <g>
+       <use xlink:href="#fig1-mb89f885742" x="50.24" y="146.108789" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig1-text_10">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="43.24" y="149.743281" transform="rotate(-0 43.24 149.743281)">10</text>
+     </g>
+    </g>
+    <g id="fig1-ytick_5">
+     <g id="fig1-line2d_10">
+      <g>
+       <use xlink:href="#fig1-mb89f885742" x="50.24" y="90.883732" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig1-text_11">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="43.24" y="94.518224" transform="rotate(-0 43.24 94.518224)">20</text>
+     </g>
+    </g>
+    <g id="fig1-ytick_6">
+     <g id="fig1-line2d_11">
+      <g>
+       <use xlink:href="#fig1-mb89f885742" x="50.24" y="35.658676" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig1-text_12">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="43.24" y="39.293168" transform="rotate(-0 43.24 39.293168)">30</text>
+     </g>
+    </g>
+    <g id="fig1-text_13">
+     <text style="font-size: 11px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; text-anchor: middle; fill: #17211f" x="19.794453" y="164.78" transform="rotate(-90 19.794453 164.78)">Year-three debt interest revision, £bn</text>
+    </g>
+   </g>
+   <g id="fig1-line2d_12">
+    <path d="M 73.598182 303.78 
+L 83.132134 298.106531 
+L 92.666085 292.433061 
+L 102.200037 286.759592 
+L 111.733989 281.086122 
+L 121.267941 275.412653 
+L 130.801892 269.739184 
+L 140.335844 264.065714 
+L 149.869796 258.392245 
+L 159.403748 252.718776 
+L 168.937699 247.045306 
+L 178.471651 241.371837 
+L 188.005603 235.698367 
+L 197.539555 230.024898 
+L 207.073506 224.351429 
+L 216.607458 218.677959 
+L 226.14141 213.00449 
+L 235.675362 207.33102 
+L 245.209314 201.657551 
+L 254.743265 195.984082 
+L 264.277217 190.310612 
+L 273.811169 184.637143 
+L 283.345121 178.963673 
+L 292.879072 173.290204 
+L 302.413024 167.616735 
+L 311.946976 161.943265 
+L 321.480928 156.269796 
+L 331.014879 150.596327 
+L 340.548831 144.922857 
+L 350.082783 139.249388 
+L 359.616735 133.575918 
+L 369.150686 127.902449 
+L 378.684638 122.22898 
+L 388.21859 116.55551 
+L 397.752542 110.882041 
+L 407.286494 105.208571 
+L 416.820445 99.535102 
+L 426.354397 93.861633 
+L 435.888349 88.188163 
+L 445.422301 82.514694 
+L 454.956252 76.841224 
+L 464.490204 71.167755 
+L 474.024156 65.494286 
+L 483.558108 59.820816 
+L 493.092059 54.147347 
+L 502.626011 48.473878 
+L 512.159963 42.800408 
+L 521.693915 37.126939 
+L 531.227866 31.453469 
+L 540.761818 25.78 
+" clip-path="url(#fig1-p50441bfbd0)" style="fill: none; stroke: #17211f; stroke-width: 1.2; stroke-linecap: square"/>
+   </g>
+   <g id="fig1-line2d_13">
+    <path d="M 50.24 201.333845 
+L 564.12 201.333845 
+" clip-path="url(#fig1-p50441bfbd0)" style="fill: none; stroke: #c3cbcc; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="fig1-line2d_14">
+    <path d="M 236.089881 317.68 
+L 236.089881 11.88 
+" clip-path="url(#fig1-p50441bfbd0)" style="fill: none; stroke: #c3cbcc; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="fig1-patch_3">
+    <path d="M 50.24 317.68 
+L 50.24 11.88 
+" style="fill: none; stroke: #c3cbcc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="fig1-patch_4">
+    <path d="M 50.24 317.68 
+L 564.12 317.68 
+" style="fill: none; stroke: #c3cbcc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="fig1-PathCollection_1">
+    <defs>
+     <path id="fig1-ma99cd4da77" d="M 0 3.24037 
+C 0.859356 3.24037 1.683631 2.898944 2.291288 2.291288 
+C 2.898944 1.683631 3.24037 0.859356 3.24037 0 
+C 3.24037 -0.859356 2.898944 -1.683631 2.291288 -2.291288 
+C 1.683631 -2.898944 0.859356 -3.24037 0 -3.24037 
+C -0.859356 -3.24037 -1.683631 -2.898944 -2.291288 -2.291288 
+C -2.898944 -1.683631 -3.24037 -0.859356 -3.24037 0 
+C -3.24037 0.859356 -2.898944 1.683631 -2.291288 2.291288 
+C -1.683631 2.898944 -0.859356 3.24037 0 3.24037 
+z
+" style="stroke: #17211f; stroke-width: 0.6"/>
+    </defs>
+    <g clip-path="url(#fig1-p50441bfbd0)">
+     <use xlink:href="#fig1-ma99cd4da77" x="211.716126" y="225.080619" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="283.821818" y="184.214078" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="90.862925" y="235.57338" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="224.918577" y="217.349112" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="206.638261" y="221.767116" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="268.588221" y="194.872514" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="284.837391" y="196.36359" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="247.261186" y="202.438346" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="189.373518" y="288.037184" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="204.607115" y="243.304888" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="264.525929" y="187.582806" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="208.669407" y="228.946373" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="200.544822" y="227.786647" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="207.653834" y="225.908995" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="245.23004" y="196.36359" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="248.276759" y="205.199599" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="263.510356" y="188.355957" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="236.089881" y="210.722105" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="205.622688" y="223.589543" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="187.342372" y="243.636238" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="191.404664" y="246.176591" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="238.121028" y="223.313418" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="245.23004" y="192.332161" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="266.557075" y="184.103628" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="313.273439" y="147.32374" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="495.061028" y="52.447093" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="184.295652" y="211.716156" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="357.958656" y="104.966122" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="176.171067" y="277.710098" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="224.918577" y="193.823238" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="291.946403" y="173.610867" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="236.089881" y="182.225976" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+     <use xlink:href="#fig1-ma99cd4da77" x="228.98087" y="214.146058" style="fill: #a6b2b6; stroke: #17211f; stroke-width: 0.6"/>
+    </g>
+   </g>
+   <g id="fig1-patch_5">
+    <path d="M 414.248941 234.795512 
+Q 360.546248 200.926507 306.843554 167.057503 
+" style="fill: none; stroke: #21645a; stroke-width: 0.8; stroke-linecap: round"/>
+   </g>
+   <g id="fig1-text_14">
+    <text style="font-size: 10px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: start; fill: #21645a" x="327.491462" y="245.51389" transform="rotate(-0 327.491462 245.51389)">September 2026: +0.68 points, 6.4</text>
+   </g>
+   <g id="fig1-text_15">
+    <text style="font-size: 9px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: start; fill: #17211f" x="439.204506" y="90.883732" transform="rotate(-0 439.204506 90.883732)">November 2022</text>
+   </g>
+   <g id="fig1-PathCollection_2">
+    <defs>
+     <path id="fig1-m775a4ecf29" d="M 0 5.244044 
+C 1.390737 5.244044 2.7247 4.691499 3.708099 3.708099 
+C 4.691499 2.7247 5.244044 1.390737 5.244044 0 
+C 5.244044 -1.390737 4.691499 -2.7247 3.708099 -3.708099 
+C 2.7247 -4.691499 1.390737 -5.244044 0 -5.244044 
+C -1.390737 -5.244044 -2.7247 -4.691499 -3.708099 -3.708099 
+C -4.691499 -2.7247 -5.244044 -1.390737 -5.244044 0 
+C -5.244044 1.390737 -4.691499 2.7247 -3.708099 3.708099 
+C -2.7247 4.691499 -1.390737 5.244044 0 5.244044 
+z
+" style="stroke: #ffffff"/>
+    </defs>
+    <g clip-path="url(#fig1-p50441bfbd0)">
+     <use xlink:href="#fig1-m775a4ecf29" x="305.148854" y="165.988696" style="fill: #21645a; stroke: #ffffff"/>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="fig1-p50441bfbd0">
+   <rect x="50.24" y="11.88" width="513.88" height="305.8"/>
+  </clipPath>
+ </defs>
+</svg>
+
+<figcaption>Figure 1. Each point on gilt yields moves third-year debt interest by about £11bn. 33 OBR forecasts, November 2010 to March 2026; R squared 0.81. The filled point is September 2026, at +0.68 points on the fitted line.</figcaption>
+</figure>
+<table>
+  <caption>Table 3. The debt interest channel</caption>
+  <thead><tr><th></th><th class="n">All 33 events</th><th class="n">Walk-forward from 2016</th></tr></thead>
+  <tbody>
+    <tr><td>£bn per percentage point on the DMO-weighted rate</td><td class="n">11.0 (standard error 1.0)</td><td class="n"></td></tr>
+    <tr><td>R squared</td><td class="n">0.81</td><td class="n"></td></tr>
+    <tr><td>Residual standard deviation, £bn</td><td class="n">3.5</td><td class="n"></td></tr>
+    <tr><td>Root mean square error, £bn</td><td class="n"></td><td class="n">3.6</td></tr>
+  </tbody>
+</table>
+<p>Applied to a 0.68 point move, the fit gives £7.4bn. The OBR’s March 2025 ready reckoner, which is the latest published, gives £5.6bn for the gilt yield on issuance from 2026-27, £3.1bn for the Bank Rate path through reserves remuneration, and about £0.5bn carried into 2029-30 from a near-term RPI bump on the index-linked stock: £9.2bn. The empirical fit sits below the reckoner because gilt moves and Bank Rate moves have historically arrived together, so the one-variable coefficient already carries some of the Bank Rate channel. We take the midpoint, £8.5bn, and treat £7.4bn to £9.2bn as the range. Reaching the £12bn in the sell-side estimates requires the OBR to revise its 2029-30 RPI forecast up by about a third of a point, which is what market breakevens imply and what the OBR’s convention, its own CPI path returning to target with a fixed wedge, does not deliver.</p>
+<p>Receipts: at the July public finances the OBR reported central government receipts £2.8bn above its profile, led by onshore corporation tax, PAYE and National Insurance. On the 15 events with both sides available, a £1bn in-year shortfall against the previous profile has been followed by a £1.05bn adverse revision to year-three receipts (standard error 0.40, R squared 0.35). We carry £2.8bn at one for one, rounded to £3bn, and note that on a growth-rate definition the news is larger (£7.2bn), so the risk here is to the upside.</p>
+<p>Spending: non-interest spending in year three has been revised up in 27 of 33 forecasts, median £3.4bn. Central government spending is £5.1bn above profile this year with net social benefits contributing. We take £3.5bn. Spending revisions show no usable relationship with in-year outturn; they are the OBR’s judgement about welfare and departments, and the record says that judgement runs one way.</p>
+<table>
+  <caption>Table 4. The estimate, 2029-30 current budget before Budget measures, £bn</caption>
+  <thead><tr><th>Line</th><th class="n">Central</th><th>Range</th><th>Basis</th></tr></thead>
+  <tbody>
+    <tr><td>March 2026 EFO</td><td class="n">23.6</td><td class="n"></td><td class="n">Table 5.1</td></tr>
+    <tr><td>Debt interest</td><td class="n">−8.5</td><td class="n">−7.4 to −9.2</td><td class="t">fit and reckoner on +0.68 points</td></tr>
+    <tr><td>Receipts carry-forward</td><td class="n">+3.0</td><td class="n">+1 to +7</td><td class="t">£2.8bn to £7.2bn of news at about one for one</td></tr>
+    <tr><td>Non-interest spending drift</td><td class="n">−3.5</td><td class="n">−1 to −11</td><td class="t">median and p10/p90 of the record</td></tr>
+    <tr><td>OBR judgement</td><td class="n">0</td><td class="n"></td><td class="t">zero mean by construction</td></tr>
+    <tr class="total"><td>Headroom before measures</td><td class="n">14.6</td><td class="t">80 per cent interval about −4 to +34</td><td class="n"></td></tr>
+  </tbody>
+</table>
+<figure class="plot">
+<svg role="img" aria-label="Waterfall from the March 2026 figure of 23.6 through debt interest minus 8.5, receipts plus 3.0 and spending drift minus 3.5 to 14.6 before Budget measures, with an 80 per cent interval bar from minus 4 to plus 34." xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 576 331.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ 
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="fig2-figure_1">
+  <g id="fig2-patch_1">
+   <path d="M 0 331.2 
+L 576 331.2 
+L 576 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="fig2-axes_1">
+   <g id="fig2-patch_2">
+    <path d="M 44.48 292.16 
+L 509.948571 292.16 
+L 509.948571 15.48 
+L 44.48 15.48 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="fig2-patch_3">
+    <path d="M 65.637662 256.071304 
+L 122.424462 256.071304 
+L 122.424462 114.122435 
+L 65.637662 114.122435 
+z
+" clip-path="url(#fig2-p33a24ea872)" style="fill: #a6b2b6; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="fig2-patch_4">
+    <path d="M 157.229274 165.248087 
+L 214.016074 165.248087 
+L 214.016074 114.122435 
+L 157.229274 114.122435 
+z
+" clip-path="url(#fig2-p33a24ea872)" style="fill: #21645a; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="fig2-patch_5">
+    <path d="M 248.820886 165.248087 
+L 305.607685 165.248087 
+L 305.607685 147.203739 
+L 248.820886 147.203739 
+z
+" clip-path="url(#fig2-p33a24ea872)" style="fill: #21645a; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="fig2-patch_6">
+    <path d="M 340.412498 168.255478 
+L 397.199297 168.255478 
+L 397.199297 147.203739 
+L 340.412498 147.203739 
+z
+" clip-path="url(#fig2-p33a24ea872)" style="fill: #21645a; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="fig2-patch_7">
+    <path d="M 432.00411 256.071304 
+L 488.790909 256.071304 
+L 488.790909 168.255478 
+L 432.00411 168.255478 
+z
+" clip-path="url(#fig2-p33a24ea872)" style="fill: #21645a; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="fig2-matplotlib.axis_1">
+    <g id="fig2-xtick_1">
+     <g id="fig2-line2d_1">
+      <defs>
+       <path id="fig2-m91cca7234c" d="M 0 0 
+L 0 3.5 
+" style="stroke: #5c6a6c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#fig2-m91cca7234c" x="94.031062" y="292.16" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig2-text_1">
+      <text style="font-size: 9px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; text-anchor: middle; fill: #17211f" x="94.031062" y="305.998594" transform="rotate(-0 94.031062 305.998594)">March 2026 EFO</text>
+     </g>
+    </g>
+    <g id="fig2-xtick_2">
+     <g id="fig2-line2d_2">
+      <g>
+       <use xlink:href="#fig2-m91cca7234c" x="185.622674" y="292.16" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig2-text_2">
+      <text style="font-size: 9px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; text-anchor: middle; fill: #17211f" x="185.622674" y="305.998594" transform="rotate(-0 185.622674 305.998594)">Debt interest</text>
+     </g>
+    </g>
+    <g id="fig2-xtick_3">
+     <g id="fig2-line2d_3">
+      <g>
+       <use xlink:href="#fig2-m91cca7234c" x="277.214286" y="292.16" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig2-text_3">
+      <text style="font-size: 9px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; fill: #17211f" transform="translate(257.541551 305.998594)">Receipts</text>
+      <text style="font-size: 9px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; fill: #17211f" transform="translate(245.553973 316.076625)">carry-forward</text>
+     </g>
+    </g>
+    <g id="fig2-xtick_4">
+     <g id="fig2-line2d_4">
+      <g>
+       <use xlink:href="#fig2-m91cca7234c" x="368.805898" y="292.16" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig2-text_4">
+      <text style="font-size: 9px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; text-anchor: middle; fill: #17211f" x="368.805898" y="305.998594" transform="rotate(-0 368.805898 305.998594)">Spending drift</text>
+     </g>
+    </g>
+    <g id="fig2-xtick_5">
+     <g id="fig2-line2d_5">
+      <g>
+       <use xlink:href="#fig2-m91cca7234c" x="460.397509" y="292.16" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig2-text_5">
+      <text style="font-size: 9px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; fill: #17211f" transform="translate(427.369619 305.998594)">Before Budget</text>
+      <text style="font-size: 9px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; fill: #17211f" transform="translate(438.452978 316.204594)">measures</text>
+     </g>
+    </g>
+   </g>
+   <g id="fig2-matplotlib.axis_2">
+    <g id="fig2-ytick_1">
+     <g id="fig2-line2d_6">
+      <defs>
+       <path id="fig2-mdca47735a4" d="M 0 0 
+L -3.5 0 
+" style="stroke: #5c6a6c; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#fig2-mdca47735a4" x="44.48" y="256.071304" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig2-text_6">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="259.705797" transform="rotate(-0 37.48 259.705797)">0</text>
+     </g>
+    </g>
+    <g id="fig2-ytick_2">
+     <g id="fig2-line2d_7">
+      <g>
+       <use xlink:href="#fig2-mdca47735a4" x="44.48" y="195.923478" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig2-text_7">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="199.55797" transform="rotate(-0 37.48 199.55797)">10</text>
+     </g>
+    </g>
+    <g id="fig2-ytick_3">
+     <g id="fig2-line2d_8">
+      <g>
+       <use xlink:href="#fig2-mdca47735a4" x="44.48" y="135.775652" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig2-text_8">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="139.410144" transform="rotate(-0 37.48 139.410144)">20</text>
+     </g>
+    </g>
+    <g id="fig2-ytick_4">
+     <g id="fig2-line2d_9">
+      <g>
+       <use xlink:href="#fig2-mdca47735a4" x="44.48" y="75.627826" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig2-text_9">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="79.262318" transform="rotate(-0 37.48 79.262318)">30</text>
+     </g>
+    </g>
+    <g id="fig2-ytick_5">
+     <g id="fig2-line2d_10">
+      <g>
+       <use xlink:href="#fig2-mdca47735a4" x="44.48" y="15.48" style="fill: #5c6a6c; stroke: #5c6a6c; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="fig2-text_10">
+      <text style="font-size: 9.5px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="37.48" y="19.114492" transform="rotate(-0 37.48 19.114492)">40</text>
+     </g>
+    </g>
+    <g id="fig2-text_11">
+     <text style="font-size: 11px; font-family: 'Source Serif 4', 'DejaVu Serif', serif; text-anchor: middle; fill: #17211f" x="19.597344" y="153.82" transform="rotate(-90 19.597344 153.82)">£bn, 2029-30 current budget surplus</text>
+    </g>
+   </g>
+   <g id="fig2-LineCollection_1">
+    <path d="M 460.397509 280.130435 
+L 460.397509 51.568696 
+" clip-path="url(#fig2-p33a24ea872)" style="fill: none; stroke: #21645a; stroke-width: 1.4"/>
+   </g>
+   <g id="fig2-line2d_11">
+    <defs>
+     <path id="fig2-m176f475404" d="M 6 0 
+L -6 -0 
+" style="stroke: #21645a"/>
+    </defs>
+    <g clip-path="url(#fig2-p33a24ea872)">
+     <use xlink:href="#fig2-m176f475404" x="460.397509" y="280.130435" style="fill: #1f77b4; stroke: #21645a"/>
+    </g>
+   </g>
+   <g id="fig2-line2d_12">
+    <g clip-path="url(#fig2-p33a24ea872)">
+     <use xlink:href="#fig2-m176f475404" x="460.397509" y="51.568696" style="fill: #1f77b4; stroke: #21645a"/>
+    </g>
+   </g>
+   <g id="fig2-line2d_13">
+    <path d="M 44.48 256.071304 
+L 509.948571 256.071304 
+" clip-path="url(#fig2-p33a24ea872)" style="fill: none; stroke: #c3cbcc; stroke-width: 0.6; stroke-linecap: square"/>
+   </g>
+   <g id="fig2-patch_8">
+    <path d="M 44.48 292.16 
+L 44.48 15.48 
+" style="fill: none; stroke: #c3cbcc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="fig2-patch_9">
+    <path d="M 44.48 292.16 
+L 509.948571 292.16 
+" style="fill: none; stroke: #c3cbcc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="fig2-text_12">
+    <text style="font-size: 11px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="94.031062" y="110.513565" transform="rotate(-0 94.031062 110.513565)">23.6</text>
+   </g>
+   <g id="fig2-text_13">
+    <text style="font-size: 11px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="185.622674" y="110.513565" transform="rotate(-0 185.622674 110.513565)">-8.5</text>
+   </g>
+   <g id="fig2-text_14">
+    <text style="font-size: 11px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="277.214286" y="143.59487" transform="rotate(-0 277.214286 143.59487)">+3.0</text>
+   </g>
+   <g id="fig2-text_15">
+    <text style="font-size: 11px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: middle; fill: #17211f" x="368.805898" y="143.59487" transform="rotate(-0 368.805898 143.59487)">-3.5</text>
+   </g>
+   <g id="fig2-text_16">
+    <text style="font-size: 11px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; text-anchor: end; fill: #17211f" x="421.929032" y="164.646609" transform="rotate(-0 421.929032 164.646609)">14.6</text>
+   </g>
+   <g id="fig2-text_17">
+    <text style="font-size: 9px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; fill: #21645a" transform="translate(498.865986 55.023119)">80% interval</text>
+    <text style="font-size: 9px; font-family: 'IBM Plex Mono', 'DejaVu Sans Mono'; fill: #21645a" transform="translate(498.865986 65.158525)">-4 to +34</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="fig2-p33a24ea872">
+   <rect x="44.48" y="15.48" width="465.468571" height="276.68"/>
+  </clipPath>
+ </defs>
+</svg>
+
+<figcaption>Figure 2. From £23.6bn to £14.6bn: the composition matters more than the number. The final bar carries the 80 per cent interval, −4 to +34.</figcaption>
+</figure>
+<p>The interval is the residual after the three modelled lines. Excluding the 2020 forecasts, the non-debt-interest part of the OBR’s year-three revision has a standard deviation of £15.7bn; the receipts term removes perhaps a fifth of that variance. The band therefore contains the March figure, every sell-side number and a small deficit. That is not a hedge. It is what 33 forecasts say about how much of the October number is knowable in September.</p>
+<p>Two smaller forecasts follow from the same inputs. The OBR’s economic determinants table carries a row for the market gilt rate, the weighted average interest rate on conventional gilts, which was 5.2 per cent for 2029-30 in March; on a parallel shift of 0.68 it will print at about 5.9, range 5.7 to 6.1 depending on where the window settles and how the shorter remit changes the weighting. And the OBR’s own figures for average revisions imply the two-in-three probability the IFS quoted last autumn for a £10bn cushion surviving one forecast is, on the fuller record, closer to 73 per cent.</p>
+<h2 class="sec"><span class="n">5</span>The gilt move is mostly imported</h2>
+<p>We regress daily changes in the 10-year gilt on daily changes in the 10-year Bund and the 10-year Treasury over the two years to 30 January 2026 (486 days; coefficients 0.26 and 0.57; R squared 0.52), then apply the fit to the daily changes since. To 10 September the gilt is up 0.75 of a point, the Bund 0.60 and the Treasury 0.71. The fitted global component is 0.56 (74 per cent); the UK-specific residual is 0.19 (26 per cent). At 30 years the split is 63 to 37 (a 0.63 point move, of which 0.40 global and 0.23 UK-specific), so there is a little more UK-specific pressure at the long end, which reads as term premium.</p>
+<p>The timing matters more than the split. The UK-specific residual is almost entirely March (+0.31 at 10 years), partly reversed in May (−0.19), and near zero since June; September’s rise has been global to the last basis point. The Budget is being squeezed by the world, not by a verdict on Britain. The corollary is the one to remember: a global squeeze is exactly when a domestic misstep is most expensive.</p>
+<h2 class="sec"><span class="n">6</span>Published estimates</h2>
+<table>
+  <caption>Table 5. Pre-measures headroom estimates in circulation, 2029-30, £bn</caption>
+  <thead><tr><th>Source</th><th class="n">Date</th><th class="n">Number</th><th class="n">Base</th><th class="n">Implied change</th><th>Mechanism as stated</th></tr></thead>
+  <tbody>
+    <tr><td>Capital Economics</td><td class="n">1 Sep</td><td class="n">15</td><td class="n">24</td><td class="n">−9</td><td class="n">borrowing costs</td></tr>
+    <tr><td>Deutsche Bank</td><td class="n">1 Sep</td><td class="n">13.8</td><td class="n">26 (own)</td><td class="n">−12.2</td><td class="t">debt interest at spot yields</td></tr>
+    <tr><td>Pantheon</td><td class="n">2 Sep</td><td class="n">13</td><td class="n">23.6</td><td class="n">−10.6</td><td class="n">interest costs</td></tr>
+    <tr><td>Societe Generale</td><td class="n">late Aug</td><td class="n">12</td><td class="n">23.6</td><td class="n">−11.5</td><td class="t">Iran, growth and rates</td></tr>
+    <tr><td>Bloomberg Economics</td><td class="n">1 Sep</td><td class="n">11.6</td><td class="n">23.6</td><td class="n">−12</td><td class="t">borrowing costs plus inflation</td></tr>
+    <tr><td>Walkforward</td><td class="n">10 Sep window</td><td class="n">14.6</td><td class="n">23.6</td><td class="n">−9.0</td><td class="t">yield, Bank Rate, receipts credit, spending drift</td></tr>
+  </tbody>
+</table>
+<p>Numbers are from press reports of the notes; Deutsche’s base differs from the OBR’s and its estimate is £11.4bn on the OBR base. Panmure Liberum’s £17.6bn covers the long end only and its suggestion of a £5bn growth offset is an upside view on receipts and judgement rather than a headroom estimate; the IFS’s £4bn from lower net migration is a component of the OBR judgement residual. The IFS Green Budget, expected in early to mid October, will be the strongest independent benchmark and will be added to the postscript.</p>
+<h2 class="sec"><span class="n">7</span>The rules and the Chancellor’s choice</h2>
+<p>Whether the rules change. Since June 2010 the fiscal rules have been changed or replaced at about ten of 33 fiscal events, and at five of the five first Budgets of a new Chancellor. Against that base rate, the rules were redefined only ten months ago, the defence target has been deferred to the spring 2027 spending review, and the Chancellor’s 7 September speech committed to the existing rules and to keeping a buffer, without a word on borrowing room; gilts moved a basis point. We put the probability of any announced amendment to the Charter’s mandate or supplementary targets at 30 per cent, and of a substantive loosening at 10 per cent.</p>
+<p>What the Chancellor does with the number. On the record, Chancellors offset about a fifth of bad pre-measures news in year three, loosen at 70 per cent of events, and when the underlying position has worsened by more than £5bn have tightened only 31 per cent of the time. Against that, the post-2024 framework has made the headroom figure itself the political target and the Treasury is reported to defend a floor of £10bn. We expect post-measures headroom of about £12bn, with a 25 per cent chance it is below £10bn and a 10 per cent chance it is above £20bn. This is a forecast of a political choice and we claim no skill in it.</p>
+<h2 class="sec"><span class="n">8</span>Scoring</h2>
+<p>On 28 October the OBR publishes its Economic and Fiscal Outlook. The following will be marked against it in a postscript to this paper, and nowhere else:</p>
+<ul class="plain">
+  <li><strong>Q1</strong>, the 2029-30 current budget before Budget measures, recoverable from the EFO’s changes-since-March table: our 14.6 and interval, against 23.6 (no change), 20.2 with the historical band (the unconditional benchmark) and each estimate in Table 5. Absolute error and whether the outcome fell inside the 80 per cent interval.</li>
+  <li><strong>Q2</strong>, the same after measures, the number the Chancellor announces: our 12 and the two probabilities, scored by absolute error and Brier score.</li>
+  <li><strong>Q3</strong>, the OBR’s decomposition of the underlying change in 2029-30 into debt interest, receipts and other spending: sign and size against Table 4.</li>
+  <li><strong>Q4</strong>, the market gilt rate for 2029-30 in the determinants table: our 5.9 and range.</li>
+  <li><strong>Q5</strong>, the global share of the 10-year move, refreshed with the same fit to the OBR’s actual window: reported, not scored, since no published number exists to beat.</li>
+  <li><strong>Q6</strong>, whether the rules were changed: Brier score on 0.30.</li>
+</ul>
+<p>The claim of skill rests on Q1 alone, and on beating the published estimates in Table 5, not on beating no-change. If the OBR’s number lands nearer the sell-side cluster than ours, the postscript will say so and say why.</p>
+<h2 class="sec"><span class="n">9</span>Data and reproducibility</h2>
+<p>All inputs are deterministic downloads: the OBR’s Fiscal forecast revisions database, Policy measures database and ready reckoner (obr.uk/data); the Bank of England’s yield curve archives; the Debt Management Office’s April 2026 remit; ONS public sector finances via the ONS time series API; Bundesbank and US Treasury daily yields; the EFO documents on gov.uk for the window dates. The pipeline that rebuilds the vintages table, the window averages, the backtest and the estimate from those files runs as a single script and is available on request. Window dates for 12 of the 33 forecasts are assumed rather than read; they are listed in the appendix and replacing them does not change the coefficient to one decimal place.</p>
+<h2 class="sec unnumbered">Appendix. The 33 forecasts</h2>
+<p>Year-three revisions to borrowing, £bn, positive means higher borrowing, with the change in the DMO-weighted gilt rate between the previous window and this one. Window dates marked (a) are assumed.</p>
+<table class="tight">
+  <caption></caption>
+  <thead><tr><th>Forecast</th><th class="n">Target year</th><th class="n">Underlying</th><th class="n">of which debt interest</th><th class="n">of which receipts</th><th class="n">of which non-interest spending</th><th class="n">Policy</th><th class="n">Gilt move, pp</th></tr></thead>
+  <tbody>
+    <tr><td>November 2010</td><td class="n">2013-14</td><td class="n">1.8</td><td class="n">−4.3</td><td class="n">3.4</td><td class="n">2.7</td><td class="n">−1.7</td><td class="n">−0.24</td></tr>
+    <tr><td>March 2011</td><td class="n">2013-14</td><td class="n">8.9</td><td class="n">3.1</td><td class="n">−1.4</td><td class="n">7.2</td><td class="n">0.7</td><td class="n">+0.47</td></tr>
+    <tr><td>November 2011</td><td class="n">2014-15</td><td class="n">33.2</td><td class="n">−6.2</td><td class="n">39.1</td><td class="n">0.3</td><td class="n">−1.5</td><td class="n">−1.43</td></tr>
+    <tr><td>March 2012</td><td class="n">2014-15</td><td class="n">−1.7</td><td class="n">−2.9</td><td class="n">0.7</td><td class="n">0.5</td><td class="n">−2.2</td><td class="n">−0.11</td></tr>
+    <tr><td>December 2012</td><td class="n">2015-16</td><td class="n">30.1</td><td class="n">−3.7</td><td class="n">30.1</td><td class="n">3.7</td><td class="n">0.1</td><td class="n">−0.29</td></tr>
+    <tr><td>March 2013</td><td class="n">2015-16</td><td class="n">13.8</td><td class="n">1.2</td><td class="n">11.1</td><td class="n">1.6</td><td class="n">0.0</td><td class="n">+0.32</td></tr>
+    <tr><td>December 2013</td><td class="n">2016-17</td><td class="n">−13.3</td><td class="n">0.9</td><td class="n">−11.6</td><td class="n">−2.6</td><td class="n">0.3</td><td class="n">+0.48</td></tr>
+    <tr><td>March 2014</td><td class="n">2016-17</td><td class="n">−4.5</td><td class="n">−0.2</td><td class="n">−4.4</td><td class="n">0.1</td><td class="n">−1.8</td><td class="n">+0.11</td></tr>
+    <tr><td>December 2014</td><td class="n">2017-18</td><td class="n">6.9</td><td class="n">−15.7</td><td class="n">22.8</td><td class="n">−0.2</td><td class="n">−8.2</td><td class="n">−0.46</td></tr>
+    <tr><td>March 2015</td><td class="n">2017-18</td><td class="n">−7.4</td><td class="n">−7.6</td><td class="n">6.6</td><td class="n">−6.4</td><td class="n">4.3</td><td class="n">−0.31</td></tr>
+    <tr><td>July 2015</td><td class="n">2018-19</td><td class="n">5.3</td><td class="n">2.5</td><td class="n">−2.3</td><td class="n">5.1</td><td class="n">6.3</td><td class="n">+0.28</td></tr>
+    <tr><td>November 2015</td><td class="n">2018-19</td><td class="n">−8.0</td><td class="n">−5.0</td><td class="n">−5.4</td><td class="n">2.4</td><td class="n">4.4</td><td class="n">−0.27</td></tr>
+    <tr><td>March 2016</td><td class="n">2018-19</td><td class="n">12.3</td><td class="n">−4.8</td><td class="n">14.0</td><td class="n">3.2</td><td class="n">4.5</td><td class="n">−0.35</td></tr>
+    <tr><td>November 2016</td><td class="n">2019-20</td><td class="n">17.7</td><td class="n">−4.5</td><td class="n">15.2</td><td class="n">6.9</td><td class="n">8.4</td><td class="n">−0.28</td></tr>
+    <tr><td>March 2017</td><td class="n">2019-20</td><td class="n">−1.4</td><td class="n">0.9</td><td class="n">−1.6</td><td class="n">−0.7</td><td class="n">1.7</td><td class="n">+0.09</td></tr>
+    <tr><td>November 2017</td><td class="n">2020-21</td><td class="n">13.7</td><td class="n">−0.7</td><td class="n">13.0</td><td class="n">1.4</td><td class="n">3.6</td><td class="n">+0.12</td></tr>
+    <tr><td>March 2018</td><td class="n">2020-21</td><td class="n">−3.7</td><td class="n">2.4</td><td class="n">−6.8</td><td class="n">0.8</td><td class="n">−0.3</td><td class="n">+0.27</td></tr>
+    <tr><td>October 2018</td><td class="n">2021-22</td><td class="n">−14.7</td><td class="n">−1.7</td><td class="n">−11.2</td><td class="n">−1.8</td><td class="n">13.7</td><td class="n">−0.00</td></tr>
+    <tr><td>March 2019 (a)</td><td class="n">2021-22</td><td class="n">−7.4</td><td class="n">−4.0</td><td class="n">−3.8</td><td class="n">0.4</td><td class="n">1.2</td><td class="n">−0.30</td></tr>
+    <tr><td>March 2020 (a)</td><td class="n">2022-23</td><td class="n">3.6</td><td class="n">−7.7</td><td class="n">4.1</td><td class="n">7.1</td><td class="n">22.5</td><td class="n">−0.48</td></tr>
+    <tr><td>July 2020 (a)</td><td class="n">2023-24</td><td class="n">61.7</td><td class="n">−8.1</td><td class="n">66.4</td><td class="n">3.4</td><td class="n">1.4</td><td class="n">−0.44</td></tr>
+    <tr><td>November 2020 (a)</td><td class="n">2023-24</td><td class="n">−7.8</td><td class="n">−4.0</td><td class="n">−9.1</td><td class="n">5.3</td><td class="n">−15.1</td><td class="n">+0.02</td></tr>
+    <tr><td>March 2021 (a)</td><td class="n">2023-24</td><td class="n">4.0</td><td class="n">1.6</td><td class="n">−2.5</td><td class="n">4.9</td><td class="n">−19.1</td><td class="n">+0.09</td></tr>
+    <tr><td>October 2021</td><td class="n">2024-25</td><td class="n">−33.5</td><td class="n">3.1</td><td class="n">−46.3</td><td class="n">9.6</td><td class="n">5.4</td><td class="n">+0.30</td></tr>
+    <tr><td>March 2022 (a)</td><td class="n">2024-25</td><td class="n">−14.1</td><td class="n">9.8</td><td class="n">−36.9</td><td class="n">13.0</td><td class="n">4.3</td><td class="n">+0.76</td></tr>
+    <tr><td>November 2022 (a)</td><td class="n">2025-26</td><td class="n">55.8</td><td class="n">27.0</td><td class="n">17.4</td><td class="n">11.4</td><td class="n">−13.7</td><td class="n">+2.55</td></tr>
+    <tr><td>March 2023 (a)</td><td class="n">2025-26</td><td class="n">−19.3</td><td class="n">−1.9</td><td class="n">−25.1</td><td class="n">7.7</td><td class="n">19.0</td><td class="n">−0.51</td></tr>
+    <tr><td>November 2023 (a)</td><td class="n">2026-27</td><td class="n">−17.2</td><td class="n">17.4</td><td class="n">−50.6</td><td class="n">15.9</td><td class="n">22.1</td><td class="n">+1.20</td></tr>
+    <tr><td>March 2024 (a)</td><td class="n">2026-27</td><td class="n">−6.2</td><td class="n">−13.8</td><td class="n">10.3</td><td class="n">−2.7</td><td class="n">6.4</td><td class="n">−0.59</td></tr>
+    <tr><td>October 2024 (a)</td><td class="n">2027-28</td><td class="n">−9.8</td><td class="n">1.4</td><td class="n">−15.5</td><td class="n">4.3</td><td class="n">31.4</td><td class="n">−0.11</td></tr>
+    <tr><td>March 2025 (a)</td><td class="n">2027-28</td><td class="n">10.3</td><td class="n">5.0</td><td class="n">1.8</td><td class="n">3.5</td><td class="n">−2.3</td><td class="n">+0.55</td></tr>
+    <tr><td>November 2025</td><td class="n">2028-29</td><td class="n">6.6</td><td class="n">3.5</td><td class="n">−15.1</td><td class="n">20.5</td><td class="n">2.9</td><td class="n">−0.00</td></tr>
+    <tr><td>March 2026</td><td class="n">2028-29</td><td class="n">−4.6</td><td class="n">−2.3</td><td class="n">−7.3</td><td class="n">5.0</td><td class="n">3.7</td><td class="n">−0.07</td></tr>
+  </tbody>
+</table>
+<p class="tablenote">Source: OBR Fiscal forecast revisions database, March 2026; Bank of England yield curves; window dates from EFO texts where published. Figures reproduce the OBR’s published summary statistics.</p>
+<div class="colophon">
+  Foresight not hindsight<br>
+  Walkforward Research &nbsp;·&nbsp; enquiries@walkforwardresearch.com &nbsp;·&nbsp; walkforwardresearch.com
+</div>
+
+</body>
+</html>
